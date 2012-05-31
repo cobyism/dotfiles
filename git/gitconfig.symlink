@@ -1,0 +1,38 @@
+[user]
+	name = Coby Chapple
+	email = coby@cobychapple.com
+[alias]
+	b = branch
+	cl = clone
+	cm = commit
+	co = checkout
+	d = diff
+	i = init
+	l = log
+	m = merge
+	s = status -sb
+	t = tag
+	g = log --graph --all --oneline
+  undo = reset --soft HEAD^
+  count = shortlog -sn
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = auto
+[core]
+	excludesfile = /Users/coby/.gitignore
+	autocrlf = input
+	quotepath = false
+[apply]
+	whitespace = nowarn
+[format]
+	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+[help]
+  autocorrect = 1
+[github]
+	user = cobyism
+[heroku]
+	account = coby
+[mergetool]
+	keepBackup = true
