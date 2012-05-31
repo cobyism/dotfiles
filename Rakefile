@@ -1,5 +1,8 @@
 require 'rake'
 
+# Rakefile thanks to Zach Holman (@holman)
+#   https://github.com/holman/dotfiles/blob/master/Rakefile
+
 desc "Hook our dotfiles into system-standard positions."
 task :install do
   linkables = Dir.glob('*/**{.symlink}')
