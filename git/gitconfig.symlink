@@ -36,3 +36,7 @@
 	account = coby
 [mergetool]
 	keepBackup = true
+[hub]
+	protocol = https
+[credential]
+	helper = osxkeychain

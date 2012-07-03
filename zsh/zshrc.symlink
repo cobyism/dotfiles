@@ -27,3 +27,5 @@ export PATH="$PATH:/usr/local/share/npm/bin"
 eval "$(rbenv init -)"
 
 [ -s "/Users/coby/.scm_breeze/scm_breeze.sh" ] && source "/Users/coby/.scm_breeze/scm_breeze.sh"
+
+source /opt/github/env.sh
