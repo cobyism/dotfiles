@@ -24,6 +24,9 @@ export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X1
 export PATH="$HOME/scripts/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 export PATH="$PATH:/usr/local/share/npm/bin"
+
+export EDITOR="subl -w"
+
 eval "$(rbenv init -)"
 
 [ -s "/Users/coby/.scm_breeze/scm_breeze.sh" ] && source "/Users/coby/.scm_breeze/scm_breeze.sh"
