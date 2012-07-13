@@ -14,7 +14,9 @@ blatantly stolen from one of the following places:
 ## Installation
 
 ```sh
-curl https://raw.github.com/cobyism/dotfiles/master/install.sh | sh
+$ git clone https://github.com/cobyism/dotfiles ~/.dotfiles
+$ cd ~/.dotfiles
+$ rake
 ```
 
 Use at your own peril.
