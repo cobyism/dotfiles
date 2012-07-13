@@ -1,8 +1,8 @@
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+export DOTFILES=$HOME/.dotfiles
 
 # source every .zsh file in this rep
-for config_file ($ZSH/**/*.zsh) source $config_file
+for config_file ($DOTFILES/**/*.zsh) source $config_file
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -10,7 +10,6 @@ if [[ -a ~/.localrc ]]
 then
   source ~/.localrc
 fi
-
 
 disable r
 alias r='rails'
