@@ -1,7 +1,8 @@
 #!/bin/sh
-set -x
 sublime_dir=~/Library/Application\ Support/Sublime\ Text\ 2/Packages
 
 # Put everything back where it was
+echo "Restoring Sublime Text 2 preferences..."
 rm "$sublime_dir/User"
 mv "$sublime_dir/User.backup" "$sublime_dir/User"
+echo "Sublime Text 2 restored successfully."
