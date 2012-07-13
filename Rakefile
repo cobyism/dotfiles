@@ -35,6 +35,7 @@ task :install do
     end
     `ln -s "$PWD/#{linkable}" "#{target}"`
   end
+  `./sublime/install`
 end
 
 task :uninstall do
@@ -55,6 +56,7 @@ task :uninstall do
     end
 
   end
+  `./sublime/uninstall`
 end
 
 task :default => 'install'
