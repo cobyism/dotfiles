@@ -36,6 +36,9 @@ task :install do
     `ln -s "$PWD/#{linkable}" "#{target}"`
   end
   `./sublime/install`
+  # TODO
+  # - Install oh-my-zsh
+  # - Install scm_breeze (Or try better git aliases?)
 end
 
 task :uninstall do
