@@ -1,0 +1,17 @@
+#!/bin/sh
+set -x
+sublime_dir=~/Library/Application\ Support/Sublime\ Text\ 2/Packages
+
+# symlink settings in
+mv "$sublime_dir/User" "$sublime_dir/User.backup"
+ln -s "$HOME/.dotfiles/sublime/User" "$sublime_dir"
+
+# Grab the Soda theme
+soda_dir=Theme\ -\ Soda
+cd "$sublime_dir"
+if [ ! -d "$soda_dir" ]; then
+  git clone https://github.com/buymeasoda/soda-theme/ "$soda_dir"
+else
+  cd "$soda_dir"
+  git pull
+fi

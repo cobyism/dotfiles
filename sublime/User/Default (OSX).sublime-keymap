@@ -1,0 +1,18 @@
+[
+
+{ "keys": ["ctrl+alt+shift+up"], "command": "select_lines", "args": {"forward": false} },
+{ "keys": ["ctrl+alt+shift+down"], "command": "select_lines", "args": {"forward": true} },
+
+{ "keys": ["j", "j"], "command": "exit_insert_mode",
+  "context":
+  [
+    { "key": "setting.command_mode", "operand": false },
+    { "key": "setting.is_widget", "operand": false }
+  ]
+},
+
+// swap the keybindings for paste and paste_and_indent
+{ "keys": ["super+v"], "command": "paste_and_indent" },
+{ "keys": ["super+shift+v"], "command": "paste" }
+
+]

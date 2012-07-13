@@ -1,0 +1,32 @@
+{
+	// Color scheme and Sublime UI
+	"color_scheme": "Packages/Color Scheme - Default/Coby Solarized (Dark).tmTheme",
+	"theme": "Soda Dark.sublime-theme",
+
+	// Font preferences
+	// http://nodnod.net/2009/feb/12/adding-straight-single-and-double-quotes-inconsola/
+	"font_face": "Inconsolata-dz",
+	"font_size": 18.0,
+
+	// Caret Style
+	"wide_caret": true,
+	"caret_style": "phase",
+	// Blue caret color set in theme: #0CA1EE
+
+	// Vim mode
+	"ignored_packages": [],
+	"vintage_start_in_command_mode": true,
+
+	// Whitespace and formatting
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true,
+  "trim_trailing_white_space_on_save": true,
+  "ensure_newline_at_eof_on_save": true,
+
+	// Misc Preferences
+	"highlight_line": true,
+	"rulers": [ 80 ],
+	"highlight_modified_tabs": true,
+	"indent_guide_options": ["draw_active"],
+	"word_wrap": true
+}
