@@ -16,4 +16,13 @@ else
   cd "$soda_dir"
   git pull
 fi
+
+# Install custom app icon
+echo "Installing custom app icon..."
+icon_dir=/Applications/Sublime\ Text\ 2.app/Contents/Resources
+icon_name=Sublime\ Text\ 2.icns
+cd "$icon_dir"
+mv "$icon_name" "$icon_name.backup"
+cp "$HOME/.dotfiles/sublime/icons/$icon_name" "$icon_name"
+
 echo "Sublime Text 2 installation complete."

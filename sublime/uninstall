@@ -1,8 +1,13 @@
 #!/bin/sh
 sublime_dir=~/Library/Application\ Support/Sublime\ Text\ 2/Packages
+icon_dir=/Applications/Sublime\ Text\ 2.app/Contents/Resources
+icon_name=Sublime\ Text\ 2.icns
 
 # Put everything back where it was
 echo "Restoring Sublime Text 2 preferences..."
 rm "$sublime_dir/User"
 mv "$sublime_dir/User.backup" "$sublime_dir/User"
+echo "Restoring application icon..."
+rm "$icon_dir/$icon_name"
+mv "$icon_dir/$icon_name.backup" "$icon_dir/$icon_name"
 echo "Sublime Text 2 restored successfully."
