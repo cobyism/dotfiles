@@ -5,6 +5,8 @@
 curl http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.dmg
 
 # Dropbox
+open https://www.dropbox.com/download?plat=mac
+
 # 1Password
 # Tuxera?
 # Skitch
