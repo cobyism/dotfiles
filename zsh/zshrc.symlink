@@ -28,6 +28,4 @@ export EDITOR="subl -w"
 
 eval "$(rbenv init -)"
 
-[ -s "/Users/coby/.scm_breeze/scm_breeze.sh" ] && source "/Users/coby/.scm_breeze/scm_breeze.sh"
-
 source /opt/github/env.sh
