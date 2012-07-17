@@ -28,5 +28,6 @@
 	"rulers": [ 80 ],
 	"highlight_modified_tabs": true,
 	"indent_guide_options": ["draw_active"],
+	"wrap_width": 80,
 	"word_wrap": true
 }
