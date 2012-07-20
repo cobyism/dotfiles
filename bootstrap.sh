@@ -36,3 +36,4 @@ open https://www.dropbox.com/download?plat=mac
 # TrueCrypt
 # Viscosity
 # xScope
+# QLMarkdown (quicklook for markdown) => https://github.com/toland/qlmarkdown

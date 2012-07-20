@@ -1,7 +1,6 @@
-$('a[href="/newsies"]').attr("href", "/notifications")
-
+// swap github.com logo with octocat
 $('#header .site-logo img')
-  .css('width', '97px')
-  .css('height', '80px')
-  .css('margin-top', '-15px')
-  .attr('src', '//bit.ly/ghD24e')
+  .css('width', '72px')
+  .css('height', '72px')
+  .css('margin-top', '-20px')
+  .attr('src', 'http://assets.warpspire.com/images/github/octocat.png')
