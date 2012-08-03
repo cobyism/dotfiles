@@ -1,0 +1,1 @@
+alias sz='source ~/.zshrc'

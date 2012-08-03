@@ -26,6 +26,9 @@ open https://www.dropbox.com/download?plat=mac
 # Daisy Disk
 # GHfM
 # iTerm
+# iTerm color schemes?
+#   https://github.com/mbadolato/iTerm2-Color-Schemes/downloads (desert, zenburn etc.)
+#   https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized
 # MacVim
 # MAMP
 # VMware

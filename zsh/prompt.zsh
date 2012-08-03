@@ -3,11 +3,14 @@ function collapse_pwd {
 }
 
 function prompt_char {
-    git branch >/dev/null 2>/dev/null && echo '±' && return
-    # hg root >/dev/null 2>/dev/null && echo '☿' && return
-    # echo '○'
+  git branch >/dev/null 2>/dev/null && echo '±' && return
+  hg root >/dev/null 2>/dev/null && echo '☿' && return
+  # echo '○'
 	# echo '➜'
 	echo '⚡'
+  # echo '➤'
+  # echo '❯'
+  # echo '⌁'
 }
 
 function battery_charge {
@@ -26,14 +29,19 @@ function virtualenv_info {
 # patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>" 2>/dev/null
  }
 
+function rbenv_version {
+  echo `rbenv version | cut -f 1 -d " "`
+}
+
 PROMPT='
-%{$fg[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_info)
+%{$fg[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} %{$fg[grey]%}[$(battery_pct_remaining)%%]%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_info)
 $(virtualenv_info)$(prompt_char) '
 
-RPROMPT='$(battery_charge)'
+# RPROMPT='%{$fg[red]%}$(rbenv_version)%{$reset_color%}'
+RPROMPT=''
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%}!"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[green]%}?"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%} ✘"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[red]%} ??"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ✔"
