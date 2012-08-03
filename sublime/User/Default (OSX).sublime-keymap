@@ -3,6 +3,8 @@
 { "keys": ["ctrl+alt+shift+up"], "command": "select_lines", "args": {"forward": false} },
 { "keys": ["ctrl+alt+shift+down"], "command": "select_lines", "args": {"forward": true} },
 
+{ "keys": ["super+shift+w"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
+
 { "keys": ["j", "j"], "command": "exit_insert_mode",
   "context":
   [
