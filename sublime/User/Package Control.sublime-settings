@@ -1,10 +1,10 @@
 {
-	"auto_upgrade_last_run": 1342740605,
+	"auto_upgrade_last_run": 1344045758,
 	"installed_packages":
 	[
 		"Alignment",
-		"ERB Insert and Toggle Commands",
 		"ColorPicker",
+		"ERB Insert and Toggle Commands",
 		"Gist",
 		"Git",
 		"Haml",
