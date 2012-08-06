@@ -1,0 +1,14 @@
+#!/bin/bash
+# Run Heroku commands on staging remote
+if [ `git remote | grep staging | wc -l ` == "1" ]; then
+  echo "As you wish..."
+  command=""
+  for var in "$@"
+  do
+    command=$command"$var "
+  done
+  echo " -> heroku "$command"--remote staging"
+  heroku $command--remote staging
+else
+  echo "Well, this is awkward. I don’t know anything about a 'staging' remote..."
+fi

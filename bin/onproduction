@@ -1,0 +1,14 @@
+#!/bin/bash
+# Run Heroku commands on production remote
+if [ `git remote | grep production | wc -l ` == "1" ]; then
+  echo "As you wish..."
+  command=""
+  for var in "$@"
+  do
+    command=$command"$var "
+  done
+  echo " -> heroku "$command"--remote production"
+  heroku $command--remote production
+else
+  echo "Well, this is awkward. I don’t know anything about a 'production' remote..."
+fi
