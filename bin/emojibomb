@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'open-uri'
+
+response = open("http://www.emoji-cheat-sheet.com/")
+html = response.read
+emoji = html.scan(/:\S+:/)
+count = [ARGV.first.to_i, 3].max
+bomb = ""
+count.times do
+  bomb << emoji.sample
+end
+puts bomb

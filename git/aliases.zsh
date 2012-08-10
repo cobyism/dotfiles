@@ -26,6 +26,6 @@ alias glb='git shortlog -sn'
 alias gpm='git checkout master && git pull'
 alias gr='git remote'
 alias grm='git rm'
-alias grma="git status | grep deleted | awk '{print $3}' | xargs git rm"
+alias grma="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias grv='git remote -v'
 alias gs='git status -sb'
