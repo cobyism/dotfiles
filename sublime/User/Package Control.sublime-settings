@@ -1,5 +1,5 @@
 {
-	"auto_upgrade_last_run": 1344045758,
+	"auto_upgrade_last_run": 1344818060,
 	"installed_packages":
 	[
 		"Alignment",
@@ -12,6 +12,7 @@
 		"SCSS",
 		"SideBarGit",
 		"Tag",
+		"Theme - Aqua",
 		"Theme - Soda",
 		"Theme - Soda.backup",
 		"TrailingSpaces",
