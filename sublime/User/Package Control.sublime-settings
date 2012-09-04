@@ -1,20 +1,21 @@
 {
-	"auto_upgrade_last_run": 1344818060,
+	"auto_upgrade_last_run": 1346715718,
 	"installed_packages":
 	[
 		"Alignment",
+		"CoffeeScript",
 		"ColorPicker",
 		"ERB Insert and Toggle Commands",
 		"Gist",
 		"Git",
 		"Haml",
 		"Package Control",
+		"Sass",
 		"SCSS",
 		"SideBarGit",
 		"Tag",
 		"Theme - Aqua",
 		"Theme - Soda",
-		"Theme - Soda.backup",
 		"TrailingSpaces",
 		"VintageEx",
 		"ZenCoding"
