@@ -1,6 +1,7 @@
 {
 	// Color scheme and Sublime UI
-	"color_scheme": "Packages/Color Scheme - Default/Coby Solarized (Dark).tmTheme",
+	// "color_scheme": "Packages/Color Scheme - Default/Coby Solarized (Dark).tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Tomorrow-Night-CC.tmTheme",
 	"theme": "Soda Dark.sublime-theme",
 
 	// Font preferences
