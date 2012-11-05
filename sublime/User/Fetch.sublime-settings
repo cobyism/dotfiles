@@ -1,0 +1,12 @@
+{
+	"files":
+	{
+		"jquery": "http://code.jquery.com/jquery.min.js",
+		"normalize": "https://raw.github.com/necolas/normalize.css/master/normalize.css"
+	},
+	"packages":
+	{
+		"html5_boilerplate": "https://github.com/h5bp/html5-boilerplate/zipball/master",
+		"wordpress": "http://wordpress.org/latest.zip"
+	}
+}

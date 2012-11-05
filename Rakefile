@@ -39,6 +39,7 @@ task :install do
   # TODO
   # - Install oh-my-zsh
   # - Install scm_breeze (Or try better git aliases?)
+  # - Install dotjs
 end
 
 task :uninstall do

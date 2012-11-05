@@ -1,7 +1,8 @@
 {
-	"auto_upgrade_last_run": 1346723544,
+	"auto_upgrade_last_run": 1352132669,
 	"installed_packages":
 	[
+		"AdvancedNewFile",
 		"Alignment",
 		"CoffeeScript",
 		"ColorPicker",
@@ -9,15 +10,23 @@
 		"Gist",
 		"Git",
 		"Haml",
+		"Nettuts+ Fetch",
 		"Package Control",
+		"Prefixr",
 		"Sass",
 		"SCSS",
+		"SideBarEnhancements",
 		"SideBarGit",
+		"SublimeLinter",
 		"Tag",
 		"Theme - Aqua",
 		"Theme - Soda",
 		"TrailingSpaces",
 		"VintageEx",
 		"ZenCoding"
+	],
+	"repositories":
+	[
+		"https://github.com/sergeche/emmet-sublime"
 	]
 }

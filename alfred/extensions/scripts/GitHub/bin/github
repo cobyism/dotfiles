@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.expand_path('../../lib', __FILE__))
+
+require 'github'
+
+cli = GitHub::Cli.new(ARGV)
+
+if cli.command === :none
+  puts cli.display_usage
+else
+  cli.open_in_browser
+end
