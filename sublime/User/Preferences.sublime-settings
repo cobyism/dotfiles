@@ -7,6 +7,7 @@
 	// Font preferences
 	// http://nodnod.net/2009/feb/12/adding-straight-single-and-double-quotes-inconsola/
 	"font_face": "Inconsolata-dz",
+	"font_face": "Source Code Pro",
 	"font_size": 18.0,
 
 	// Caret Style
