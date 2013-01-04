@@ -35,7 +35,7 @@ task :install do
     end
     `ln -s "$PWD/#{linkable}" "#{target}"`
   end
-  `./sublime/install`
+  #  `./sublime/install`
   # TODO
   # - Install oh-my-zsh
   # - Install scm_breeze (Or try better git aliases?)
@@ -60,7 +60,7 @@ task :uninstall do
     end
 
   end
-  `./sublime/uninstall`
+  # `./sublime/uninstall`
 end
 
 task :default => 'install'
