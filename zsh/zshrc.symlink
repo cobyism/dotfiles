@@ -25,6 +25,5 @@ export PATH="$PATH:/usr/local/share/npm/bin"
 
 export EDITOR="subl -w"
 
-eval "$(rbenv init -)"
-
 source /opt/github/env.sh
+eval "$(rbenv init -)"
