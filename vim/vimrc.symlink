@@ -2,13 +2,14 @@
 set nocompatible
 syntax enable
 set encoding=utf-8
+set showcmd                     " display incomplete commands
 filetype plugin indent on       " load file type plugins + indentation
 
 " Searching
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
-set smartcase                   " ... unless they contain at least one capital letter
+set smartcase                   " ... unless they contain at least one capital letter test
 
 " Directories for swp files
 set backupdir=~/.vim/backup
@@ -23,7 +24,7 @@ set softtabstop=2
 set listchars=tab:▸\ ,eol:¬,trail:·
 set showbreak=…
 set nolist
-set formatoptions=l
+set formatoptions=lj
 set lbr
 set wrap
 
@@ -36,5 +37,13 @@ set guioptions=aAce
 set number
 set ruler
 syntax on
-color desert
+color molokai
 set guifont=Source\ Code\ Pro:h18
+set visualbell
+
+" Shortcuts                                                                                                                 
+nmap <silent> <leader>l :set list!<CR>                                                                                      
+nmap <silent> <leader>w :set wrap!<CR>                                                                                      
+nmap <silent> <leader>h :set invhlsearch<CR>                                                                                
+nmap <silent> <leader>s :set spell!<CR>
+nmap <silent> <leader>R :source ~/.vimrc<CR>
