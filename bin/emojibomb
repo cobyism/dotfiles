@@ -4,7 +4,11 @@ require 'open-uri'
 
 response = open("http://www.emoji-cheat-sheet.com/")
 html = response.read
-emoji = html.scan(/:\S+:/)
+results = html.scan(/:<span class="name">\S+<\/span>:/)
+emoji = []
+for r in results do
+  emoji << r.gsub(/<span class="name">/, '').gsub(/<\/span>/, '')
+end
 count = [ARGV.first.to_i, 3].max
 bomb = ""
 count.times do
