@@ -21,7 +21,7 @@
 	branch = auto
 	ui = auto
 [core]
-	excludesfile = /Users/coby/.gitignore
+	excludesfile = /opt/boxen/config/git/gitignore
 	autocrlf = input
 	quotepath = false
 [apply]
@@ -38,5 +38,6 @@
 	keepBackup = true
 [hub]
 	protocol = https
+
 [credential]
-	helper = osxkeychain
+helper = /opt/boxen/bin/boxen-git-credential

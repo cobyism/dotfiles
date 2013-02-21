@@ -23,8 +23,9 @@ export PATH="$HOME/scripts/bin:$PATH"
 export PATH="$HOME/node_modules/.bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 export PATH="$PATH:/usr/local/share/npm/bin"
+export PATH="$PATH:/opt/boxen/nvm/v0.8.8/bin"
 
 export EDITOR="vim"
 
-source /opt/github/env.sh
+source /opt/boxen/env.sh
 eval "$(rbenv init -)"

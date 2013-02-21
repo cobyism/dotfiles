@@ -37,7 +37,7 @@ set guioptions=aAce
 set number
 set ruler
 syntax on
-color molokai
+" color molokai
 set guifont=Source\ Code\ Pro:h18
 set visualbell
 
