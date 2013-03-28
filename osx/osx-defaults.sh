@@ -38,7 +38,7 @@ defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreS
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
 # Always show scrollbars
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+#defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
 # Disable smooth scrolling
 # (Uncomment if you’re on an older Mac that messes up the animation)
