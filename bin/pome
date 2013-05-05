@@ -1,0 +1,71 @@
+#!/usr/bin/env ruby
+
+words = %w[
+horse
+comb
+snake
+letter
+camera
+elephant
+elevator
+book
+cigarette
+flag
+egg
+hammer
+sponge
+bell
+shop
+tortoise
+umbrella
+shoe
+nose
+hamburger
+balloon
+telephone
+pencil
+tree
+mouse
+television
+lawyer
+bee
+rain
+fire
+bath
+aeroplane
+guitar
+paint
+carpet
+song
+currency
+knife
+icecube
+vote
+rocket
+mountain
+car
+ladder
+glue
+cat
+radio
+table
+heart
+trap
+key
+matchstick
+copier
+cactus
+prison
+flower
+string
+eraser
+gun
+pin
+]
+
+word = words.sample
+vowelish = "a"
+vowelish << "n" if %w[a e i o u].include? word[0]
+po = "What if you made it work more like #{vowelish} #{word}?"
+puts po
+`say #{po}`
