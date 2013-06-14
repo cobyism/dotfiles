@@ -16,6 +16,8 @@ alias rake="noglob rake"
 
 export NODE_PATH="usr/local/lib/node_modules"
 
+export PYTHONPATH=/opt/boxen/homebrew/lib/python2.7/site-packages:$PYTHONPATH
+
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 export PATH="$DOTFILES/bin:$PATH"
