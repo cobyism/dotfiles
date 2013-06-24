@@ -11,11 +11,6 @@ then
   source ~/.localrc
 fi
 
-alias updatedb='sudo /usr/libexec/locate.updatedb'
-alias rake="noglob rake"
-
-export NODE_PATH="usr/local/lib/node_modules"
-
 export PYTHONPATH=/opt/boxen/homebrew/lib/python2.7/site-packages:$PYTHONPATH
 
 # Customize to your needs...

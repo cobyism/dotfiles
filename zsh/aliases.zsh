@@ -7,3 +7,5 @@ alias y='yeoman'
 alias be='bundle exec'
 alias ghgh='cd ~/github/github'
 alias gh='github'
+alias updatedb='sudo /usr/libexec/locate.updatedb'
+alias rake="noglob rake"
