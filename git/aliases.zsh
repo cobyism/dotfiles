@@ -25,8 +25,8 @@ alias gga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 alias gl='git log'
 alias glb='git shortlog -sn'
 alias gpm='git checkout master && git pull'
-alias gup="git push origin `git rev-parse --symbolic-full-name --abbrev-ref HEAD`"
-alias gsy="git pull origin `git rev-parse --symbolic-full-name --abbrev-ref HEAD`"
+#alias gup="git push origin `git rev-parse --symbolic-full-name --abbrev-ref HEAD`"
+#alias gsy="git pull origin `git rev-parse --symbolic-full-name --abbrev-ref HEAD`"
 alias gr='git remote'
 alias grm='git rm'
 alias grma="git status | grep deleted | awk '{print \$3}' | xargs git rm"

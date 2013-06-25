@@ -1,3 +1,6 @@
+# 256 color support
+set -g default-terminal "screen-256color"
+
 # enable in-pane mouse/scroll support
 set-window-option -g mode-mouse on
 set-option -g mouse-select-pane on
@@ -13,7 +16,6 @@ bind ^B select-pane -t :.+
 
 # start window indexing at one instead of zero
 set -g base-index 1
-set -g renumber-windows on
 
 # send prefix to nested tmux session
 bind-key a send-prefix
@@ -23,3 +25,13 @@ bind -r + resize-pane -U 5
 bind -r _ resize-pane -D 5
 bind -r - resize-pane -L 5
 bind -r = resize-pane -R 5
+
+# Status bar
+set -g status-position top
+set -g status-bg black
+set -g status-fg white
+set -g status-left "#h"
+set -g status-left-bg green
+set -g status-left-attr bold
+set -g status-right "#[fg=green]#H"
+

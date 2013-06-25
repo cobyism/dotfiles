@@ -24,5 +24,8 @@ export PATH="$PATH:/opt/boxen/nvm/v0.8.8/bin"
 
 export EDITOR="vim"
 
-source /opt/boxen/env.sh
+if [[ -a /opt/boxen/env.sh ]]
+then
+  source /opt/boxen/env.sh
+fi
 eval "$(rbenv init -)"

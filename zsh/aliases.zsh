@@ -9,3 +9,5 @@ alias ghgh='cd ~/github/github'
 alias gh='github'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 alias rake="noglob rake"
+alias ta="tmux attach"
+alias tx="tmux"
