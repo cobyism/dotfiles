@@ -13,8 +13,8 @@
 	s = status -sb
 	t = tag
 	g = log --graph --all --oneline
-  undo = reset --soft HEAD^
-  count = shortlog -sn
+  	undo = reset --soft HEAD^
+  	count = shortlog -sn
 [color]
 	diff = auto
 	status = auto
@@ -29,7 +29,7 @@
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [help]
-  autocorrect = 1
+  	autocorrect = 1
 [github]
 	user = cobyism
 [heroku]
@@ -38,6 +38,5 @@
 	keepBackup = true
 [hub]
 	protocol = https
-
 [credential]
-helper = /opt/boxen/bin/boxen-git-credential
+	helper = /opt/boxen/bin/boxen-git-credential
