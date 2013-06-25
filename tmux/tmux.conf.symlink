@@ -1,18 +1,25 @@
-# remap prefix to Control + a
-# set -g prefix C-a
-# unbind C-b
-# bind C-a send-prefix
+# enable in-pane mouse/scroll support
+set-window-option -g mode-mouse on
+set-option -g mouse-select-pane on
+set-option -g mouse-resize-pane on
+set-option -g mouse-select-window on
 
 # force a reload of the config file
-# unbind r
-# bind r source-file ~/.tmux.conf
+bind R source-file ~/.tmux.conf \; display-message "Config reloaded…"
 
 # quick pane cycling
-# unbind ^A
-# bind ^A select-pane -t :.+
+unbind ^B
+bind ^B select-pane -t :.+
+
+# start window indexing at one instead of zero
+set -g base-index 1
+set -g renumber-windows on
+
+# send prefix to nested tmux session
+bind-key a send-prefix
 
 # pane resizing
-# bind -r + resize-pane -U 5
-# bind -r _ resize-pane -D 5
-# bind -r - resize-pane -L 5
-# bind -r = resize-pane -R 5
+bind -r + resize-pane -U 5
+bind -r _ resize-pane -D 5
+bind -r - resize-pane -L 5
+bind -r = resize-pane -R 5
