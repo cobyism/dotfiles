@@ -1,0 +1,2 @@
+# Install gems without documentation by default
+gem: --no-ri --no-rdoc
