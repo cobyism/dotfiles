@@ -36,11 +36,4 @@ bind -r - resize-pane -L 5
 bind -r = resize-pane -R 5
 
 # Status bar
-set -g status-position top
-set -g status-bg black
-set -g status-fg white
-set -g status-left "#h"
-set -g status-left-bg green
-set -g status-left-attr bold
-set -g status-right "#[fg=green]#H"
-
+source ~/.powerline/powerline/bindings/tmux/powerline.conf
