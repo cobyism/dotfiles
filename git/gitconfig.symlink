@@ -40,3 +40,8 @@
 	protocol = https
 [credential]
 	helper = /opt/boxen/bin/boxen-git-credential
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[push]
+	default = simple

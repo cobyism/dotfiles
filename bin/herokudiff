@@ -1,0 +1,16 @@
+#!/bin/bash
+# Run the same Heroku command on `production` and `staging` remotes,
+# and then diff the output.
+if [ `git remote | grep production | wc -l ` == "1" ] && \
+  [ `git remote | grep staging | wc -l ` == "1" ]; then
+  echo "As you wish..."
+  command=""
+  for var in "$@"
+  do
+    command=$command"$var "
+  done
+  echo " -> Comparing remotes for command: heroku "$command""
+  diff <(heroku $command--remote production) <(heroku $command--remote staging)
+else
+  echo "Well, this is awkward. I seem to be missing either a 'production' or 'stating' remote..."
+fi

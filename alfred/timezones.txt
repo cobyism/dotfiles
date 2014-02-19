@@ -1,4 +1,4 @@
-Auckland|Auckland|New Zealand|-36.8484597|174.7633315|43200|Pacific/Auckland|New Zealand Standard Time|UTC+12
+Auckland|Auckland|New Zealand|-36.8484597|174.7633315|46800|Pacific/Auckland|New Zealand Daylight Time|UTC+13
 Brisbane|Brisbane|Australia|-27.4710107|153.0234489|36000|Australia/Brisbane|Australian Eastern Standard Time|UTC+10
 San Francisco|San Francisco|United States|37.7749295|-122.4194155|-25200|America/Los_Angeles|Pacific Daylight Time|UTC-7
 New York|New York|United States|40.7143528|-74.0059731|-14400|America/New_York|Eastern Daylight Time|UTC-4
