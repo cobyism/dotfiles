@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!-- Place this file at ~/Library/Application Support/KeyRemap4MacBook/private.xml -->
+<root>
+
+  <!-- remap caps lock to escape, or
+    "hyper" modifier key (ctrl + shift + cmd + opt) if held -->
+  <item>
+    <name>F19 to F19</name>
+    <appendix>(F19 to Hyper (ctrl+shift+cmd+opt) + F19 Only, send escape)</appendix>
+    <identifier>private.f192f19_escape</identifier>
+    <autogen>
+      --KeyOverlaidModifier--
+      KeyCode::F19,
+      KeyCode::COMMAND_L,
+      ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+      KeyCode::ESCAPE
+    </autogen>
+  </item>
+
+  <!-- Logitech R800 Presenter remote control -->
+  <devicevendordef>
+    <vendorname>LOGITECH</vendorname>
+    <vendorid>0x046d</vendorid>
+  </devicevendordef>
+
+  <deviceproductdef>
+    <productname>LOGITECH_R800</productname>
+    <productid>0xc52d</productid>
+  </deviceproductdef>
+
+  <appdef>
+    <appname>IWORK_KEYNOTE</appname>
+    <equal>com.apple.iWork.Keynote</equal>
+  </appdef>
+
+  <item>
+    <name>Logitech R800 Keynote Support</name>
+
+    <item>
+      <name>R800 For Keynote</name>
+      <identifier>private.R800_for_keynote</identifier>
+      <only>IWORK_KEYNOTE</only>
+      <device_only>DeviceVendor::LOGITECH, DeviceProduct::LOGITECH_R800</device_only>
+      <autogen>--KeyToKey-- KeyCode::DOT, KeyCode::B</autogen>
+      <autogen>
+        --KeyToKey--
+        KeyCode::F5,
+        KeyCode::P, ModifierFlag::OPTION_L | ModifierFlag::COMMAND_L
+      </autogen>
+    </item>
+  </item>
+
+</root>
