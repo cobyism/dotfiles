@@ -24,6 +24,7 @@
 	excludesfile = /opt/boxen/config/git/gitignore
 	autocrlf = input
 	quotepath = false
+	editor = atom --wait
 [apply]
 	whitespace = nowarn
 [format]
