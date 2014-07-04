@@ -1,0 +1,84 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+.palette {
+  overflow-y: auto;
+  .palette-controls {
+    margin-bottom: 10px;
+  }
+
+  .color {
+    margin-bottom: 10px;
+    border: 1px solid @base-border-color;
+    overflow: hidden;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    .color {
+      border: none;
+      margin: 0;
+    }
+
+    .color-preview {
+      display: block;
+      float: left;
+      margin-right: 10px;
+      width: 60px;
+      height: 60px;
+      position: relative;
+
+      &:before {
+        content: '';
+        background: url(atom://project-palette-finder/resources/transparent-background.png);
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+
+      &:after {
+        content: '';
+        background: inherit;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+    }
+
+    .color-name {
+      color: @text-color;
+    }
+
+    .color-line {
+      padding: 5px;
+      margin-top: 5px;
+    }
+
+    .color-path {
+      color: @text-color-info;
+      margin-left: 10px;
+    }
+  }
+
+  .grid {
+    .color {
+      float: left;
+      margin-right: 10px;
+      .color-preview {
+        margin: 0;
+      }
+      .color-name, .color-line, .color-path {
+        display: none;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,23 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  '.conflicted':
+    'Resolve: Current': 'merge-conflicts:accept-current'
+    'Resolve: Ours': 'merge-conflicts:accept-ours'
+    'Resolve: Theirs': 'merge-conflicts:accept-theirs'
+    'Resolve: Ours Then Theirs': 'merge-conflicts:ours-then-theirs'
+    'Resolve: Theirs Then Ours': 'merge-conflicts:theirs-then-ours'
+  '.merge-conflicts .navigate':
+    'Resolve: Entire File Ours': 'merge-conflicts:entire-file-ours'
+    'Resolve: Entire File Theirs': 'merge-conflicts:entire-file-theirs'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Merge Conflicts'
+      'submenu': [
+        { 'label': 'Detect', 'command': 'merge-conflicts:detect' }
+      ]
+    ]
+  }
+]

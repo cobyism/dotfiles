@@ -1,0 +1,32 @@
+{
+  "name": "atom-prettify",
+  "main": "./lib/prettify",
+  "version": "0.1.0",
+  "description": "Prettify your HTML",
+  "activationEvents": [
+    "prettify:prettify"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adambutler/atom-prettify"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.39.0"
+  },
+  "dependencies": {
+    "js-beautify": "~1.4.x"
+  },
+  "readme": "# Prettify Package for Atom\n\nPrettify your HTML\n\n![Prettify](https://f.cloud.github.com/assets/1238468/2282365/dd9ad7c4-9fac-11e3-90a0-a6778ed81cfe.gif)\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/adambutler/atom-prettify/issues"
+  },
+  "homepage": "https://github.com/adambutler/atom-prettify",
+  "_id": "atom-prettify@0.1.0",
+  "dist": {
+    "shasum": "3264bccade90d362c2987f50c2f9b8a7fa90f01b"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114218-22919-15rwh13/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114218-22919-15rwh13/package.tgz"
+}

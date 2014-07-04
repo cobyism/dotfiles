@@ -1,0 +1,38 @@
+{
+  "name": "project-palette-finder",
+  "main": "./lib/project-palette-finder",
+  "version": "0.5.3",
+  "description": "Finds and archive colors defined in a project's less/sass/stylus files",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abe33/atom-project-palette-finder"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "underscore-plus": "1.x",
+    "emissary": "1.x",
+    "mixto": "1.x",
+    "prolix": "1.x",
+    "pigments": ">= 1.6.0",
+    "pathwatcher": "1.x"
+  },
+  "devDependencies": {
+    "wrench": "1.5.x",
+    "temp": "~0.6.0"
+  },
+  "readme": "# project-palette-finder package\n\n[![Build Status](https://travis-ci.org/abe33/atom-project-palette-finder.svg)](https://travis-ci.org/abe33/atom-project-palette-finder)\n\nFinds and exposes colors defined in a project's Less, Sass or Stylus files.\n\n![Palette View](https://raw.github.com/abe33/atom-project-palette-finder/master/screenshot.gif)\n\nIn itself this packages only offer the to following commands:\n\n * `palette:refresh` - It just scans the project directory for Less, Sass (scss & sass) and Stylus files and search for variables containing colors. It do so at startup and everytime you trigger the `palette:refresh` command.\n * `palette:view` - It scans the project and display a view in the active pane that lists all the colors defined in the palette, with source and path to the definition.\n\nTheses colors are then stored in a `Palette` object that is exposed by the package.\nAfter a project scan the colors can be retrieved with their name (the name of variable that hold them).\n\n### API\n\nTo access the package you can use the following snippets:\n\n```coffee\nProjectPaletteFinder =\nrequire atom.packages.activePackages['project-palette-finder'].path\n\nProjectPaletteFinder =\nrequire atom.packages.getLoadedPackage('project-palette-finder').path\n```\n\n#### Retrieving The Palette\n\nTo access the project palette use:\n\n```coffee\npalette = ProjectPaletteFinder.palette\n```\n\nIt references a `Palette` instance containing as many `PaletteItem` as variables holding colors found in the project files.\n\n#### Retrieving Palette Items\n\nYou can retrieve items using the following methods:\n\n```coffee\npalette.getItemByName('@less_variable_name') # :PaletteItem\npalette.getItemsForPath('/path/to/file.sass') # :Array<PaletteItem>\npalette.getItemsForPathInRange('/path/to/file.styl', [[startRow, startCol], [endRow, endCol]]) # :Array<PaletteItem>\n```\n\n#### Palette Items\n\nA `PaletteItem` instance has the following properties:\n\n * `name` - The name of the variable holding the color\n * `filePath` - The path to the file that defines that color\n * `row` - The row at which the color is defined\n * `lineRange` - An array containing the start and end index of the color definition\n * `colorString` - The color string that was found during the project scan\n * `color` - The `Color` object representing this color.\n\nAnd the following method:\n\n * `getRange()` - Returns an Array representing the color string range as a valid Atom range in the form `[[startRow, startCol], [endRow, endCol]]`\n\n#### Color\n\nThe `Color` class is provided by the [pigments module](https://github.com/abe33/pigments) and offers conversions from many color spaces such RGB, HSL or HSV.\n\nThe `Color` class registers expressions to match and parse colors in strings, allowing to create a color with any valid strings such as:\n\n```coffee\n# All this colors are equal\nnew Color('red')\nnew Color('#f00')\nnew Color('#ff0000')\nnew Color('rgba(255,0,0,1)')\nnew Color('saturate(desaturate(rgba(255,0,0,1), 50%), 50%)')\nnew Color('vec4(1,0,0,1)')\nnew Color('0xffff0000')\n```\n\nBy default, the class offer support for every CSS color notations, Less, Sass, and Stylus color functions, GLSL `vec4` type and hexadecimal integer notation.\n\nThe project palette finder will also creates its own expression using the variables names, meaning that if a Sass file defines the following variable:\n\n```sass\n$color-red: red\n```\n\nCreating a color with `new Color('$color-red')` will produces the same color as `new Color('red')`.\n\nIt'll also enable to parse color operations that uses a color variable. For instance, the two following colors will be equal:\n\n```coffee\nnew Color('darken($color-red, 20%)')\nnew Color('darken(red, 20%)')\n```\n\n#### Accessing The Color Class\n\nThe class can be retrieved directly from the palette using:\n\n```coffee\nColor = palette.Color\n```\n\n#### Real World Example\n\nThe [atom-color-highlight package](https://atom.io/packages/atom-color-highlight) will make uses of the palette colors if the package is installed, allowing to highlights all the places a variable holding a color is used in a file.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/abe33/atom-project-palette-finder/issues"
+  },
+  "homepage": "https://github.com/abe33/atom-project-palette-finder",
+  "_id": "project-palette-finder@0.5.3",
+  "dist": {
+    "shasum": "7986492bfe5141a1e18ba47e480242620e2ce6eb"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114512-81431-yyaqdj/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114512-81431-yyaqdj/package.tgz"
+}

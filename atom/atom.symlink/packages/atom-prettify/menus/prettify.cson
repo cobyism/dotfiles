@@ -1,0 +1,11 @@
+'menu': [
+  {
+    'label': 'Edit'
+    'submenu': [
+      'label': 'text'
+      'submenu': [
+        { 'label': 'Prettify HTML', 'command': 'prettify:prettify' }
+      ]
+    ]
+  }
+]

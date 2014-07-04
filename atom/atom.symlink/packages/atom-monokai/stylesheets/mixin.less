@@ -1,0 +1,23 @@
+.base-background (@color) when (lightness(@color) < 50%) {
+  background-color: darken(@base-background-color, 5%);
+}
+
+.base-background (@color) when (lightness(@color) >= 50%) {
+  background-color: lighten(@base-background-color, 2%);
+}
+
+.base-text-color (@color) when (lightness(@color) < 50%) {
+  color: lighten(@text-color, 20%);
+}
+
+.base-text-color (@color) when (lightness(@color) >= 50%) {
+  color: darken(@text-color, 20%);
+}
+
+.string-color(@color) when (lightness(@color) < 50%) {
+  color: @string;
+}
+
+.string-color(@color) when (lightness(@color) >= 50%) {
+  color: mix(@string, @red, 20%);
+}

@@ -1,0 +1,8 @@
+'body':
+  'ctrl-alt-w': 'editor:toggle-soft-wrap'
+
+'.editor':
+  'ctrl-alt-.': 'emmet:next-edit-point'
+  'ctrl-alt-,': 'emmet:prev-edit-point'
+  'ctrl-A': 'emmet:increment-number-by-1'
+  'ctrl-X': 'emmet:decrement-number-by-1'

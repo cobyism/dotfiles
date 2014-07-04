@@ -1,0 +1,26 @@
+{
+  "name": "electron-dark-syntax",
+  "theme": "syntax",
+  "version": "1.0.1",
+  "description": "A modern dark syntax theme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benogle/electron-dark-syntax"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readme": "# Electron Dark Syntax Theme\n\nVisually based on the [neutron-syntax] theme. Looks great with the [neutron-ui] UI theme.\n\n![Money shot](https://f.cloud.github.com/assets/69169/2317235/17a7ade0-a348-11e3-916d-d991707cce23.png)\n\n[neutron-syntax]: https://github.com/brentd/neutron-syntax\n[neutron-ui]: https://github.com/brentd/neutron-ui\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/benogle/electron-dark-syntax/issues"
+  },
+  "homepage": "https://github.com/benogle/electron-dark-syntax",
+  "_id": "electron-dark-syntax@1.0.1",
+  "dist": {
+    "shasum": "c139a379a232b745f8ab1c4b2b234ab901310cfb"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-11425-29817-1qa5ym1/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-11425-29817-1qa5ym1/package.tgz"
+}

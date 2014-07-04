@@ -1,0 +1,22 @@
+.results-view {
+  .matches .list-item {
+    color: lighten(@text-color, 10%);
+    .line-number {
+      display: inline-block;
+      min-width: 20px;
+    }
+    .preview {
+      font-size: 12px;
+      font-family: "Inconsolata-g", "Menlo", "Inconsolata", monospace;
+    }
+  }
+
+  .list-item.path-details .path-name, .list-item.path-details .icon {
+    color: @text-color-highlight;
+  }
+
+  .list-item.path-details {
+    background: darken(@base-background-color, 2%);
+    padding: 2px 15px;
+  }
+}

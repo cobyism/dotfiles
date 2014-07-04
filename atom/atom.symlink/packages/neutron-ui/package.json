@@ -1,0 +1,26 @@
+{
+  "name": "neutron-ui",
+  "theme": "ui",
+  "version": "0.3.0",
+  "description": "An (almost) flat theme in shades of gunmetal and medium-contrast colors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brentd/neutron-ui"
+  },
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readme": "# Neutron UI Theme for Atom\n\nAn (almost) flat theme in shades of gunmetal and medium-contrast colors. **Pair it with the [Neutron Syntax Theme](http://atom.io/packages/neutron-syntax)**.\n\nInspired by [Spacegray](http://kkga.github.io/spacegray), forked from the [Atom port](https://github.com/cannikin) by @cannikin.\n\n![screenshot](http://dl.dropboxusercontent.com/u/156655/Screenshots/e1yd~-osy6_4.png)\n\n## Notes:\n\n  * The [complementing syntax theme](http://atom.io/packages/neutron-syntax) changes line-height, which is currently bugged. If your cursor appears out of place, switch tabs and it'll sort itself out.\n  * Use \"Show scroll bars: When scrolling\" in System Preferences > General or your scrollbars will look like crap.\n  * The font used in the screenshots is [Inconsolata-g](https://github.com/brentd/neutron-syntax/blob/master/Inconsolata-g.otf?raw=true) at 15pt. If installed it'll be picked up automatically by the syntax theme.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/brentd/neutron-ui/issues"
+  },
+  "homepage": "https://github.com/brentd/neutron-ui",
+  "_id": "neutron-ui@0.3.0",
+  "dist": {
+    "shasum": "bf7b5b448fbe7f6745975eb224421f53ec188c50"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114429-58977-1tienr0/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114429-58977-1tienr0/package.tgz"
+}
