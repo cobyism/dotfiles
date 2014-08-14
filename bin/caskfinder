@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+exact_matches = {}
+partial_matches = {}
+no_matches = []
+
+puts "Searching /Applications for things that exist in cask…"
+
+Dir.glob('/Applications/*.app').each do |app|
+  app_name = File.basename(app)
+  search_term = File.basename(app, ".*").downcase.split(/\s/)[0]
+  output = `brew cask search #{search_term}`
+
+  if output.match /Exact match/
+    exact_matches[app_name] = search_term
+  elsif output.match /Partial match/
+    partial_matches[app_name] = output.lines[1..-1].map(&:chomp)
+  else
+    no_matches.push app_name
+  end
+end
+
+puts "\nExact matches:\n"
+exact_matches.each do |app, term|
+  puts term
+end
+
+puts "\nPartial matches:\n"
+partial_matches.each do |app, terms|
+  puts "\nMatches for #{app}:\n"
+  terms.each do |term|
+    puts term
+  end
+end
+
+puts "\nNo matches:\n"
+no_matches.each do |app|
+  puts app
+end

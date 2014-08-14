@@ -1,0 +1,110 @@
+# Uses `brew cask` to install applications.
+# See caskroom.io for details
+# Install with `brew install caskroom/cask/brew-cask` if it’s not on this system yet.
+# Run `brew bundle ~/.dotfiles/Brewfile` to bootstrap all these applications.
+
+# LARGE DOWNLOADS
+# cask install adobe-creative-cloud
+# cask install adobe-photoshop-lightroom
+
+# cask install acorn
+# cask install adium
+# cask install airmail
+cask install alfred
+# cask install appcleaner
+# cask install appium
+cask install arq
+cask install atom
+cask install bartender
+cask install bettertouchtool
+# cask install blender
+# cask install brackets
+# cask install caffeine
+cask install chicken
+cask install google-chrome
+cask install cloud
+cask install coda
+cask install colloquy
+cask install cyberduck
+cask install daisydisk
+# cask install dash
+cask install dropbox
+cask install ffmpegx
+cask install firefox
+cask install flux
+cask install gfxcardstatus
+# cask install gifrocket
+cask install github
+cask install gitx
+# cask install handbrake
+# cask install hiss
+cask install imageoptim
+# cask install inkscape
+cask install istat-menus
+# cask install istumbler
+cask install iterm2
+# cask install kaleidoscope
+cask install keyboard-cleaner
+cask install keyremap4macbook
+cask install kindle
+# cask install kiwi
+# cask install layervault
+# cask install librecad
+cask install libreoffice
+# cask install licecap
+cask install little-snitch
+# cask install macbreakz
+cask install macdown
+cask install macvim
+# cask install mailplane
+# cask install manager
+# cask install moom
+cask install node-webkit
+cask install omnifocus
+cask install omnigraffle
+cask install omnioutliner
+cask install onepassword
+# cask install openscad
+cask install opera
+# cask install owncloud
+# cask install p4merge
+# cask install paparazzi!
+cask install rdio
+cask install rescuetime
+# cask install rightzoom
+cask install screenhero
+cask install seil
+# cask install selfcontrol
+cask install sequel-pro
+# cask install shuttle
+cask install sizeup
+# cask install sketch
+cask install skype
+cask install slack
+# cask install slate
+cask install sourcetree
+# cask install sparrow
+# cask install spotify
+cask install sublime-text
+# cask install synergy
+# cask install textmate
+cask install the-unarchiver
+# cask install things
+# cask install thunderbird
+cask install torbrowser
+# cask install trailer
+cask install transmission
+cask install transmit
+cask install truecrypt
+cask install virtualbox
+cask install viscosity
+cask install vlc
+cask install vmware-fusion
+# cask install wedge
+cask install wireshark
+# cask install xmind
+cask install xscope
+
+# Adds cask paths to Alfred’s search scope
+cask alfred link
+install emacs

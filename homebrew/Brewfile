@@ -1,0 +1,11 @@
+install ack
+install caskroom/cask/brew-cask
+install curl
+install gh
+install git
+install heroku-toolbelt
+install htop-osx
+install tig
+install tmux
+install wget
+install zsh
