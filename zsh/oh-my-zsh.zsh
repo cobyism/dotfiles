@@ -29,5 +29,4 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(vi-mode osx)
 
 source $ZSH/oh-my-zsh.sh
-
 source ~/.dotfiles/zsh/prompt.zsh
