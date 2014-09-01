@@ -1,0 +1,15 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Lint'
+      'submenu': [
+        { 'label': 'Toggle', 'command': 'lint:toggle' }
+        { 'label': 'Move to Next Violation', 'command': 'lint:move-to-next-violation' }
+        { 'label': 'Move to Previous Violation', 'command': 'lint:move-to-previous-violation' }
+        { 'label': 'Toggle Violation Metadata', 'command': 'lint:toggle-violation-metadata' }
+      ]
+    ]
+  }
+]

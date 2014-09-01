@@ -1,7 +1,7 @@
 {
   "name": "project-palette-finder",
   "main": "./lib/project-palette-finder",
-  "version": "0.5.3",
+  "version": "1.0.2",
   "description": "Finds and archive colors defined in a project's less/sass/stylus files",
   "repository": {
     "type": "git",
@@ -12,12 +12,13 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "property-accessors": "1.x",
     "underscore-plus": "1.x",
     "emissary": "1.x",
     "mixto": "1.x",
     "prolix": "1.x",
-    "pigments": ">= 1.6.0",
-    "pathwatcher": "1.x"
+    "pigments": "2.x",
+    "pathwatcher": "2.x"
   },
   "devDependencies": {
     "wrench": "1.5.x",
@@ -29,10 +30,10 @@
     "url": "https://github.com/abe33/atom-project-palette-finder/issues"
   },
   "homepage": "https://github.com/abe33/atom-project-palette-finder",
-  "_id": "project-palette-finder@0.5.3",
+  "_id": "project-palette-finder@1.0.2",
   "dist": {
-    "shasum": "7986492bfe5141a1e18ba47e480242620e2ce6eb"
+    "shasum": "d42de5cf3352b0838c67c0558e5d735300787802"
   },
-  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114512-81431-yyaqdj/package.tgz",
-  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114512-81431-yyaqdj/package.tgz"
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114728-48908-ppn7nz/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114728-48908-ppn7nz/package.tgz"
 }

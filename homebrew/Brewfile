@@ -1,11 +1,40 @@
 install ack
+install ansible
 install caskroom/cask/brew-cask
 install curl
 install gh
 install git
 install heroku-toolbelt
 install htop-osx
+install hugo
 install tig
 install tmux
 install wget
 install zsh
+
+# Cask font directory
+tap caskroom/fonts
+
+# Monospace fonts
+cask install font-inconsolata
+cask install font-input
+cask install font-anonymous-pro
+cask install font-source-code-pro
+cask install font-pt-mono
+
+# Variable-width fonts
+cask install font-lato
+cask install font-open-sans
+cask install font-open-sans-condensed
+cask install font-montserrat
+cask install font-source-sans-pro
+cask install font-source-serif-pro
+cask install font-pt-sans
+cask install font-pt-serif
+cask install font-noto-sans
+cask install font-noto-serif
+cask install font-droid-sans
+cask install font-droid-serif
+cask install font-roboto
+cask install font-roboto-slab
+cask install font-titillium-web

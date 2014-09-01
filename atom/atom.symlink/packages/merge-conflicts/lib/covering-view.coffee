@@ -24,6 +24,9 @@ class CoveringView extends View
   # Override to determine if the content of this Side has been modified.
   detectDirty: -> null
 
+  # Override to apply a decoration to a marker as appropriate.
+  decorate: -> null
+
   getModel: -> null
 
   reposition: ->
@@ -38,6 +41,8 @@ class CoveringView extends View
 
   buffer: -> @editor().getBuffer()
 
+  includesCursor: (cursor) -> false
+
   offsetForMarker: (marker) ->
     position = marker.getTailBufferPosition()
     @editorView.pixelPositionForBufferPosition position
@@ -50,10 +55,13 @@ class CoveringView extends View
     @editor().setCursorBufferPosition positionOrNull if positionOrNull?
 
   prependKeystroke: (eventName, element) ->
-    bindings = atom.keymap.keyBindingsMatchingElement @editorView
-    for e in bindings when e.command is eventName
+    bindings = atom.keymap.findKeyBindings
+      target: @editorView[0]
+      command: eventName
+
+    for e in bindings
       original = element.text()
-      element.text(_.humanizeKeystroke(e.keystroke) + " #{original}")
+      element.text(_.humanizeKeystroke(e.keystrokes) + " #{original}")
 
 module.exports =
   CoveringView: CoveringView

@@ -1,7 +1,7 @@
 {
   "name": "atom-color-highlight",
   "main": "./lib/atom-color-highlight",
-  "version": "0.14.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Highlights color in files",
   "repository": {
@@ -16,23 +16,23 @@
     "qq": "*"
   },
   "dependencies": {
+    "q": "1.x",
     "emissary": "1.x",
     "underscore-plus": "1.x",
-    "property-accessors": "1.x",
-    "mixto": "1.x",
-    "oniguruma": "2.x",
-    "pigments": ">= 1.6.0"
+    "pigments": "2.x",
+    "oniguruma": "3.x",
+    "mixto": "1.x"
   },
-  "readme": "# Atom Color Highlight\n\nHighlights colors in files.\n\n![AtomColorHighlight Screenshot](https://raw.github.com/abe33/atom-color-highlight/master/atom-color-highlight-variables.gif)\n\n![AtomColorHighlight Screenshot](https://raw.github.com/abe33/atom-color-highlight/master/atom-color-highlight.jpg)\n\n### Project Palette Support\n\nIf you have the [project-palette-finder package](https://atom.io/packages/project-palette-finder) installed, the package will automatically benefit from the palette definitions:\n\n![AtomColorHighlight And Project Palette Screenshot](https://raw.github.com/abe33/atom-color-highlight/master/atom-color-highlight-palette.jpg)\n\n### Extending AtomColorHighlight\n\n#### Accessing the package\n\nAtom currently doesn't provides a simple way to access installed package,\nhowever, the `PackageManager`, accessible through the `atom.packages` property,\nprovides the `resolvePackagePath` method that return the absolute path\nof a specified package.\n\nKnowing that, you can, either in a package on in your atom init script,\nrequire the package using:\n\n```coffeescript\natomColorHighlight = atom.packages.getLoadedPackage 'atom-color-highlight'\natomColorHighlight = require(atomColorHighlight.path)\n```\n\n#### Adding new color\n\nYou can register a new color expression using the `Color.addExpression` method.\n\n```coffeescript\natomColorHighlight = atom.packages.getLoadedPackage 'atom-color-highlight'\nColor = require(atomColorHighlight.path + '/lib/atom-color-highlight-model').Color\n\nColor.addExpression 'name', 'oniguruma regexp', (color, expression) ->\n  # modify color using data extracted from expression\n```\n\nThe first argument is a string that match the new expression using\n[Oniguruma](https://github.com/atom/node-oniguruma) regular expressions.\nThis string will be used to match the expression both when scanning the\nbuffer and when creating a `Color` object for the various matches.\n\nNote that the regular expression source will be concatened with the other\nexpressions to create the `OnigRegExp` used on the buffer.\nIn that regards, selectors such `^` and `$` should be avoided at all cost.\n\nThe second argument is the function called by the `Color` class when the\ncurrent expression match your regexp. It'll be called with the `Color` instance\nto modify and the matching expression.\n\nFor instance, the CSS hexadecimal RGB notation is defined as follow:\n\n```coffeescript\nColor.addExpression 'css_hexa_6', \"#([\\\\da-fA-F]{6})(?![\\\\da-fA-F])\", (color, expression) ->\n  [m, hexa] = @onigRegExp.search(expression)\n\n  color.hex = hexa.match\n```\n",
+  "readme": "# Atom Color Highlight [![Build Status](https://travis-ci.org/abe33/atom-color-highlight.svg?branch=master)](https://travis-ci.org/abe33/atom-color-highlight)\n\nHighlights colors in files.\n\n![AtomColorHighlight Screenshot](https://raw.github.com/abe33/atom-color-highlight/master/atom-color-highlight-variables.gif)\n\n![AtomColorHighlight Screenshot](https://raw.github.com/abe33/atom-color-highlight/master/atom-color-highlight.jpg)\n\n### Project Palette Support\n\nIf you have the [project-palette-finder package](https://atom.io/packages/project-palette-finder) installed, the package will automatically benefit from the palette definitions:\n\n![AtomColorHighlight And Project Palette Screenshot](https://raw.github.com/abe33/atom-color-highlight/master/atom-color-highlight-palette.jpg)\n\n### Extending AtomColorHighlight\n\n#### Accessing the package\n\nAtom currently doesn't provides a simple way to access installed package,\nhowever, the `PackageManager`, accessible through the `atom.packages` property,\nprovides the `resolvePackagePath` method that return the absolute path\nof a specified package.\n\nKnowing that, you can, either in a package on in your atom init script,\nrequire the package using:\n\n```coffeescript\natomColorHighlight = atom.packages.getLoadedPackage 'atom-color-highlight'\natomColorHighlight = require(atomColorHighlight.path)\n```\n\n#### Adding new color\n\nYou can register a new color expression using the `Color.addExpression` method.\n\n```coffeescript\natomColorHighlight = atom.packages.getLoadedPackage 'atom-color-highlight'\nColor = require(atomColorHighlight.path + '/lib/atom-color-highlight-model').Color\n\nColor.addExpression 'name', 'oniguruma regexp', (color, expression) ->\n  # modify color using data extracted from expression\n```\n\nThe first argument is a string that match the new expression using\n[Oniguruma](https://github.com/atom/node-oniguruma) regular expressions.\nThis string will be used to match the expression both when scanning the\nbuffer and when creating a `Color` object for the various matches.\n\nNote that the regular expression source will be concatened with the other\nexpressions to create the `OnigRegExp` used on the buffer.\nIn that regards, selectors such `^` and `$` should be avoided at all cost.\n\nThe second argument is the function called by the `Color` class when the\ncurrent expression match your regexp. It'll be called with the `Color` instance\nto modify and the matching expression.\n\nFor instance, the CSS hexadecimal RGB notation is defined as follow:\n\n```coffeescript\nColor.addExpression 'css_hexa_6', \"#([\\\\da-fA-F]{6})(?![\\\\da-fA-F])\", (color, expression) ->\n  [m, hexa] = @onigRegExp.search(expression)\n\n  color.hex = hexa.match\n```\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/abe33/atom-color-highlight/issues"
   },
   "homepage": "https://github.com/abe33/atom-color-highlight",
-  "_id": "atom-color-highlight@0.14.1",
+  "_id": "atom-color-highlight@1.0.2",
   "dist": {
-    "shasum": "7883a5268711f3f046131bfd75e5b54b2f2818b2"
+    "shasum": "8c3e5cbf3263c4841a974d04e8c30449a216710b"
   },
-  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114512-81409-skjucs/package.tgz",
-  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114512-81409-skjucs/package.tgz"
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114715-15694-19lo875/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114715-15694-19lo875/package.tgz"
 }

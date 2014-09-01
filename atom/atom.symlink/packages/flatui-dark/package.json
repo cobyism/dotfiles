@@ -1,0 +1,27 @@
+{
+  "name": "flatui-dark",
+  "theme": "syntax",
+  "version": "0.3.0",
+  "private": true,
+  "description": "A darker version of the flatui Atom syntax theme.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpinnix/flatui-dark"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readme": "# flatui-dark theme\n\nA darker version of the flatui Atom syntax theme.\n\n![Screenshot](https://raw.github.com/jpinnix/flatui-dark/master/screenshot.png)\n\nOriginally converted from the [TextMate](https://github.com/JacksonGariety/Toy-Chest-Theme)\ntheme using the [TextMate bundle converter](http://atom.io/docs/latest/converting-a-text-mate-theme).\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/jpinnix/flatui-dark/issues"
+  },
+  "homepage": "https://github.com/jpinnix/flatui-dark",
+  "_id": "flatui-dark@0.3.0",
+  "dist": {
+    "shasum": "b01a5b9f2962310dfa380df1a6efe612f21f48e2"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114713-26561-932yrz/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114713-26561-932yrz/package.tgz"
+}

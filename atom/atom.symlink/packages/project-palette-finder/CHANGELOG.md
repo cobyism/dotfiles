@@ -1,3 +1,32 @@
+<a name="1.0.2"></a>
+# 1.0.2 (2014-08-19)
+
+## :bug: Bug Fixes
+
+- Fix deprecated method call ([c616ab83](https://github.com/abe33/atom-project-palette-finder/commit/c616ab83df274550be2d4377c2c514983e20206c), [#7](https://github.com/abe33/atom-project-palette-finder/issues/7))
+
+<a name="v1.0.0"></a>
+# v1.0.0 (2014-08-04)
+
+## :sparkles: Features
+
+- Add support for pigments 2.0.0 and Atom 0.120.0 ([c53df1b5](https://github.com/abe33/atom-project-palette-finder/commit/c53df1b5ec39d6d518cc57f3e9fa651e7b33a289))
+
+<a name="v0.6.2"></a>
+# v0.6.2 (2014-07-30)
+
+## :bug: Bug Fixes
+
+- Fix missing match for color followed by a class selector ([cc92621a](https://github.com/abe33/atom-project-palette-finder/commit/cc92621a7aa9d0c718676593d734e5c606fc12d0))
+
+<a name="v0.6.0"></a>
+# v0.6.0 (2014-07-10)
+
+## :sparkles: Features
+
+- Implement lazy access to a PaletteItem color ([01793aff](https://github.com/abe33/atom-project-palette-finder/commit/01793aff11558653d7fda5d81789e5c1089694a3))
+  <br>It reduces the risk of error when a palette item is defined before another item it references.
+
 <a name="v0.5.2"></a>
 # v0.5.2 (2014-05-28)
 

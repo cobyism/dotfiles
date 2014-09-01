@@ -1,3 +1,15 @@
+## 1.2.6
+
+- Remove deprecated calls to `keyBindingsMatchingElement` and `keystroke`.
+
+## 1.2.5
+
+- Use CSS to distinguish EditorViews instead of `instanceof`.
+
+## 1.2.4
+
+- Use the Decorations API to highlight lines.
+
 ## 1.2.3
 
 - Fix a regression in detecting dirty conflict hunks.

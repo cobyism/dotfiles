@@ -1,7 +1,7 @@
 {
   "name": "alignment",
   "main": "./lib/atom-alignment",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "private": true,
   "description": "Quickly align selections with a single shortcut",
   "author": {
@@ -20,16 +20,16 @@
   "dependencies": {
     "escape-regexp": "0.0.1"
   },
-  "readme": "# Alignment\n\nQuick alignment of multi-line selections and multiple selections for [Atom](https://atom.io/packages/alignment).\n\n## Installation\n\n```\napm install alignment\n```\n\n## Usage\n\nMake a selection of the lines to you want to align and press `cmd-ctrl-alt-]`. It will transform something like:\n\n```js\nvar test = 'string';\nvar another = 10;\nvar small = 10 * 10;\n```\n\nInto:\n\n```js\nvar test    = 'string';\nvar another = 10;\nvar small   = 10 * 10;\n```\n\n## License\n\nMIT\n",
+  "readme": "# Alignment\n\n[![Build status][travis-image]][travis-url]\n[![Gittip][gittip-image]][gittip-url]\n\nQuick alignment of multi-line selections and multiple selections for [Atom](https://atom.io/packages/alignment).\n\n## Installation\n\n```\napm install alignment\n```\n\n## Usage\n\nMake a selection of the lines to you want to align and press `cmd-ctrl-alt-]`. It will transform something like:\n\n```js\nvar test = 'string';\nvar another = 10;\nvar small = 10 * 10;\n```\n\nInto:\n\n```js\nvar test    = 'string';\nvar another = 10;\nvar small   = 10 * 10;\n```\n\n## License\n\nMIT\n\n[travis-image]: https://img.shields.io/travis/blakeembrey/atom-alignment.svg?style=flat\n[travis-url]: https://travis-ci.org/blakeembrey/atom-alignment\n[gittip-image]: https://img.shields.io/gittip/blakeembrey.svg?style=flat\n[gittip-url]: https://www.gittip.com/blakeembrey\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/blakeembrey/atom-alignment/issues"
   },
   "homepage": "https://github.com/blakeembrey/atom-alignment",
-  "_id": "alignment@0.0.5",
+  "_id": "alignment@1.0.0",
   "dist": {
-    "shasum": "63a14347d8c7c1521a77aa63ed32867aa17eb63f"
+    "shasum": "93320a3a9f339a1b7da38aed028fcbe41f8ed78c"
   },
-  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114429-58933-1m2qi2k/package.tgz",
-  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114429-58933-1m2qi2k/package.tgz"
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114719-2645-1naq6kb/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114719-2645-1naq6kb/package.tgz"
 }

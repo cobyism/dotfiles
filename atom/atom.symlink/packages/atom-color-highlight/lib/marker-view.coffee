@@ -1,13 +1,15 @@
 {View, $} = require 'atom'
 {Subscriber} = require 'emissary'
+MarkerMixin = require './marker-mixin'
 
 module.exports =
 class MarkerView
   Subscriber.includeInto(this)
+  MarkerMixin.includeInto(this)
 
   constructor: ({@editorView, @marker}) ->
     @regions = []
-    @editSession = @editorView.editor
+    @editor = @editorView.editor
     @element = document.createElement('div')
     @element.className = 'marker color-highlight'
     @updateNeeded = @marker.isValid()
@@ -16,39 +18,6 @@ class MarkerView
     @subscribeToMarker()
     @updateDisplay()
 
-  remove: =>
-    @unsubscribe()
-    @marker = null
-    @editorView = null
-    @editSession = null
-    @element.remove()
-
-  show: ->
-    @element.style.display = ""
-
-  hide: ->
-    @element.style.display = "none"
-
-  subscribeToMarker: ->
-    @subscribe @marker, 'changed', @onMarkerChanged
-    @subscribe @marker, 'destroyed', @remove
-    @subscribe @editorView, 'editor:display-updated', @updateDisplay
-
-  onMarkerChanged: ({isValid}) =>
-    @updateNeeded = isValid
-    if isValid then @show() else @hide()
-
-  isUpdateNeeded: ->
-    return false unless @updateNeeded and @editSession is @editorView.editor
-
-    oldScreenRange = @oldScreenRange
-    newScreenRange = @getScreenRange()
-    @oldScreenRange = newScreenRange
-    @intersectsRenderedScreenRows(oldScreenRange) or @intersectsRenderedScreenRows(newScreenRange)
-
-  intersectsRenderedScreenRows: (range) ->
-    range.intersectsRowRange(@editorView.firstRenderedScreenRow, @editorView.lastRenderedScreenRow)
-
   updateDisplay: =>
     return unless @isUpdateNeeded()
 
@@ -56,6 +25,8 @@ class MarkerView
     @clearRegions()
     range = @getScreenRange()
     return if range.isEmpty()
+
+    @hide() if @hidden()
 
     rowSpan = range.end.row - range.start.row
 
@@ -71,8 +42,8 @@ class MarkerView
     { lineHeight, charWidth } = @editorView
     color = @getColor()
     colorText = @getColorTextColor()
-    bufferRange = @editSession.bufferRangeForScreenRange({start, end})
-    text = @editSession.getTextInRange(bufferRange)
+    bufferRange = @editor.bufferRangeForScreenRange({start, end})
+    text = @editor.getTextInRange(bufferRange)
 
     css = @editorView.pixelPositionForScreenPosition(start)
     css.height = lineHeight * rows
@@ -96,8 +67,3 @@ class MarkerView
   clearRegions: ->
     region.remove() for region in @regions
     @regions = []
-
-  getColor: -> @marker.bufferMarker.properties.cssColor
-  getColorText: -> @marker.bufferMarker.properties.color
-  getColorTextColor: -> @marker.bufferMarker.properties.textColor
-  getScreenRange: -> @marker.getScreenRange()

@@ -3,9 +3,6 @@
 .editor, .editor-colors {
   background-color: @syntax-background-color;
   color: @syntax-text-color;
-  .lines, .line-numbers, .cursor {
-    line-height: 1.5;
-  }
 }
 
 .editor {
@@ -64,17 +61,6 @@
   .selection .region {
     background-color: @syntax-selection-color;
   }
-}
-
-.editor .search-results .marker .region,
-.editor .find-result .region {
-  background-color: transparent;
-  border: 1px solid @syntax-result-marker-color;
-}
-
-.editor .search-results .marker.current-result .region,
-.editor .current-result .region {
-  border: 1px solid @syntax-result-marker-color-selected;
 }
 
 .comment {

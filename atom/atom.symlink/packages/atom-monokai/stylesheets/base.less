@@ -1,6 +1,7 @@
 @import "ui-variables";
 @import "colors";
 @import "mixin";
+@import "keyframes";
 
 .editor-colors {
   .base-background (@base);
@@ -27,10 +28,9 @@
     color: @magenta;
   }
 
-  .cursor {
-    border-left: 1px solid @text;
-    width: 2px;
-    background: @base;
+  .cursors.blink-off .cursor{
+    visibility: visible !important;
+    border-left: 1px solid @base;
   }
 
   .selection .region {

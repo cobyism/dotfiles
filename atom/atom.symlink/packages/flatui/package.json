@@ -1,0 +1,27 @@
+{
+  "name": "flatui",
+  "theme": "syntax",
+  "version": "0.4.0",
+  "private": true,
+  "description": "An Atom syntax theme inspired by the Flat UI color palette.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpinnix/flatui"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readme": "# flatui theme\n\nAn Atom syntax theme inspired by the Flat UI color palette.\n\n![Screenshot](https://raw.github.com/jpinnix/flatui/master/screenshot.png)\n\nOriginally converted from the [TextMate](https://github.com/JacksonGariety/Toy-Chest-Theme)\ntheme using the [TextMate bundle converter](http://atom.io/docs/latest/converting-a-text-mate-theme).\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/jpinnix/flatui/issues"
+  },
+  "homepage": "https://github.com/jpinnix/flatui",
+  "_id": "flatui@0.4.0",
+  "dist": {
+    "shasum": "4edd92800bde628ef9347a1c7bb3d270885ca245"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114713-26551-i7z984/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114713-26551-i7z984/package.tgz"
+}

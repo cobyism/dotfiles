@@ -1,0 +1,454 @@
+{
+  "classes": {
+    "Directory": {
+      "name": "Directory",
+      "filename": "src/directory.coffee",
+      "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L19",
+      "sections": [],
+      "classMethods": [],
+      "instanceMethods": [
+        {
+          "name": "constructor",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L29",
+          "visibility": "Public",
+          "summary": "Configures a new Directory instance, no files are accessed.",
+          "description": "Configures a new Directory instance, no files are accessed.",
+          "arguments": [
+            {
+              "name": "directoryPath",
+              "description": "A {String} containing the absolute path to the directory",
+              "type": "String",
+              "isOptional": false
+            },
+            {
+              "name": "symlink",
+              "description": "A {Boolean} indicating if the path is a symlink. (default: false) ",
+              "type": "Boolean",
+              "isOptional": true
+            }
+          ]
+        },
+        {
+          "name": "getBaseName",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L48",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns the {String} basename of the directory."
+            }
+          ]
+        },
+        {
+          "name": "getPath",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L55",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns the directory's {String} path."
+            }
+          ]
+        },
+        {
+          "name": "isFile",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L58",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "Boolean",
+              "description": "Returns a {Boolean}, always false."
+            }
+          ]
+        },
+        {
+          "name": "isDirectory",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L61",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "Boolean",
+              "description": "Returns a {Boolean}, always true."
+            }
+          ]
+        },
+        {
+          "name": "getFile",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L69",
+          "visibility": "Public",
+          "summary": "Traverse within this Directory to a child File. This method doesn't\nactually check to see if the File exists, it just creates the File object.",
+          "description": "Traverse within this Directory to a child File. This method doesn't\nactually check to see if the File exists, it just creates the File object.",
+          "arguments": [
+            {
+              "name": "filename",
+              "description": "The {String} name of a File within this Directory.",
+              "type": "String",
+              "isOptional": false
+            }
+          ],
+          "returnValues": [
+            {
+              "type": "File",
+              "description": "Returns a {File}."
+            }
+          ]
+        },
+        {
+          "name": "getSubdirectory",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L79",
+          "visibility": "Public",
+          "summary": "Traverse within this a Directory to a child Directory. This method\ndoesn't actually check to see if the Directory exists, it just creates the\nDirectory object.",
+          "description": "Traverse within this a Directory to a child Directory. This method\ndoesn't actually check to see if the Directory exists, it just creates the\nDirectory object.",
+          "arguments": [
+            {
+              "name": "dirname",
+              "description": "The {String} name of the child Directory.",
+              "type": "String",
+              "isOptional": false
+            }
+          ],
+          "returnValues": [
+            {
+              "type": "Directory",
+              "description": "Returns a {Directory}."
+            }
+          ]
+        },
+        {
+          "name": "getParent",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L85",
+          "visibility": "Public",
+          "summary": "Traverse to the parent directory.",
+          "description": "Traverse to the parent directory.",
+          "returnValues": [
+            {
+              "type": "Directory",
+              "description": "Returns a {Directory}."
+            }
+          ]
+        },
+        {
+          "name": "isRoot",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L90",
+          "visibility": "Public",
+          "summary": "Return a {Boolean}, true if this {Directory} is the root directory\nof the filesystem, or false if it isn't. ",
+          "description": "Return a {Boolean}, true if this {Directory} is the root directory\nof the filesystem, or false if it isn't. "
+        },
+        {
+          "name": "getRealPathSync",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L97",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns this directory's completely resolved {String} path."
+            }
+          ]
+        },
+        {
+          "name": "contains",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L110",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": null,
+              "description": "Returns whether the given path (real or symbolic) is inside this\ndirectory. This method does not actually check if the path exists, it just\nchecks if the path is under this directory."
+            }
+          ]
+        },
+        {
+          "name": "relativize",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L135",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns the relative {String} path to the given path from this\ndirectory."
+            }
+          ]
+        },
+        {
+          "name": "getEntriesSync",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L170",
+          "visibility": "Public",
+          "summary": "Reads file entries in this directory from disk synchronously.",
+          "description": "Reads file entries in this directory from disk synchronously.",
+          "returnValues": [
+            {
+              "type": "Array",
+              "description": "Returns an {Array} of {File} and {Directory} objects."
+            }
+          ]
+        },
+        {
+          "name": "getEntries",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/directory.coffee#L191",
+          "visibility": "Public",
+          "summary": "Reads file entries in this directory from disk asynchronously.",
+          "description": "Reads file entries in this directory from disk asynchronously.",
+          "arguments": [
+            {
+              "children": [
+                {
+                  "name": "error",
+                  "description": "An {Error}, may be null.",
+                  "type": "Error",
+                  "isOptional": false
+                },
+                {
+                  "name": "entries",
+                  "description": "An {Array} of {File} and {Directory} objects. ",
+                  "type": "Array",
+                  "isOptional": false
+                }
+              ],
+              "name": "callback",
+              "description": "A {Function} to call with the following arguments:",
+              "type": "Function",
+              "isOptional": false
+            }
+          ]
+        }
+      ],
+      "classProperties": [],
+      "instanceProperties": [],
+      "visibility": "Public",
+      "summary": "Represents a directory on disk that can be watched for changes.",
+      "description": "Represents a directory on disk that can be watched for changes.",
+      "events": [
+        {
+          "name": "contents-changed",
+          "summary": "Fired when the contents of the directory has changed.",
+          "description": "Fired when the contents of the directory has changed.",
+          "visibility": "Public",
+          "arguments": null
+        }
+      ]
+    },
+    "File": {
+      "name": "File",
+      "filename": "src/file.coffee",
+      "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L31",
+      "sections": [],
+      "classMethods": [],
+      "instanceMethods": [
+        {
+          "name": "constructor",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L40",
+          "visibility": "Public",
+          "summary": "Creates a new file.",
+          "description": "Creates a new file.",
+          "arguments": [
+            {
+              "name": "filePath",
+              "description": "A {String} containing the absolute path to the file",
+              "type": "String",
+              "isOptional": false
+            },
+            {
+              "name": "symlink",
+              "description": "A {Boolean} indicating if the path is a symlink (default: false). ",
+              "type": "Boolean",
+              "isOptional": false
+            }
+          ]
+        },
+        {
+          "name": "isFile",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L65",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "Boolean",
+              "description": "Returns a {Boolean}, always true."
+            }
+          ]
+        },
+        {
+          "name": "isDirectory",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L68",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "Boolean",
+              "description": "Returns a {Boolean}, always false."
+            }
+          ]
+        },
+        {
+          "name": "getPath",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L75",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns the {String} path for the file."
+            }
+          ]
+        },
+        {
+          "name": "getParent",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L78",
+          "visibility": "Public",
+          "summary": "Return the {Directory} that contains this file. ",
+          "description": "Return the {Directory} that contains this file. "
+        },
+        {
+          "name": "getRealPathSync",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L83",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns this file's completely resolved {String} path."
+            }
+          ]
+        },
+        {
+          "name": "getBaseName",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L92",
+          "visibility": "Public",
+          "summary": "Return the {String} filename without any directory information. ",
+          "description": "Return the {String} filename without any directory information. "
+        },
+        {
+          "name": "write",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L100",
+          "visibility": "Public",
+          "summary": "Overwrites the file with the given text.",
+          "description": "Overwrites the file with the given text.",
+          "arguments": [
+            {
+              "name": "text",
+              "description": "The {String} text to write to the underlying file.",
+              "type": "String",
+              "isOptional": false
+            }
+          ]
+        },
+        {
+          "name": "read",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L122",
+          "visibility": "Public",
+          "summary": "Reads the contents of the file.",
+          "description": "Reads the contents of the file.",
+          "arguments": [
+            {
+              "name": "flushCache",
+              "description": "A {Boolean} indicating whether to require a direct read or if a cached copy is acceptable.",
+              "type": "Boolean",
+              "isOptional": false
+            }
+          ],
+          "returnValues": [
+            {
+              "type": null,
+              "description": "Returns a promise that resovles to a String."
+            }
+          ]
+        },
+        {
+          "name": "exists",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L149",
+          "visibility": "Public",
+          "summary": "",
+          "description": "",
+          "returnValues": [
+            {
+              "type": "Boolean",
+              "description": "Returns a {Boolean}, true if the file exists, false otherwise."
+            }
+          ]
+        },
+        {
+          "name": "getDigest",
+          "sectionName": null,
+          "srcUrl": "https://github.com/atom/node-pathwatcher/blob/v2.0.10/src/file.coffee#L158",
+          "visibility": "Public",
+          "summary": "Get the SHA-1 digest of this file",
+          "description": "Get the SHA-1 digest of this file",
+          "returnValues": [
+            {
+              "type": "String",
+              "description": "Returns a {String}."
+            }
+          ]
+        }
+      ],
+      "classProperties": [],
+      "instanceProperties": [],
+      "visibility": "Public",
+      "summary": "Represents an individual file that can be watched, read from, and\nwritten to.",
+      "description": "Represents an individual file that can be watched, read from, and\nwritten to.",
+      "events": [
+        {
+          "name": "contents-changed",
+          "summary": "Fired when the contents of the file has changed.",
+          "description": "Fired when the contents of the file has changed.",
+          "visibility": "Public",
+          "arguments": null
+        },
+        {
+          "name": "moved",
+          "summary": "Fired when the file has been renamed. {::getPath} will reflect the new path.",
+          "description": "Fired when the file has been renamed. {::getPath} will reflect the new path.",
+          "visibility": "Public",
+          "arguments": null
+        },
+        {
+          "name": "removed",
+          "summary": "Fired when the file has been deleted.",
+          "description": "Fired when the file has been deleted.",
+          "visibility": "Public",
+          "arguments": null
+        }
+      ]
+    }
+  }
+}

@@ -1,15 +1,22 @@
 {EditorView} = require 'atom'
 {Emitter} = require 'emissary'
-
-AtomColorHighlightEditor = require './atom-color-highlight-editor'
+AtomColorHighlightEditor = null
 
 class AtomColorHighlight
   Emitter.includeInto(this)
 
+  configDefaults:
+    markersAtEndOfLine: false
+    hideMarkersInComments: false
+    hideMarkersInStrings: false
+    dotMarkersSize: 16
+    dotMarkersSpacing: 4
+
   editors: {}
   activate: (state) ->
     atom.workspaceView.eachEditorView (editor) =>
-      return if editor.hasClass 'mini'
+      AtomColorHighlightEditor ||= require './atom-color-highlight-editor'
+
       colorEditor = new AtomColorHighlightEditor(editor)
 
       @editors[editor.editor.id] = colorEditor
@@ -20,10 +27,10 @@ class AtomColorHighlight
     @on 'color-highlight:editor-created', callback
 
   viewForEditorView: (editorView) ->
-    @viewForEditor(editorView.getEditor()) if editorView instanceof EditorView
+    @viewForEditor(editorView.getEditor()) if editorView?.hasClass('editor')
 
   modelForEditorView: (editorView) ->
-    @modelForEditor(editorView.getEditor()) if editorView instanceof EditorView
+    @modelForEditor(editorView.getEditor()) if editorView?.hasClass('editor')
 
   modelForEditor: (editor) -> @editors[editor.id]?.getActiveModel()
   viewForEditor: (editor) -> @editors[editor.id]?.getactiveView()

@@ -2,11 +2,11 @@
   'autoIndentOnPaste': true
   'hideGitIgnoredFiles': false
   'softWrapAtPreferredLineLength': true
-  'fontFamily': 'Anonymous Pro'
   'softWrap': true
   'showIndentGuide': true
   'preferredLineLength': 120
   'showInvisibles': true
+  'fontFamily': 'Source Code Pro'
 'core':
   'hideGitIgnoredFiles': false
   'disabledPackages': [
@@ -25,9 +25,10 @@
     'linter'
     'vim-mode'
   ]
+  'useReactEditor': true
   'themes': [
     'neutron-ui'
-    'neutron-syntax'
+    'saturn-syntax'
   ]
 'spell-check':
   'grammars': [
@@ -47,3 +48,5 @@
   'extensionsPath': '~/.dotfiles/emmet'
 'merge-conflicts':
   'gitPath': '/opt/boxen/homebrew/bin/hub'
+'tree-view':
+  'showOnRightSide': true

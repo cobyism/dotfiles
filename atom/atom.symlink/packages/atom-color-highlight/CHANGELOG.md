@@ -1,3 +1,102 @@
+<a name="v1.0.1"></a>
+# v1.0.1 (2014-08-04)
+
+## :bug: Bug Fixes
+
+- Fix warning due to deprecated prefixed function ([49bd8c6e](https://github.com/abe33/atom-color-highlight/commit/49bd8c6e8f3e6fcb48ba4876d9c2a1b89a810e9c))
+
+<a name="v1.0.0"></a>
+# v1.0.0 (2014-08-04)
+
+## :sparkles: Features
+
+- Add support of pigments 2.0.0 and Atom 0.120.0 ([78d0db5f](https://github.com/abe33/atom-color-highlight/commit/78d0db5fc3665b26933340f89502b739de52b873))
+
+## :bug: Bug Fixes
+
+- Fix invalid layout when adding removing a color in a line ([a185707c](https://github.com/abe33/atom-color-highlight/commit/a185707c64a1c3a997785067a2fb6ea574c82ddb))
+
+<a name="v0.19.4"></a>
+# v0.19.4 (2014-07-30)
+
+## :bug: Bug Fixes
+
+- Fix missing match when a color is followed by a class selector ([8c482feb](https://github.com/abe33/atom-color-highlight/commit/8c482feb568db30829bffca96ace40bf7be0b386))
+
+<a name="v0.19.3"></a>
+# v0.19.3 (2014-07-21)
+
+## :bug: Bug Fixes
+
+- Fix invalid lighten/darken operation for less/sass ([abe33/pigments@8ac0214d](https://github.com/abe33/pigments/commit/8ac0214dd67ea34b77be21ce03440f9de914f3fe), [abe33/atom-color-highlight#26](https://github.com/abe33/atom-color-highlight/issues/26))
+- Fix css color function raising exception when invalid ([abe33/pigments@a883ccad](https://github.com/abe33/pigments/commit/a883ccadb60a3498d01506ab821ed43e39992fe4), [abe33/atom-color-highlight#27](https://github.com/abe33/atom-color-highlight/issues/27))
+
+
+<a name="v0.19.2"></a>
+# v0.19.2 (2014-07-21)
+
+## :bug: Bug Fixes
+
+- Fix broken variable handling at n+1 ([abe33/pigments@f34be5b0](https://github.com/abe33/pigments/commit/f34be5b082ce60a11ad3f710604e410b60d5a4e8), [#23](https://github.com/abe33/atom-color-highlight/issues/23))
+
+<a name="v0.19.1"></a>
+# v0.19.1 (2014-07-20)
+
+## :bug: Bug Fixes
+
+- Fix creating markers for invalid colors ([dc204b98](https://github.com/abe33/atom-color-highlight/commit/dc204b981a42ee1404748c72f9e85227b4605275))
+
+<a name="v0.19.0"></a>
+# v0.19.0 (2014-07-20)
+
+## :sparkles: Features
+
+- Implement masking markers present in strings ([7691338b](https://github.com/abe33/atom-color-highlight/commit/7691338bfec09c4887927b0aefd04f4512c22a8c))
+- Add support for variables in color functions ([abe33/pigments@ee67434a](https://github.com/abe33/pigments/commit/ee67434acc0ae8542e8cb02235247216561900fc))  
+  <br>Includes:
+  - Any parameter can now be a variable
+  - Any missing variable will mark the color as invalid
+
+<a name="v0.18.0"></a>
+# v0.18.0 (2014-07-18)
+
+## :bug: Bug Fixes
+
+- Fix sass method parsed as css color function ([eced697f](https://github.com/abe33/atom-color-highlight/commit/eced697f8d3b8d6003e1959b7c306973d161aac7), [#21](https://github.com/abe33/atom-color-highlight/issues/21))
+
+<a name="v0.17.0"></a>
+# v0.17.0 (2014-07-16)
+
+## :sparkles: Features
+
+- Add support for css 4 `gray` functional notation. ([abe33/pigments@f8f0d212](https://github.com/abe33/pigments/commit/f8f0d21223c24b4724c8e0638b4f3b52126160b1))
+- Add support for the `hwb` color model the corresponding css4 function. ([abe33/pigments@b64d9574](https://github.com/abe33/pigments/commit/b64d95749a348cb66e9434c5438eac6afbca0693), [abe33/atom-color-highlight#20](https://github.com/abe33/atom-color-highlight/issues/20))  
+
+## :bug: Bug Fixes
+
+- Fix z-index issues with popover lists ([ea13b1d1](https://github.com/abe33/atom-color-highlight/commit/ea13b1d1c473878708746ef020358914f7b5dd50), [#17](https://github.com/abe33/atom-color-highlight/issues/17))
+- Fix missing getBufferRange method on dot markers ([4d25639b](https://github.com/abe33/atom-color-highlight/commit/4d25639b97439ab6ffc54113ab8c89fbb25c967b), [#19](https://github.com/abe33/atom-color-highlight/issues/19))
+
+<a name="v0.16.0"></a>
+# v0.16.0 (2014-07-11)
+
+## :sparkles: Features
+
+- Implement masking markers present in comments ([cb4d5529](https://github.com/abe33/atom-color-highlight/commit/cb4d5529231cdfdbb6a4d9645c27b394db111587), [#16](https://github.com/abe33/atom-color-highlight/issues/16))
+- Implement dot markers on end of lines ([98d7e33d](https://github.com/abe33/atom-color-highlight/commit/98d7e33d531b0fc2a6e20bb9f8d54bc1be78d796), [#11](https://github.com/abe33/atom-color-highlight/issues/11))
+
+<a name="v0.15.0"></a>
+# v0.15.0 (2014-07-10)
+
+## :sparkles: Features
+
+- Add Travis CI setup ([38bbaf09](https://github.com/abe33/atom-color-highlight/commit/38bbaf096062558fe6848e945e73fb4c0ecfb5e1))
+- Implement highlight update on palette refresh ([a0aa45f6](https://github.com/abe33/atom-color-highlight/commit/a0aa45f6c2f7ee4220e3dd1e64b3ade40bece018))
+
+## :bug: Bug Fixes
+
+- Fix views and models access by editors on react ([3f0c77eb](https://github.com/abe33/atom-color-highlight/commit/3f0c77eb29e418bf257f257bbab2eb65d3791696))
+
 <a name="v0.14.0"></a>
 # v0.14.0 (2014-06-03)
 

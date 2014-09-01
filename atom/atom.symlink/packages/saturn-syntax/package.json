@@ -1,0 +1,26 @@
+{
+  "name": "saturn-syntax",
+  "theme": "syntax",
+  "version": "0.2.0",
+  "description": "Colors from Pasquale's (@psql) brain. Roughly hacked together. Excuse strange LESS variables. Would like to clean up in a future release.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psql/saturn-syntax"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readme": "# saturn-syntax theme\n\nAtom Theme, based on my Terminal/XCode theme called [Saturn Colors](https://github.com/psql/saturn-colors)\n\n![yeah](http://cl.ly/X0lW/Screen%20Shot%202014-08-12%20at%204.33.31%20PM.png)\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/psql/saturn-syntax/issues"
+  },
+  "homepage": "https://github.com/psql/saturn-syntax",
+  "_id": "saturn-syntax@0.2.0",
+  "dist": {
+    "shasum": "3f05e8c30ef6afaf58cbd29e0d5424b1f97d9829"
+  },
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114713-26533-120wyay/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114713-26533-120wyay/package.tgz"
+}

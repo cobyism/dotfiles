@@ -1,7 +1,7 @@
 {
   "name": "neutron-syntax",
   "theme": "syntax",
-  "version": "0.4.0",
+  "version": "0.6.1",
   "description": "Syntax theme for the Neutron UI theme",
   "repository": {
     "type": "git",
@@ -17,10 +17,10 @@
     "url": "https://github.com/brentd/neutron-syntax/issues"
   },
   "homepage": "https://github.com/brentd/neutron-syntax",
-  "_id": "neutron-syntax@0.4.0",
+  "_id": "neutron-syntax@0.6.1",
   "dist": {
-    "shasum": "99cada51ceef7964c39d7df81abf220c86437ebc"
+    "shasum": "310109d804ad599870b9605faa05c30e849c8713"
   },
-  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114524-30937-lmuxlg/package.tgz",
-  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114524-30937-lmuxlg/package.tgz"
+  "_resolved": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114626-60565-19rabu3/package.tgz",
+  "_from": "/var/folders/m1/dfrbsg4s4fldhtcw2tmwcv700000gn/T/d-114626-60565-19rabu3/package.tgz"
 }
