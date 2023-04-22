@@ -1,0 +1,11 @@
+*~
+**/.DS_Store
+**/Thumbs.db
+**/.svn
+**/.hg
+**/CVS
+**/.swp
+**/.sass-cache
+**/.env
+**/.localrc
+**/.vscode

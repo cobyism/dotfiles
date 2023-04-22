@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+# Details from man
+# --archive, -a            archive mode is -rlptgoD (no -A,-X,-U,-N,-H)
+# --verbose, -v            increase verbosity
+# --one-file-system, -x    don't cross filesystem boundaries
+# --checksum, -c           skip based on checksum, not mod-time & size
+# --human-readable, -h     output numbers in a human-readable format
+# --itemize-changes, -i    output a change-summary for all updates
+# --acls, -A               preserve ACLs (implies --perms)
+# --xattrs, -X             preserve extended attributes
+# --atimes, -U             preserve access (use) times
+# --crtimes, -N            preserve create times (newness)
+# --hard-links, -H         preserve hard links
+# --executability, -E      preserve executability
+# --numeric-ids            don't map uid/gid values by user/group name
+# --stats                  give some file-transfer stats
+# --progress               show progress during transfer
+
+# AVOID
+# -z/--compress: compression will only load up the CPU as the transfer isn't over a network but over RAM.
+# --append-verify: resume an interrupted transfer. This sounds like a good idea, but it has the dangerous failure case: any destination file the same size (or greater) than the source will be IGNORED. Also, it checksums the whole file at the end, meaning no significant speed up over --no-whole-file while adding a dangerous failure case.
+
+# USE
+# -S/--sparse: turn sequences of nulls into sparse blocks
+# --partial or -P which is --partial --progress: save any partially transferred files for future resuming. Note: files won't have a temporary name, so ensure that nothing else is expecting to use the destination until the whole copy has completed.
+# --no-whole-file so that anything that needs to be resent uses delta transfer. Reading half of a partially transferred file is often much quicker than writing it again.
+# --inplace to avoid file copy (but only if nothing is reading the destination until the whole transfer completes)
+
+# sudo rsync -avxchiAXUNHESP --numeric-ids --stats --info=progress2 --compress-choice=none --no-whole-file --inplace $1 $2
+sudo rsync -avxchAXUNHESP --numeric-ids --stats --info=progress2 --compress-choice=none --no-whole-file --inplace $1 $2 # no -i

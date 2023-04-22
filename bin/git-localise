@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+# External subcommand for `git`:
+# Ensures all remote branches are tracked locally.
+
+for remote in `git branch -r | grep -v /HEAD`; do git checkout --track $remote ; done

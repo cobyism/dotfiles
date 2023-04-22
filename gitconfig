@@ -1,0 +1,75 @@
+[user]
+	name = Coby Chapple
+	email = 296432+cobyism@users.noreply.github.com
+	signingkey = 97DCE0F28AAC75D6
+[github]
+	user = cobyism
+[heroku]
+	account = coby
+[commit]
+	gpgsign = true
+[credential]
+	helper = osxkeychain
+[alias]
+	b = branch
+	cl = clone
+	cm = commit
+	co = checkout
+	d = diff
+	i = init
+	l = log
+	m = merge
+	s = status -sb
+	t = tag
+	g = log --graph --all --oneline
+	undo = reset --soft HEAD^
+	count = shortlog -sn
+[apply]
+	whitespace = nowarn
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = auto
+[core]
+	excludesfile = \"$HOME\"/.gitignore
+	autocrlf = input
+	quotepath = false
+	editor = code
+	# pager = diff-so-fancy | less --tabs=1,5 -R
+	pager = delta
+[format]
+	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+[help]
+	autocorrect = 1
+[hub]
+	protocol = https
+[mergetool]
+	keepBackup = true
+[push]
+	default = simple
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[init]
+	defaultBranch = main
+[http]
+	postBuffer = 524288000
+# For Delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true    # use n and N to move between diff sections
+	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
+[gpg]
+	program = gpg

@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+def gm_ls
+  main_dir = "/Users/cobyism/code"
+  Dir.chdir(main_dir) do
+    dirs = `find . -name .git -type d -prune`.split("\n")
+    repo_dirs = dirs.map{ |r| r.gsub("/.git", '') }
+    repos = repo_dirs.map do |repo_dir|
+      Dir.chdir repo_dir do
+        # git status (dirty, clean, etc)
+        status_out = `git status --porcelain`.chomp.split("\n")
+        status_entries = status_out.map do |s|
+          {
+            type: s.split(" ")[0],
+            path: s.split(" ")[1..-1]
+          }
+        end
+        counts = {
+          added: status_entries.select{|e| e[:type] == 'A'}.length,
+          modified: status_entries.select{|e| e[:type] == 'M'}.length,
+          deleted: status_entries.select{|e| e[:type] == 'D'}.length,
+          conflict: status_entries.select{|e| e[:type] == 'C'}.length,
+          ignored: status_entries.select{|e| e[:type] == '??'}.length
+        }
+
+        count_string = ""
+        count_string << " A#{counts[:added]}" if counts[:added] > 0
+        count_string << " M#{counts[:modified]}" if counts[:modified] > 0
+        count_string << " D#{counts[:deleted]}" if counts[:deleted] > 0
+        count_string << " C#{counts[:conflict]}" if counts[:conflict] > 0
+        count_string << " ?#{counts[:ignored]}" if counts[:ignored] > 0
+        count_string = count_string.chomp.strip
+
+        state = count_string.empty? ? :clean : :dirty
+
+        obj = {
+          path: repo_dir,
+          state: state,
+          counts: counts,
+          count_string: count_string,
+        }
+      end
+    end
+    repos.sort_by {|r| r[:path]}.each do |r|
+
+      case r[:state]
+      when :clean
+        print "--"
+      when :dirty
+        print r[:count_string]
+      end
+      print "\t"
+      puts r[:path]
+    end
+  end
+end
+
+gm_ls
