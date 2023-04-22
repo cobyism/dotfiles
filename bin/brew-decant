@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+# External subcommand for `brew`:
+# Maintains an up-to-date Brewfile in $DOTFILES.
+
+# Paths
+local BREWFILE="$DOTFILES/Brewfile"
+
+# Remove current linkable and home symlink
+echo "Refreshing Brewfile…"
+rm -f $BREWFILE
+
+# Regenerate linkable
+$(brew bundle dump --all --describe --force --file=$BF_DOTFILE)
+echo "Ah, that's better!"

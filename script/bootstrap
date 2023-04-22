@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+# Assumes this repo is cloned into ~/code/dotfiles
+local DOTFILES_REPO="$HOME/code/dotfiles"
+
+# check if ~/.dotfiles is a symlink and if it is, remove it
+if [ -L ~/.dotfiles ]; then
+  echo "Removing ~/.dotfiles symlink"
+  rm ~/.dotfiles
+fi
+
+# check if ~/.rcrc is a symlink and if it is, remove it
+if [ -L ~/.rcrc ]; then
+  echo "Removing ~/.rcrc symlink"
+  rm ~/.rcrc
+fi
+
+echo "Linking ${DOTFILES_REPO} as ~/.dotfiles"
+ln -swi $DOTFILES_REPO ~/.dotfiles
+echo "Linking ~/.dotfiles/rcrc as ~/.rcrc"
+ln -swi ~/.dotfiles/rcrc ~/.rcrc
+
+# Next up: ensure brew installed, install rcm, rest of Brewfile, etc.
