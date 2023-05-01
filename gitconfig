@@ -1,13 +1,11 @@
 [user]
 	name = Coby Chapple
 	email = 296432+cobyism@users.noreply.github.com
-	signingkey = 97DCE0F28AAC75D6
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIDzRACB89Np3sSwWDB4pPpqSRg1afhJW8a2ctNT/rK5
 [github]
 	user = cobyism
 [heroku]
 	account = coby
-[commit]
-	gpgsign = true
 [credential]
 	helper = osxkeychain
 [alias]
@@ -72,4 +70,8 @@
 [diff]
 	colorMoved = default
 [gpg]
-	program = gpg
+	format = ssh
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+[commit]
+  gpgsign = true
