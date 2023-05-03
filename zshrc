@@ -46,6 +46,22 @@ source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
 source_file "$(brew --prefix asdf)/libexec/asdf.sh"
 source_file "$HOME/.cargo/env"
 
+# Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh" ]; then
+        . "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 # =============================== PROMPT
 
 source_file "$DOTFILES/resources/prompt-typewritten.zsh"
