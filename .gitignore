@@ -9,19 +9,14 @@
 **/.env
 **/.localrc
 **/.vscode
-
-# Directories to ignore
+**/update-notifier*.json
 **/extensions/*
 **/keypairs/*
 config/iterm2/AppSupport
 config/.mono
-config/SweetScape
-config/sonic-pi.net
-config/Xplist
-
-# Specific files to ignore
 config/gh/hosts.yml
-config/raycast/config.json
-config/rclone/rclone.conf
-config/sampler.yml
-update-notifier*.json
+config/raycast
+config/rclone
+config/sonic-pi.net
+config/SweetScape
+config/Xplist
