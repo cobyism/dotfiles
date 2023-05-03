@@ -1,4 +1,5 @@
 tap "cantino/mcfly"
+tap "charmbracelet/tap"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-drivers"
@@ -8,8 +9,12 @@ tap "homebrew/services"
 tap "macos-fuse-t/cask"
 tap "sidneys/homebrew"
 tap "zero-sh/tap"
+# Simple, modern, secure file encryption
+brew "age"
 # General-purpose data compression with high compression ratio
 brew "xz"
+# New file format for still image compression
+brew "jpeg-xl"
 # Library for command-line editing
 brew "readline"
 # Download with resuming and segmented downloading
@@ -48,6 +53,8 @@ brew "cmake"
 brew "curl"
 # Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
+# In-depth comparison of files, archives, and directories
+brew "diffoscope"
 # File comparison utilities
 brew "diffutils"
 # Pack, ship and run any application as a lightweight container
@@ -62,6 +69,8 @@ brew "dupseek"
 brew "dust"
 # Modern replacement for 'ls'
 brew "exa"
+# Efficient Duplicate File Finder
+brew "fclones"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
 # Identify or delete duplicate files
@@ -86,6 +95,10 @@ brew "pango"
 brew "tesseract"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
+# High performance message passing library
+brew "open-mpi"
+# Command-line outline and bitmap font editor/converter
+brew "fontforge"
 # Terminal JSON viewer
 brew "fx"
 # Command-line fuzzy finder written in Go
@@ -94,16 +107,24 @@ brew "fzf"
 brew "gdrive"
 # GitHub command-line tool
 brew "gh"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
 # Distributed revision control system
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # Git extension for versioning large files
 brew "git-lfs"
+# Render markdown on the CLI
+brew "glow"
+# GNU grep, egrep and fgrep
+brew "grep"
 # Open-source video transcoder available for Linux, Mac, and Windows
 brew "handbrake", link: false
 # Improved top (interactive process viewer)
 brew "htop"
+# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
+brew "libheif"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Duplicate file finder and an enhanced fork of 'fdupes'
@@ -148,8 +169,6 @@ brew "rdfind"
 brew "ripgrep"
 # Utility that provides fast incremental file transfer
 brew "rsync"
-# Tool for shell commands execution, visualization and alerting
-brew "sampler"
 # SOund eXchange: universal sound sample translator
 brew "sox"
 # Zsh prompt for Astronauts
@@ -168,6 +187,10 @@ brew "tldr"
 brew "tree"
 # Minimal zsh prompt
 brew "typewritten"
+# CLI time zone visualizer
+brew "tz"
+# Bi-directional conversion between UTF-8 and various ASCII flavors
+brew "uni2ascii"
 # Vi 'workalike' with many additional features
 brew "vim"
 # Wave-to-notes transcriber
@@ -184,6 +207,12 @@ brew "zlib"
 brew "zoxide"
 # McFly
 brew "cantino/mcfly/mcfly"
+# The Charm Tool and Library 🌟
+brew "charmbracelet/tap/charm"
+# Backup and restore Ed25519 SSH keys with seed words
+brew "charmbracelet/tap/melt"
+# A personal key value store 🛼
+brew "charmbracelet/tap/skate"
 # Offline NT Password Editor
 brew "sidneys/homebrew/chntpw"
 # Small tool to set macOS user defaults from a YAML file
@@ -192,6 +221,8 @@ brew "zero-sh/tap/apply-user-defaults"
 cask "010-editor"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
+# Command-line helper for the 1Password password manager
+cask "1password-cli"
 # Watch local content on Apple TV and Chromecast
 cask "airflow"
 # Memory training application
@@ -226,12 +257,82 @@ cask "element"
 cask "figma"
 # Web browser
 cask "firefox"
+# Developer targeted fonts with a high number of glyphs
+cask "font-anonymice-nerd-font"
+# Programming font
+cask "font-anonymous-pro"
+# Developer targeted fonts with a high number of glyphs
+cask "font-blex-mono-nerd-font"
+# Monospaced font that includes programming ligatures
+cask "font-cascadia-code"
+# Version of Cascadia Code without ligatures
+cask "font-cascadia-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-caskaydia-cove-nerd-font"
+# Developer targeted fonts with a high number of glyphs
+cask "font-code-new-roman-nerd-font"
+cask "font-cousine"
+# Developer targeted fonts with a high number of glyphs
+cask "font-cousine-nerd-font"
+cask "font-dm-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-droid-sans-mono-nerd-font"
+# Free monospaced font with programming ligatures
+cask "font-fira-code"
+# Developer targeted fonts with a high number of glyphs
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-fira-mono-nerd-font"
+cask "font-hack"
+# Developer targeted fonts with a high number of glyphs
+cask "font-hack-nerd-font"
 cask "font-ia-writer-duo"
 cask "font-ia-writer-duospace"
 cask "font-ia-writer-mono"
 cask "font-ia-writer-quattro"
+# Corporate typeface for IBM
+cask "font-ibm-plex-mono"
 # Developer targeted fonts with a high number of glyphs
 cask "font-im-writing-nerd-font"
+cask "font-inconsolata"
+# Developer targeted fonts with a high number of glyphs
+cask "font-inconsolata-nerd-font"
+# Typeface made for developers
+cask "font-jetbrains-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-jetbrains-mono-nerd-font"
+# Programming font
+cask "font-lilex"
+# Developer targeted fonts with a high number of glyphs
+cask "font-lilex-nerd-font"
+cask "font-noto-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-noto-nerd-font"
+cask "font-noto-sans-mono"
+cask "font-nova-mono"
+cask "font-overpass"
+# Developer targeted fonts with a high number of glyphs
+cask "font-overpass-nerd-font"
+# Led by arrow type, a type foundry based in brooklyn, ny, usa
+cask "font-recursive"
+# Recursive's prebuilt text-editor-friendly files, including powerline glyphs
+cask "font-recursive-code"
+cask "font-red-hat-mono"
+cask "font-roboto-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-roboto-mono-nerd-font"
+# Developer targeted fonts with a high number of glyphs
+cask "font-sauce-code-pro-nerd-font"
+# Monospaced variant of "San Francisco" by Apple
+cask "font-sf-mono"
+cask "font-source-code-pro"
+# Monospaced font with cursive italics and programming symbol ligatures
+cask "font-victor-mono"
+# Developer targeted fonts with a high number of glyphs
+cask "font-victor-mono-nerd-font"
+# Font editor and converter for outline and bitmap fonts
+cask "fontforge"
 # LibFUSE implementation that doesn't use kernel extensions
 cask "fuse-t"
 # SSHFS implementation based on FUSE-T
@@ -262,8 +363,14 @@ cask "karabiner-elements"
 cask "keyboard-cleaner"
 # CAD application
 cask "librecad"
+# Software for Logitech devices
+cask "logi-options-plus"
+# Privacy-first, open-source platform for knowledge sharing and management
+cask "logseq"
 # File system integration
 cask "macfuse"
+# Open-source Dropbox client
+cask "maestral"
 # Web browser
 cask "microsoft-edge"
 # Monitor MIDI inputs and outputs
@@ -314,6 +421,8 @@ cask "spotify"
 cask "steam"
 # Unpacks archive files
 cask "the-unarchiver"
+# Helper application for Things
+cask "thingsmacsandboxhelper"
 # Web browser focusing on security
 cask "tor-browser"
 # MIDI and OSC Controller Software
@@ -336,15 +445,3 @@ cask "whatsapp"
 cask "workflowy"
 # Video communication and virtual meeting platform
 cask "zoom"
-mas "1Password for Safari", id: 1569813296
-mas "Amphetamine", id: 937984704
-mas "Darkroom", id: 953286746
-mas "Diffusers", id: 1666309574
-mas "Disk Speed Test", id: 425264550
-mas "djay Pro AI", id: 450527929
-mas "iA Writer", id: 775737590
-mas "Numbers", id: 409203825
-mas "Stockfish", id: 801463932
-mas "Things", id: 904280696
-mas "VCard Explorer", id: 672624893
-mas "vCard Viewer", id: 1554042199
