@@ -64,6 +64,7 @@ alias ls="exa"
 alias l="ls -lah"
 alias cd="z"
 alias ..="cd .."
+alias grep="grepp"
 
 ## Git
 
@@ -72,7 +73,9 @@ alias ga="git add"
 alias gcm="git commit -m"
 alias gco="git checkout"
 alias gcob="git checkout -b"
-alias gr="git remote -v"
+alias gcom="git checkout main"
+alias gr="git remote"
+alias grv="git remote -v"
 alias gl="git log"
 alias gd="git diff"
 alias gb="git branch"
