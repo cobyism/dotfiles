@@ -30,7 +30,7 @@
 	branch = auto
 	ui = auto
 [core]
-	excludesfile = \"$HOME\"/.gitignore
+	excludesfile = ~/.gitignore
 	autocrlf = input
 	quotepath = false
 	editor = code
