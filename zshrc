@@ -23,6 +23,7 @@ export EDITOR="code -w"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="$DOTFILES/wip:./wip:$PATH"
 export PATH="$DOTFILES/bin:./bin:$PATH"
+export PATH="/Users/cobyism/.yarn/bin:$PATH"
 export PATH="./script:$PATH"
 
 # =============================== FUNCTIONS
@@ -39,32 +40,50 @@ function source_file() {
 # =============================== EVALS
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(mcfly init zsh)"
 eval "$(zoxide init zsh)"
 
 source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
-source_file "$(brew --prefix asdf)/libexec/asdf.sh"
 source_file "$HOME/.cargo/env"
 
-# Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh" ]; then
-        . "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+eval "$(/opt/homebrew/bin/mise activate zsh)"
+
+# source_file "$(brew --prefix asdf)/libexec/asdf.sh"
+# source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+# eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# # Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh" ]; then
+#         . "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
+# Added by OrbStack: command-line tools and integration
+# source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 # =============================== PROMPT
 
 source_file "$DOTFILES/resources/prompt-typewritten.zsh"
+
+# =============================== Completions
+# Installed via homebrew - zsh-completions
+# See https://github.com/zsh-users/zsh-completions
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
 
 # =============================== OMZ
 
@@ -78,9 +97,20 @@ source_file "$DOTFILES/resources/prompt-typewritten.zsh"
 alias exa="exa --icons" # --group-directories-first
 alias ls="exa"
 alias l="ls -lah"
+alias ll="ls -lah"
 alias cd="z"
 alias ..="cd .."
-alias grep="grepp"
+# alias grep="grepp"
+alias rc="rclone copy --fast-list --progress --progress-terminal-title --verbose --stats 3s --transfers 10"
+
+## Projects
+
+alias be="bundle exec"
+alias ni="npm install"
+alias nr="npm run"
+alias nrb="npm run build"
+alias nrd="npm run dev"
+alias nrt="npm run test"
 
 ## Git
 
@@ -97,6 +127,7 @@ alias gd="git diff"
 alias gb="git branch"
 alias gpull="git pull"
 alias gpush="git push"
+alias gg="git log --graph --all --oneline"
 # alias grmc="git rm -r --cached"
 
 # =============================== LOCALRC
