@@ -113,6 +113,10 @@ alias nr="npm run"
 alias nrb="npm run build"
 alias nrd="npm run dev"
 alias nrt="npm run test"
+alias nc="npm run clean"
+alias ntc="npm run typecheck"
+alias ns="npm start"
+alias pn="pnpm"
 
 ## Git
 
@@ -130,6 +134,7 @@ alias gb="git branch"
 alias gpull="git pull"
 alias gpush="git push"
 alias gg="git log --graph --all --oneline"
+alias gwho="git show -s --pretty=fuller"
 # alias grmc="git rm -r --cached"
 
 # =============================== LOCALRC
