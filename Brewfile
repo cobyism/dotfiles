@@ -13,6 +13,8 @@ brew "age"
 brew "xz"
 # New file format for still image compression
 brew "jpeg-xl"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
 # Download with resuming and segmented downloading
 brew "aria2"
 # Automatic configure script builder
@@ -25,8 +27,6 @@ brew "pkg-config"
 brew "autogen"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
-# C library of Git core methods that is re-entrant and linkable
-brew "libgit2"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Yet another cross-platform graphical process/system monitor
@@ -71,10 +71,12 @@ brew "duf"
 brew "dupseek"
 # More intuitive version of du in rust
 brew "dust"
-# Modern replacement for 'ls'
-brew "exa"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
+# C library of Git core methods that is re-entrant and linkable
+brew "libgit2"
+# Modern, maintained replacement for ls
+brew "eza"
 # Efficient Duplicate File Finder
 brew "fclones"
 # Simple, fast and user-friendly alternative to find
@@ -105,14 +107,14 @@ brew "pango"
 brew "tesseract"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
+# Process Management Interface for HPC environments
+brew "pmix"
 # High performance message passing library
 brew "open-mpi"
 # Collection of GNU find, xargs, and locate
 brew "findutils"
 # Command-line tools for fly.io services
 brew "flyctl"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
 # Platform built on V8 to build network applications
@@ -179,8 +181,16 @@ brew "mise"
 brew "ncdu"
 # Netlify command-line tool
 brew "netlify-cli"
+# Port scanning utility for large networks
+brew "nmap"
 # Tiny, lightning fast, feature-packed file manager
 brew "nnn"
+# Optimized BLAS library
+brew "openblas"
+# Package for scientific computing with Python
+brew "numpy"
+# Open Visual Inference And Optimization toolkit for AI inference
+brew "openvino"
 # Highly capable, feature-rich programming language
 brew "perl"
 # Pinentry for GPG on Mac
@@ -197,6 +207,8 @@ brew "protobuf"
 brew "pv"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Install various Ruby versions and implementations
 brew "ruby-build"
 # Ruby version manager
@@ -213,8 +225,6 @@ brew "redis", restart_service: true
 brew "ripgrep"
 # Utility that provides fast incremental file transfer
 brew "rsync"
-# Safe, concurrent, practical language
-brew "rust"
 # SOund eXchange: universal sound sample translator
 brew "sox"
 # Zsh prompt for Astronauts
@@ -243,6 +253,8 @@ brew "uni2ascii"
 brew "vim"
 # Wave-to-notes transcriber
 brew "waon"
+# Watch files and take action when they change
+brew "watchman"
 # Internet file retriever
 brew "wget"
 # Library to create, extract, and modify Windows Imaging files
@@ -265,22 +277,16 @@ brew "charmbracelet/tap/melt"
 brew "charmbracelet/tap/skate"
 # Everything you need to get started with Heroku
 brew "heroku/brew/heroku"
-# Offline NT Password Editor
-brew "sidneys/homebrew/chntpw"
 # Small tool to set macOS user defaults from a YAML file
 brew "zero-sh/tap/apply-user-defaults"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
-# DNG file converter
-cask "adobe-dng-converter"
 # Watch local content on Apple TV and Chromecast
 cask "airflow"
 # Application uninstaller
 cask "appcleaner"
-# Multi-cloud backup application
-cask "arq"
 # Multi-track audio editor and recorder
 cask "audacity"
 # Universal chat app powered by Matrix
@@ -313,125 +319,82 @@ cask "element"
 cask "figma"
 # Web browser
 cask "firefox"
-# Developer targeted fonts with a high number of glyphs
 cask "font-anonymice-nerd-font"
-# Programming font
 cask "font-anonymous-pro"
 cask "font-barlow"
-# Developer targeted fonts with a high number of glyphs
 cask "font-blex-mono-nerd-font"
-# Monospaced font that includes programming ligatures
 cask "font-cascadia-code"
-# Version of Cascadia Code without ligatures
 cask "font-cascadia-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-caskaydia-cove-nerd-font"
 cask "font-chivo"
-# Developer targeted fonts with a high number of glyphs
 cask "font-code-new-roman-nerd-font"
 cask "font-cousine"
-# Developer targeted fonts with a high number of glyphs
 cask "font-cousine-nerd-font"
 cask "font-dm-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-droid-sans-mono-nerd-font"
-# Sans serif variable font with a weight axis
 cask "font-epilogue"
-# Free monospaced font with programming ligatures
 cask "font-fira-code"
-# Developer targeted fonts with a high number of glyphs
 cask "font-fira-code-nerd-font"
 cask "font-fira-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-fira-mono-nerd-font"
 cask "font-fira-sans"
 cask "font-flow-block"
 cask "font-flow-circular"
 cask "font-flow-rounded"
 cask "font-hack"
-# Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
-# Hubot Sans, a variable font from GitHub
 cask "font-hubot-sans"
 cask "font-ia-writer-duo"
 cask "font-ia-writer-mono"
 cask "font-ia-writer-quattro"
-# Corporate typeface for IBM
 cask "font-ibm-plex"
-# Corporate typeface for IBM
 cask "font-ibm-plex-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-im-writing-nerd-font"
 cask "font-inconsolata"
-# Developer targeted fonts with a high number of glyphs
 cask "font-inconsolata-nerd-font"
-# Typeface made for developers
 cask "font-jetbrains-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-jetbrains-mono-nerd-font"
 cask "font-libre-baskerville"
 cask "font-libre-bodoni"
 cask "font-libre-caslon-display"
 cask "font-libre-caslon-text"
 cask "font-libre-franklin"
-# Programming font
 cask "font-lilex"
-# Developer targeted fonts with a high number of glyphs
 cask "font-lilex-nerd-font"
-# Mona Sans, a variable font from GitHub
 cask "font-mona-sans"
-# Superfamily of fonts for code
 cask "font-monaspace"
-# Developer targeted fonts with a high number of glyphs
 cask "font-monaspace-nerd-font"
 cask "font-noto-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-noto-nerd-font"
-# Sans-serif variable font
 cask "font-noto-sans"
-# Monospaced variable font
 cask "font-noto-sans-mono"
 cask "font-nova-mono"
 cask "font-open-sans"
 cask "font-overpass"
-# Developer targeted fonts with a high number of glyphs
 cask "font-overpass-nerd-font"
-# Versatile modern type family
 cask "font-plus-jakarta-sans"
-# Type family of universal use
 cask "font-pt-sans"
-# Universal type family designed for use together with PT Sans
 cask "font-pt-serif"
 cask "font-quattrocento-sans"
-# Led by arrow type, a type foundry based in brooklyn, ny, usa
 cask "font-recursive"
-# Recursive's prebuilt text-editor-friendly files, including powerline glyphs
 cask "font-recursive-code"
 cask "font-red-hat-display"
 cask "font-red-hat-mono"
 cask "font-red-hat-text"
 cask "font-roboto-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-roboto-mono-nerd-font"
-# Developer targeted fonts with a high number of glyphs
 cask "font-sauce-code-pro-nerd-font"
-# Monospaced variant of "San Francisco" by Apple
 cask "font-sf-mono"
 cask "font-source-code-pro"
 cask "font-source-sans-3"
 cask "font-space-grotesk"
 cask "font-space-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-space-mono-nerd-font"
-# Monospaced font with cursive italics and programming symbol ligatures
 cask "font-victor-mono"
-# Developer targeted fonts with a high number of glyphs
 cask "font-victor-mono-nerd-font"
 cask "font-work-sans"
 # Font editor and converter for outline and bitmap fonts
 cask "fontforge"
-# Visual desktop tool suite for working with the Fuse framework
-cask "fuse"
 # LibFUSE implementation that doesn't use kernel extensions
 cask "fuse-t"
 # SSHFS implementation based on FUSE-T
@@ -446,6 +409,8 @@ cask "godot"
 cask "google-chrome"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "google-cloud-sdk"
+# Client for the Google Drive storage service
+cask "google-drive"
 # Tools to protect your emails and files
 cask "gpg-suite"
 # Open-source video transcoder
@@ -468,10 +433,16 @@ cask "keyboard-cleaner"
 cask "kicad"
 # CAD application
 cask "librecad"
-# Software for Logitech devices
-cask "logi-options-plus"
+# EDA software to develop printed circuit boards
+cask "librepcb"
 # File system integration
 cask "macfuse"
+# Native desktop app for Messenger (formerly Facebook Messenger)
+cask "messenger"
+# Minimal installer for conda
+cask "miniconda"
+# Intercept, modify, replay, save HTTP/S traffic
+cask "mitmproxy"
 # Open-source DJ software
 cask "mixxx"
 # Mounts servers and cloud storages as a disk on the desktop
@@ -482,6 +453,8 @@ cask "musescore"
 cask "native-access"
 # App to write, plan, collaborate, and get organised
 cask "notion"
+# Calendar for professionals and teams
+cask "notion-calendar"
 # Native code editor
 cask "nova"
 # Knowledge base that works on top of a local folder of plain text Markdown files
@@ -498,6 +471,8 @@ cask "proton-drive"
 cask "protonmail-bridge"
 # VPN client focusing on security
 cask "protonvpn"
+# HTTP debugging proxy
+cask "proxyman"
 # G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 cask "prusaslicer"
 # Toolbox companion for QMK Firmware
@@ -526,6 +501,8 @@ cask "sonic-pi"
 cask "sonic-visualiser"
 # Music streaming service
 cask "spotify"
+# Video game digital distribution service
+cask "steam"
 # Tool to manage Synology NAS's across a LAN
 cask "synologyassistant"
 # Messaging app with a focus on speed and security
@@ -558,23 +535,24 @@ cask "vnc-viewer"
 cask "whatsapp"
 # Notetaking tool
 cask "workflowy"
+# Multi-platform graphical interface for official Nmap Security Scanner
+cask "zenmap"
 # Video communication and virtual meeting platform
 cask "zoom"
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "Darkroom", id: 953286746
-mas "Dashword", id: 1553096775
-mas "Diffusers", id: 1666309574
 mas "Disk Speed Test", id: 425264550
-mas "djay Pro AI", id: 450527929
+mas "djay Pro", id: 450527929
+mas "GoPro Quik", id: 561350520
+mas "HazeOver", id: 430798174
 mas "iA Writer", id: 775737590
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
-mas "Stockfish", id: 801463932
+mas "Pages", id: 409201541
 mas "Things", id: 904280696
-mas "Trello", id: 1278508951
-mas "VCard Explorer", id: 672624893
-mas "vCard Viewer", id: 1554042199
-mas "Zavala", id: 1546457750
+vscode "1yib.rust-bundle"
 vscode "ahmadawais.shades-of-purple"
 vscode "alefragnani.project-manager"
 vscode "aminer.codegeex"
@@ -588,7 +566,6 @@ vscode "bung87.vscode-gemfile"
 vscode "ccimage.jsonviewer"
 vscode "cesium.gltf-vscode"
 vscode "csstools.postcss"
-vscode "cstrachan.vcard"
 vscode "dart-code.dart-code"
 vscode "dart-code.flutter"
 vscode "dbaeumer.vscode-eslint"
@@ -598,6 +575,7 @@ vscode "doublebot.doublebot"
 vscode "dracula-theme.theme-dracula"
 vscode "dtoplak.vscode-glsllint"
 vscode "dtsvet.vscode-wasm"
+vscode "dustypomerleau.rust-syntax"
 vscode "eamodio.gitlens"
 vscode "emmanuelbeziat.vscode-great-icons"
 vscode "enkia.tokyo-night"
@@ -605,6 +583,7 @@ vscode "equinusocio.vsc-material-theme"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
 vscode "extemporelang.vscode-extempore"
+vscode "fill-labs.dependi"
 vscode "foxundermoon.shell-format"
 vscode "gamunu.vscode-yarn"
 vscode "github.copilot"
