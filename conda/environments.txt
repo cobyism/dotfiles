@@ -1,2 +1,2 @@
-/Users/cobyism/.asdf/installs/python/miniconda3-latest
-/Users/cobyism/.asdf/installs/python/miniconda3-latest/envs/mlc-chat
+/opt/homebrew/Caskroom/miniconda/base
+/opt/homebrew/Caskroom/miniconda/base/envs/quilter
