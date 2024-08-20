@@ -94,8 +94,8 @@ fi
 
 ## Shell
 
-alias exa="exa --icons" # --group-directories-first
-alias ls="exa"
+#alias exa="exa --icons" # --group-directories-first # No longer maintained
+#alias ls="exa" # No longer maintained
 alias l="ls -lah"
 alias ll="ls -lah"
 alias cd="z"
