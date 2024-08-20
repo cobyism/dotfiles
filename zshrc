@@ -76,16 +76,18 @@ eval "$(/opt/homebrew/bin/mise activate zsh)"
 source_file "$DOTFILES/resources/prompt-typewritten.zsh"
 
 # =============================== Completions
+
+export FPATH="$DOTFILES/completions:$FPATH" # Eza etc.
+
 # Installed via homebrew - zsh-completions
 # See https://github.com/zsh-users/zsh-completions
-
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
   autoload -Uz compinit
   compinit
 fi
 
-source_file "$DOTFILES/resources/completion-for-pnpm.zsh"
+source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
 
 # =============================== OMZ
 
@@ -96,9 +98,9 @@ source_file "$DOTFILES/resources/completion-for-pnpm.zsh"
 
 ## Shell
 
-#alias exa="exa --icons" # --group-directories-first # No longer maintained
-#alias ls="exa" # No longer maintained
-alias l="ls -lah"
+alias eza="eza --icons -F --git --git-repos --time-style=relative" # --color-scale # --group-directories-first
+alias ls="eza"
+alias l="ls -lah –git"
 alias ll="ls -lah"
 alias cd="z"
 alias ..="cd .."
