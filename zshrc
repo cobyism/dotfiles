@@ -85,6 +85,8 @@ if type brew &>/dev/null; then
   compinit
 fi
 
+source_file "$DOTFILES/resources/completion-for-pnpm.zsh"
+
 # =============================== OMZ
 
 # export OMZ="$HOME/.oh-my-zsh" # OMZ expects/hijacks $ZSH
