@@ -10,3 +10,4 @@
 **/.localrc
 **/.vscode
 **/.mise.toml
+**/aau_token
