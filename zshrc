@@ -100,8 +100,8 @@ source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
 
 alias eza="eza --icons -F --git --git-repos --time-style=relative" # --color-scale # --group-directories-first
 alias ls="eza"
-alias l="ls -lah –git"
-alias ll="ls -lah"
+alias l="eza --git -ah"
+alias ll="eza --git -lah"
 alias cd="z"
 alias ..="cd .."
 # alias grep="grepp"

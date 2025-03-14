@@ -10,5 +10,4 @@
 **/.localrc
 **/.vscode
 **/.mise.toml
-**/conda
-**/gatsby
+**/pnpm-lock.yaml
