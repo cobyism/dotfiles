@@ -199,7 +199,7 @@ brew "pinentry-mac"
 brew "postgresql@14"
 # Object-relational database system
 brew "postgresql@15", restart_service: true
-# Modern replacement for ps written by Rust
+# Modern replacement for ps written in Rust
 brew "procs"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
@@ -289,6 +289,8 @@ cask "airflow"
 cask "appcleaner"
 # Multi-track audio editor and recorder
 cask "audacity"
+# Tool to flash OS images to SD cards & USB drives
+cask "balenaetcher"
 # Universal chat app powered by Matrix
 cask "beeper"
 # Desktop password and login vault
@@ -435,10 +437,10 @@ cask "kicad"
 cask "librecad"
 # EDA software to develop printed circuit boards
 cask "librepcb"
+# Screen and video recording software
+cask "loom"
 # File system integration
 cask "macfuse"
-# Native desktop app for Messenger (formerly Facebook Messenger)
-cask "messenger"
 # Minimal installer for conda
 cask "miniconda"
 # Intercept, modify, replay, save HTTP/S traffic
