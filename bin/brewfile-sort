@@ -1,0 +1,146 @@
+#!/usr/bin/env zsh
+
+# Takes raw bundle dump of Brewfile and sorts it into an improved format.
+
+# Usage:
+# brewfile-sort < Brewfile.raw > Brewfile.sorted
+# or
+# brewfile-sort Brewfile.raw > Brewfile.sorted
+
+# The problems with the default `brew bundle dump` format are:
+# - packages (lines starting with 'brew' or 'cask') have their descriptions as comments, but it's the line directly above the respective package that is the actual description, and notably not all listed packages actually have a related description comment line above them.
+# - mas and vscode packages unfortunately don't have a description comment [FUTURE IMPROVEMENT, NOT FOR NOW]
+
+# The solution is to:
+# - move the description comment line for each package command (located on the line directly preceeding/above) to instead become a comment on the same line as the package command but after the package command itself/
+
+# Example:
+#
+## Before:
+##
+### # Simple, modern, secure file encryption
+### brew "age"
+### # General-purpose data compression with high compression ratio
+### brew "xz"
+### # New file format for still image compression
+### brew "jpeg-xl"
+### # Codec library for encoding and decoding AV1 video streams
+### brew "aom"
+##
+## After:
+##
+### brew "age"  # Simple, modern, secure file encryption
+### brew "xz"  # General-purpose data compression with high compression ratio
+### brew "jpeg-xl"  # New file format for still image compression
+### brew "aom"  # Codec library for encoding and decoding AV1 video streams
+##
+# End example
+
+# =============================================================================
+# Helper Functions
+# =============================================================================
+
+# Check if a line is a package command (brew, cask, mas, or vscode)
+is_package_command() {
+    local line="$1"
+    [[ "$line" =~ ^(brew|cask|mas|vscode)[[:space:]] ]]
+}
+
+# Check if a line is a description comment (not section headers, etc.)
+is_description_comment() {
+    local line="$1"
+
+    # Must start with # (possibly with leading whitespace)
+    [[ "$line" =~ ^[[:space:]]*# ]] || return 1
+
+    # Extract the comment text after #
+    local comment_text="${line#*#}"
+    comment_text="${comment_text## }"  # Remove leading spaces
+    comment_text="${comment_text%% }"  # Remove trailing spaces
+
+    # Skip empty comments
+    [[ -z "$comment_text" ]] && return 1
+
+    # Skip section headers (all caps, or common header patterns)
+    # Match all-caps words (including single words)
+    if [[ "$comment_text" =~ ^[A-Z][A-Z[:space:]]*$ ]] || [[ "$comment_text" =~ ^[A-Z]+$ ]]; then
+        return 1
+    fi
+
+    # Skip lines that are just separators
+    [[ "$comment_text" =~ ^[-=]+$ ]] && return 1
+
+    # Skip lines that look like section headers (start with caps and contain mostly caps/spaces)
+    local caps_count=$(echo "$comment_text" | grep -o '[A-Z]' | wc -l | tr -d ' ')
+    local total_alpha=$(echo "$comment_text" | grep -o '[A-Za-z]' | wc -l | tr -d ' ')
+    if [[ $total_alpha -gt 0 ]] && [[ $caps_count -eq $total_alpha ]]; then
+        return 1
+    fi
+
+    return 0
+}
+
+# Extract the comment text from a comment line
+extract_comment_text() {
+    local line="$1"
+    # Remove leading whitespace and # character, then trim
+    local comment="${line#"${line%%#*}"}"  # Remove everything before #
+    comment="${comment#\#}"                 # Remove the # itself
+    comment="${comment## }"                 # Remove leading spaces
+    comment="${comment%% }"                 # Remove trailing spaces
+    echo "$comment"
+}
+
+# =============================================================================
+# Main Processing
+# =============================================================================
+
+# State variables
+previous_line=""
+previous_was_comment=false
+
+# Read from file if provided, otherwise stdin
+if [[ -n "$1" ]]; then
+    exec < "$1"
+fi
+
+# Process line by line
+while IFS= read -r line || [[ -n "$line" ]]; do
+    if is_package_command "$line"; then
+        # This is a package command line
+        if [[ "$previous_was_comment" == true ]]; then
+            # Previous line was a description comment - merge them
+            local comment_text=$(extract_comment_text "$previous_line")
+            echo "${line}  # ${comment_text}"
+            previous_line=""
+            previous_was_comment=false
+        else
+            # No previous comment, output as-is
+            echo "$line"
+        fi
+    elif is_description_comment "$line"; then
+        # This is a potential description comment
+        # If we already have a buffered comment, output it first
+        if [[ "$previous_was_comment" == true ]]; then
+            echo "$previous_line"
+        fi
+        # Buffer this comment
+        previous_line="$line"
+        previous_was_comment=true
+    else
+        # This is something else (tap, blank line, other comment, etc.)
+        # Flush any buffered comment first
+        if [[ "$previous_was_comment" == true ]]; then
+            echo "$previous_line"
+            previous_line=""
+            previous_was_comment=false
+        fi
+        # Output current line
+        echo "$line"
+    fi
+done
+
+# Flush any remaining buffered comment at end of file
+if [[ "$previous_was_comment" == true ]]; then
+    echo "$previous_line"
+fi
