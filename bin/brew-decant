@@ -4,12 +4,24 @@
 # Maintains an up-to-date Brewfile in $DOTFILES.
 
 # Paths
-local BREWFILE="$DOTFILES/Brewfile"
+local BREWFILE_LOCATION="$HOME/code/dotfiles/Brewfile"
+local BREWFILE_RAW="$BREWFILE_LOCATION.raw"
+local BREWFILE_SORTED="$BREWFILE_LOCATION.sorted"
 
 # Remove current linkable and home symlink
 echo "Refreshing Brewfile…"
-rm -f $BREWFILE
+rm -f $BREWFILE_RAW
+rm -f $BREWFILE_SORTED
+rm -f $BREWFILE_LOCATION
 
 # Regenerate linkable
-$(brew bundle dump --all --describe --force --file=$BF_DOTFILE)
+$(brew bundle dump --all --describe --force --file=$BREWFILE_RAW)
+
+# Sort the Brewfile using the brewfile-sort script
+$HOME/code/dotfiles/bin/brewfile-sort $BREWFILE_RAW > $BREWFILE_SORTED
+
+# Replace the original Brewfile with the sorted one
+mv $BREWFILE_SORTED $BREWFILE_LOCATION
+
+# Done!
 echo "Ah, that's better!"
