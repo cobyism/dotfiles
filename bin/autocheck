@@ -1,0 +1,97 @@
+#!/usr/bin/env zsh
+
+# This script is intended to be used regularly by zsh to update homebrew,
+# check for outdated packages, notify the user if any packages are outdated, etc.
+# Should only run when there is an internet connection.
+
+# Maintain a file with timestamp of last run
+local TIMESTAMP_FILE="$HOME/.cache/dotfiles/autocheck-timestamp"
+local CURRENT_TIME=$(date +%s)
+local TIME_DIFF=43200 # 12 hours in seconds
+
+# Skip timestamp check if --force is passed
+if [[ "$1" == "--force" ]]; then
+		echo "Forcing autocheck to run regardless of last run time."
+else
+		# Check if the timestamp file exists and read the last run time
+		if [[ -f "$TIMESTAMP_FILE" ]]; then
+				local LAST_RUN_TIME=$(cat "$TIMESTAMP_FILE")
+				local TIME_SINCE_LAST_RUN=$((CURRENT_TIME - LAST_RUN_TIME))
+				if [[ $TIME_SINCE_LAST_RUN -lt $TIME_DIFF ]]; then
+						# Explain when last run was in hours/minutes ago language
+						local HOURS_AGO=$((TIME_SINCE_LAST_RUN / 3600))
+						local MINUTES_AGO=$(((TIME_SINCE_LAST_RUN % 3600) / 60))
+						if [[ $HOURS_AGO -gt 0 ]]; then
+								echo "Last run was $HOURS_AGO hrs and $MINUTES_AGO mins ago."
+						else
+								echo "Last run was $MINUTES_AGO mins ago."
+						fi
+						echo "Skipping. Run with --force to override."
+						# Less than 24 hours since last run, exit
+						exit 0
+				fi
+		fi
+fi
+
+# Replace the timestamp file with the current time
+echo $CURRENT_TIME > "$TIMESTAMP_FILE"
+
+# Check if brew is installed
+if ! command -v brew &> /dev/null; then
+		echo "Homebrew is not installed. Exiting."
+		exit 1
+fi
+
+# Check for internet connection
+if ! ping -c 1 google.com &> /dev/null; then
+		echo "No internet connection. Exiting."
+		exit 1
+fi
+
+# Update Homebrew
+echo "Updating Homebrew..."
+brew update
+if [ $? -ne 0 ]; then
+		echo "Failed to update Homebrew. Exiting."
+		exit 1
+fi
+echo "Homebrew updated successfully."
+# Check for outdated packages
+echo "Checking for outdated packages..."
+OUTDATED_PACKAGES=$(brew outdated)
+if [ $? -ne 0 ]; then
+		echo "Failed to check for outdated packages. Exiting."
+		exit 1
+fi
+if [ -z "$OUTDATED_PACKAGES" ]; then
+		echo "All packages are up to date."
+else
+		echo "The following packages are outdated:"
+		echo "$OUTDATED_PACKAGES"
+		echo "You can update them by running 'brew upgrade'."
+		# Optionally, notify the user via a desktop notification (macOS)
+		if command -v osascript &> /dev/null; then
+				osascript -e 'display notification "Some Homebrew packages are outdated. Run `brew upgrade` to update them." with title "Homebrew Update"'
+		fi
+fi
+
+# Keep Mac App Store apps updated too via `mas`
+if command -v mas &> /dev/null; then
+		echo "Checking for outdated Mac App Store apps..."
+		OUTDATED_MAS_APPS=$(mas outdated)
+		if [ $? -ne 0 ]; then
+				echo "Failed to check for outdated Mac App Store apps. Exiting."
+				exit 1
+		fi
+		if [ -z "$OUTDATED_MAS_APPS" ]; then
+				echo "All Mac App Store apps are up to date."
+		else
+				echo "The following Mac App Store apps are outdated:"
+				echo "$OUTDATED_MAS_APPS"
+				echo "You can update them by running 'mas upgrade'."
+				# Optionally, notify the user via a desktop notification (macOS)
+				if command -v osascript &> /dev/null; then
+						osascript -e 'display notification "Some Mac App Store apps are outdated. Run `mas upgrade` to update them." with title "Mac App Store Update"'
+				fi
+		fi
+fi

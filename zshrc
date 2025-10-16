@@ -25,6 +25,7 @@ export PATH="$DOTFILES/wip:./wip:$PATH"
 export PATH="$DOTFILES/bin:./bin:$PATH"
 export PATH="/Users/cobyism/.yarn/bin:$PATH"
 export PATH="./script:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # =============================== FUNCTIONS
 
@@ -36,44 +37,6 @@ function zz() {
 function source_file() {
   test -r "$1" && source "$1"
 }
-
-# =============================== EVALS
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(zoxide init zsh)"
-
-source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
-source_file "$HOME/.cargo/env"
-
-eval "$(/opt/homebrew/bin/mise activate zsh)"
-
-# source_file "$(brew --prefix asdf)/libexec/asdf.sh"
-# source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-
-# eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# # Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh" ]; then
-#         . "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# # <<< conda initialize <<<
-
-# Added by OrbStack: command-line tools and integration
-# source ~/.orbstack/shell/init.zsh 2>/dev/null || :
-
-# =============================== PROMPT
-
-source_file "$DOTFILES/resources/prompt-typewritten.zsh"
 
 # =============================== Completions
 
@@ -94,6 +57,10 @@ source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
 # export OMZ="$HOME/.oh-my-zsh" # OMZ expects/hijacks $ZSH
 # source_file $OMZ # Sources ~/.oh-my-zsh/oh-my-zsh.sh
 
+# =============================== Homebrew
+
+export HOMEBREW_UPGRADE_GREEDY="1"
+
 # =============================== ALIASES
 
 ## Shell
@@ -106,6 +73,7 @@ alias cd="z"
 alias ..="cd .."
 # alias grep="grepp"
 alias rc="rclone copy --fast-list --progress --progress-terminal-title --verbose --stats 3s --transfers 10"
+alias zed="/opt/homebrew/bin/zed"
 
 ## Projects
 
@@ -122,6 +90,7 @@ alias pn="pnpm"
 
 ## Git
 
+alias lg="lazygit"
 alias gs="git status"
 alias ga="git add"
 alias gcm="git commit -m"
@@ -148,3 +117,50 @@ then
 fi
 
 # Thanks for reading! ^_^
+
+# Added by Windsurf
+export PATH="/Users/cobyism/.codeium/windsurf/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/cobyism/.lmstudio/bin"
+# End of LM Studio CLI section
+
+# =============================== EVALS
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/mise activate zsh)"
+
+#source_file "$DOTFILES/resources/prompt-typewritten.zsh"
+eval "$(starship init zsh)"
+
+source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
+source_file "$HOME/.cargo/env"
+
+eval "$(zoxide init zsh)"
+
+# source_file "$(brew --prefix asdf)/libexec/asdf.sh"
+# source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+# # Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh" ]; then
+#         . "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
+# Added by OrbStack: command-line tools and integration
+# source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+### Finally…
+
+# Autocheck for brew updates and outdated packages
+$DOTFILES/bin/autocheck
