@@ -20,8 +20,8 @@ $(brew bundle dump --all --describe --force --file=$BREWFILE_RAW)
 # Sort the Brewfile using the brewfile-sort script
 $HOME/code/dotfiles/bin/brewfile-sort $BREWFILE_RAW > $BREWFILE_SORTED
 
-# Replace the original Brewfile with the sorted one
-mv $BREWFILE_SORTED $BREWFILE_LOCATION
+# Link the sorted Brewfile to the global Brewfile location
+ln -sf $BREWFILE_SORTED $BREWFILE_LOCATION
 
 # Done!
 echo "Ah, that's better!"

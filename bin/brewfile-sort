@@ -7,35 +7,6 @@
 # or
 # brewfile-sort Brewfile.raw > Brewfile.sorted
 
-# The problems with the default `brew bundle dump` format are:
-# - packages (lines starting with 'brew' or 'cask') have their descriptions as comments, but it's the line directly above the respective package that is the actual description, and notably not all listed packages actually have a related description comment line above them.
-# - mas and vscode packages unfortunately don't have a description comment [FUTURE IMPROVEMENT, NOT FOR NOW]
-
-# The solution is to:
-# - move the description comment line for each package command (located on the line directly preceeding/above) to instead become a comment on the same line as the package command but after the package command itself/
-
-# Example:
-#
-## Before:
-##
-### # Simple, modern, secure file encryption
-### brew "age"
-### # General-purpose data compression with high compression ratio
-### brew "xz"
-### # New file format for still image compression
-### brew "jpeg-xl"
-### # Codec library for encoding and decoding AV1 video streams
-### brew "aom"
-##
-## After:
-##
-### brew "age"  # Simple, modern, secure file encryption
-### brew "xz"  # General-purpose data compression with high compression ratio
-### brew "jpeg-xl"  # New file format for still image compression
-### brew "aom"  # Codec library for encoding and decoding AV1 video streams
-##
-# End example
-
 # =============================================================================
 # Helper Functions
 # =============================================================================
@@ -44,6 +15,24 @@
 is_package_command() {
     local line="$1"
     [[ "$line" =~ ^(brew|cask|mas|vscode)[[:space:]] ]]
+}
+
+# Get the command type from a line
+get_command_type() {
+    local line="$1"
+    if [[ "$line" =~ ^tap[[:space:]] ]]; then
+        echo "tap"
+    elif [[ "$line" =~ ^brew[[:space:]] ]]; then
+        echo "brew"
+    elif [[ "$line" =~ ^cask[[:space:]] ]]; then
+        echo "cask"
+    elif [[ "$line" =~ ^mas[[:space:]] ]]; then
+        echo "mas"
+    elif [[ "$line" =~ ^vscode[[:space:]] ]]; then
+        echo "vscode"
+    else
+        echo ""
+    fi
 }
 
 # Check if a line is a description comment (not section headers, etc.)
@@ -91,56 +80,318 @@ extract_comment_text() {
     echo "$comment"
 }
 
+# Check if a cask is a font
+is_font_cask() {
+    local line="$1"
+    [[ "$line" =~ ^cask[[:space:]]+\"font- ]]
+}
+
+# Fetch description for a mas entry
+fetch_mas_description() {
+    local app_id="$1"
+
+    # Check if mas is available
+    if ! command -v mas &> /dev/null; then
+        echo ""
+        return
+    fi
+
+    # Fetch the description using mas info
+    local description=$(mas info "$app_id" 2>/dev/null | grep -E "^[A-Z]" | head -1 | sed 's/^[[:space:]]*//')
+
+    # If we got a valid description, return it
+    if [[ -n "$description" && ! "$description" =~ ^[0-9] ]]; then
+        echo "$description"
+    else
+        echo ""
+    fi
+}
+
+# Extract mas app ID from a mas line
+extract_mas_id() {
+    local line="$1"
+    local id=$(echo "$line" | grep -o 'id: [0-9]*' | cut -d' ' -f2)
+    echo "$id"
+}
+
+# Calculate maximum command length in an array
+calculate_max_length() {
+    local -a lines=("${(@)@}")
+    local max=0
+    local len
+
+    for line in "${lines[@]}"; do
+        # Get length of just the command part (without any existing comment)
+        local cmd_part="${line%%#*}"
+        cmd_part="${cmd_part%%[[:space:]]}"  # Trim trailing space
+        len=${#cmd_part}
+        if [[ $len -gt $max ]]; then
+            max=$len
+        fi
+    done
+
+    echo $max
+}
+
+# Format a line with aligned comment
+format_with_comment() {
+    local line="$1"
+    local comment="$2"
+    local max_length="$3"
+
+    # If no comment, return line as-is
+    if [[ -z "$comment" ]]; then
+        echo "$line"
+        return
+    fi
+
+    # Get the command part (strip any existing comment)
+    local cmd_part="${line%%#*}"
+    cmd_part="${cmd_part%% }"  # Trim trailing spaces
+
+    # Calculate padding needed
+    local current_length=${#cmd_part}
+    local padding=$((max_length - current_length + 2))
+
+    # Build the padded line and echo it (echo adds newline)
+    local result=$(printf "%s%*s# %s" "$cmd_part" $padding "" "$comment")
+    echo "$result"
+}
+
 # =============================================================================
-# Main Processing
+# Two-Pass Processing
 # =============================================================================
 
-# State variables
-previous_line=""
-previous_was_comment=false
+# Arrays to hold each section's lines
+typeset -a taps
+typeset -a brews
+typeset -a brews_tap  # Brews from custom taps
+typeset -a casks
+typeset -a casks_fonts
+typeset -a mas_entries
+typeset -a vscode_entries
 
 # Read from file if provided, otherwise stdin
 if [[ -n "$1" ]]; then
     exec < "$1"
 fi
 
-# Process line by line
+# PASS 1: Collect and categorize all lines
+previous_line=""
+previous_was_comment=false
+
 while IFS= read -r line || [[ -n "$line" ]]; do
-    if is_package_command "$line"; then
-        # This is a package command line
-        if [[ "$previous_was_comment" == true ]]; then
-            # Previous line was a description comment - merge them
+    # Skip blank lines during collection
+    [[ -z "$line" ]] && continue
+
+    cmd_type=$(get_command_type "$line")
+
+    if [[ -n "$cmd_type" ]]; then
+        # This is a command line
+        local final_line="$line"
+
+        # If previous line was a description comment for brew/cask, merge it
+        if [[ "$previous_was_comment" == true ]] && [[ "$cmd_type" == "brew" || "$cmd_type" == "cask" ]]; then
             local comment_text=$(extract_comment_text "$previous_line")
-            echo "${line}  # ${comment_text}"
-            previous_line=""
-            previous_was_comment=false
-        else
-            # No previous comment, output as-is
-            echo "$line"
+            final_line="${line}  # ${comment_text}"
         fi
+
+        # Categorize the command
+        case "$cmd_type" in
+            tap)
+                taps+=("$final_line")
+                ;;
+            brew)
+                # Check if it's from a custom tap (contains / in the package name)
+                # Use original $line to avoid matching / in description comments
+                if [[ "$line" =~ brew[[:space:]]+\"[^/]+/ ]]; then
+                    brews_tap+=("$final_line")
+                else
+                    brews+=("$final_line")
+                fi
+                ;;
+            cask)
+                if is_font_cask "$line"; then
+                    casks_fonts+=("$final_line")
+                else
+                    casks+=("$final_line")
+                fi
+                ;;
+            mas)
+                mas_entries+=("$final_line")
+                ;;
+            vscode)
+                vscode_entries+=("$final_line")
+                ;;
+        esac
+
+        previous_was_comment=false
     elif is_description_comment "$line"; then
-        # This is a potential description comment
-        # If we already have a buffered comment, output it first
-        if [[ "$previous_was_comment" == true ]]; then
-            echo "$previous_line"
-        fi
-        # Buffer this comment
+        # Buffer this comment for potential merging
         previous_line="$line"
         previous_was_comment=true
     else
-        # This is something else (tap, blank line, other comment, etc.)
-        # Flush any buffered comment first
-        if [[ "$previous_was_comment" == true ]]; then
-            echo "$previous_line"
-            previous_line=""
-            previous_was_comment=false
-        fi
-        # Output current line
-        echo "$line"
+        # Reset comment buffer for non-description lines
+        previous_was_comment=false
     fi
 done
 
-# Flush any remaining buffered comment at end of file
-if [[ "$previous_was_comment" == true ]]; then
-    echo "$previous_line"
+# PASS 2: Format and output each section
+
+# Helper to output a section
+output_section() {
+    local section_name="$1"
+    local -a section_lines=("${(@)@:2}")
+
+    # Skip empty sections
+    [[ ${#section_lines[@]} -eq 0 ]] && return
+
+    # Output section header
+    echo ""
+    echo "# ============= ${section_name} ============="
+
+    # Calculate max length for this section
+    local max_length=$(calculate_max_length "${section_lines[@]}")
+
+    # Output each line
+    for line in "${section_lines[@]}"; do
+        # Check if line already has a comment
+        if [[ "$line" =~ "#" ]]; then
+            # Extract command and comment parts
+            local cmd_part="${line%%#*}"
+            cmd_part="${cmd_part%% }"  # Trim trailing spaces
+            local comment_part="${line#*#}"
+            comment_part="${comment_part## }"  # Trim leading spaces
+
+            # Format with alignment
+            printf "%s" "$(format_with_comment "$cmd_part" "$comment_part" "$max_length")"
+        else
+            # No comment, just output the line
+            echo "$line"
+        fi
+    done
+}
+
+# Output TAPS section
+if [[ ${#taps[@]} -gt 0 ]]; then
+    echo "# ============= TAPS ============="
+
+    # Add generic comment to taps
+    local max_length=$(calculate_max_length "${taps[@]}")
+    for line in "${taps[@]}"; do
+        format_with_comment "$line" "Third-party repository" "$max_length"
+    done
 fi
+
+# Output BREWS section
+if [[ ${#brews[@]} -gt 0 || ${#brews_tap[@]} -gt 0 ]]; then
+    echo ""
+    echo "# ============= BREWS ============="
+
+    # Output standard brews
+    if [[ ${#brews[@]} -gt 0 ]]; then
+        local max_length=$(calculate_max_length "${brews[@]}")
+        for line in "${brews[@]}"; do
+            if [[ "$line" =~ "#" ]]; then
+                local cmd_part="${line%%#*}"
+                cmd_part="${cmd_part%% }"
+                local comment_part="${line#*#}"
+                comment_part="${comment_part## }"
+                format_with_comment "$cmd_part" "$comment_part" "$max_length"
+            else
+                echo "$line"
+            fi
+        done
+    fi
+
+    # Add spacing before tap brews
+    if [[ ${#brews_tap[@]} -gt 0 ]]; then
+        echo ""
+        local max_length=$(calculate_max_length "${brews_tap[@]}")
+        for line in "${brews_tap[@]}"; do
+            if [[ "$line" =~ "#" ]]; then
+                local cmd_part="${line%%#*}"
+                cmd_part="${cmd_part%% }"
+                local comment_part="${line#*#}"
+                comment_part="${comment_part## }"
+                format_with_comment "$cmd_part" "$comment_part" "$max_length"
+            else
+                echo "$line"
+            fi
+        done
+    fi
+fi
+
+# Output CASKS section
+if [[ ${#casks[@]} -gt 0 || ${#casks_fonts[@]} -gt 0 ]]; then
+    echo ""
+    echo "# ============= CASKS ============="
+
+    # Output regular casks
+    if [[ ${#casks[@]} -gt 0 ]]; then
+        local max_length=$(calculate_max_length "${casks[@]}")
+        for line in "${casks[@]}"; do
+            if [[ "$line" =~ "#" ]]; then
+                local cmd_part="${line%%#*}"
+                cmd_part="${cmd_part%% }"
+                local comment_part="${line#*#}"
+                comment_part="${comment_part## }"
+                format_with_comment "$cmd_part" "$comment_part" "$max_length"
+            else
+                echo "$line"
+            fi
+        done
+    fi
+
+    # Output fonts subsection
+    if [[ ${#casks_fonts[@]} -gt 0 ]]; then
+        echo ""
+        echo "# --- Fonts ---"
+        local max_length=$(calculate_max_length "${casks_fonts[@]}")
+        for line in "${casks_fonts[@]}"; do
+            if [[ "$line" =~ "#" ]]; then
+                local cmd_part="${line%%#*}"
+                cmd_part="${cmd_part%% }"
+                local comment_part="${line#*#}"
+                comment_part="${comment_part## }"
+                format_with_comment "$cmd_part" "$comment_part" "$max_length"
+            else
+                echo "$line"
+            fi
+        done
+    fi
+fi
+
+# Output MAS section
+if [[ ${#mas_entries[@]} -gt 0 ]]; then
+    echo ""
+    echo "# ============= MAS ============="
+
+    local max_length=$(calculate_max_length "${mas_entries[@]}")
+    for line in "${mas_entries[@]}"; do
+        # Try to fetch description from mas info
+        local app_id=$(extract_mas_id "$line")
+        local description=$(fetch_mas_description "$app_id")
+
+        # Format with or without description
+        if [[ -n "$description" ]]; then
+            format_with_comment "$line" "$description" "$max_length"
+        else
+            echo "$line"
+        fi
+    done
+fi
+
+# Output VSCODE section
+if [[ ${#vscode_entries[@]} -gt 0 ]]; then
+    echo ""
+    echo "# ============= VSCODE ============="
+
+    local max_length=$(calculate_max_length "${vscode_entries[@]}")
+    for line in "${vscode_entries[@]}"; do
+        format_with_comment "$line" "VSCode extension" "$max_length"
+    done
+fi
+
+# Final blank line
+echo ""

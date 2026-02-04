@@ -6,7 +6,6 @@
                 "rules": [
                     {
                         "description": "rright_option to Meh modifier layer (like 'Raise' on some ergo keyboards)",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {

@@ -34,8 +34,7 @@
 	autocrlf = input
 	quotepath = false
 	editor = code
-	# pager = diff-so-fancy | less --tabs=1,5 -R
-	pager = delta
+	pager = delta # brew "git-delta"
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [help]

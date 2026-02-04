@@ -1,0 +1,754 @@
+#!/usr/bin/env zsh
+
+################################################################################
+# Script Template - High Quality CLI Script Baseline
+#
+# Description: Template script with comprehensive helper functions for building
+#              robust command-line tools with beautiful output and UX.
+#
+# Usage: ./script-template.zsh [options]
+#
+# Dependencies:
+#   - gum (https://github.com/charmbracelet/gum)
+#   - zsh
+#
+# Author: Your Name
+# Version: 1.0.0
+################################################################################
+
+set -e  # Exit on error
+setopt LOCAL_OPTIONS
+setopt LOCAL_TRAPS
+
+################################################################################
+# CONFIGURATION
+################################################################################
+
+SCRIPT_NAME="$(basename "$0")"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_VERSION="1.0.0"
+
+# Color codes
+readonly COLOR_RESET='\033[0m'
+readonly COLOR_BOLD='\033[1m'
+readonly COLOR_DIM='\033[2m'
+readonly COLOR_ITALIC='\033[3m'
+readonly COLOR_UNDERLINE='\033[4m'
+readonly COLOR_BLINK='\033[5m'
+readonly COLOR_REVERSE='\033[7m'
+
+# Foreground colors
+readonly FG_BLACK='\033[30m'
+readonly FG_RED='\033[31m'
+readonly FG_GREEN='\033[32m'
+readonly FG_YELLOW='\033[33m'
+readonly FG_BLUE='\033[34m'
+readonly FG_MAGENTA='\033[35m'
+readonly FG_CYAN='\033[36m'
+readonly FG_WHITE='\033[37m'
+readonly FG_GRAY='\033[90m'
+
+# Bright foreground colors
+readonly FG_BRIGHT_RED='\033[91m'
+readonly FG_BRIGHT_GREEN='\033[92m'
+readonly FG_BRIGHT_YELLOW='\033[93m'
+readonly FG_BRIGHT_BLUE='\033[94m'
+readonly FG_BRIGHT_MAGENTA='\033[95m'
+readonly FG_BRIGHT_CYAN='\033[96m'
+readonly FG_BRIGHT_WHITE='\033[97m'
+
+# Background colors
+readonly BG_BLACK='\033[40m'
+readonly BG_RED='\033[41m'
+readonly BG_GREEN='\033[42m'
+readonly BG_YELLOW='\033[43m'
+readonly BG_BLUE='\033[44m'
+readonly BG_MAGENTA='\033[45m'
+readonly BG_CYAN='\033[46m'
+readonly BG_WHITE='\033[47m'
+
+# Icons
+readonly ICON_CHECK='✔'
+readonly ICON_CROSS='✘'
+readonly ICON_ARROW='→'
+readonly ICON_BULLET='•'
+readonly ICON_STAR='★'
+readonly ICON_HEART='❤'
+readonly ICON_STAR_OUTLINE='☆'
+readonly ICON_HEART_OUTLINE='♥'
+readonly ICON_DIAMOND='◆'
+readonly ICON_SPARKLE=''
+readonly ICON_SPARKLES=''
+readonly ICON_WARNING='⚠'
+readonly ICON_INFO=''
+readonly ICON_QUESTION='?'
+readonly ICON_GEAR='⚙'
+readonly ICON_FOLDER=''
+readonly ICON_FILE='󰈙'
+readonly ICON_LINK=''
+readonly ICON_LOCK='🔒'
+readonly ICON_UNLOCK='🔓'
+readonly ICON_PACKAGE='󰏗'
+readonly ICON_SEARCH=''
+readonly ICON_WRENCH='󰖷'
+readonly ICON_HAMMER='󰣪'
+
+# A collection of many commonly used icons
+readonly ICON_COLLECTION_STR="""
+✔ ✘ → • ★ ❤ ☆ ♥ ◆   ⚠ ℹ ? ⚙  󰈙  🔒 🔓 󰏗   󰖷 󰣪 󰊢                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+"""
+
+# Log levels
+readonly LOG_LEVEL_DEBUG=0
+readonly LOG_LEVEL_INFO=1
+readonly LOG_LEVEL_SUCCESS=2
+readonly LOG_LEVEL_WARNING=3
+readonly LOG_LEVEL_ERROR=4
+readonly LOG_LEVEL_FATAL=5
+
+# Current log level (set to INFO by default)
+LOG_LEVEL=${LOG_LEVEL:-$LOG_LEVEL_INFO}
+
+# Flags
+VERBOSE=false
+DRY_RUN=false
+FORCE=false
+QUIET=false
+
+################################################################################
+# HELPER FUNCTIONS - Basic Output
+################################################################################
+
+# Print with color
+# Usage: print_color "message" "$FG_RED"
+print_color() {
+    local message="$1"
+    local color="${2:-$COLOR_RESET}"
+    printf "${color}%s${COLOR_RESET}\n" "$message"
+}
+
+# Print with color and style
+# Usage: print_styled "message" "$FG_RED" "$COLOR_BOLD"
+print_styled() {
+    local message="$1"
+    local color="${2:-$COLOR_RESET}"
+    local style="${3:-}"
+    printf "${style}${color}%s${COLOR_RESET}\n" "$message"
+}
+
+# Print without newline
+# Usage: print_no_newline "message" "$FG_BLUE"
+print_no_newline() {
+    local message="$1"
+    local color="${2:-$COLOR_RESET}"
+    printf "${color}%s${COLOR_RESET}" "$message"
+}
+
+################################################################################
+# HELPER FUNCTIONS - Logging
+################################################################################
+
+# Generic log function
+# Usage: log "$LOG_LEVEL_INFO" "Message"
+log() {
+    local level=$1
+    shift
+    local message="$*"
+
+    if [[ $level -lt $LOG_LEVEL ]]; then
+        return
+    fi
+
+    if [[ "$QUIET" == true && $level -lt $LOG_LEVEL_ERROR ]]; then
+        return
+    fi
+
+    local timestamp
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+    case $level in
+        $LOG_LEVEL_DEBUG)
+            printf "${FG_GRAY}[%s] ${ICON_GEAR} DEBUG: %s${COLOR_RESET}\n" "$timestamp" "$message" >&2
+            ;;
+        $LOG_LEVEL_INFO)
+            printf "${FG_BLUE}[%s] ${ICON_INFO} INFO: %s${COLOR_RESET}\n" "$timestamp" "$message"
+            ;;
+        $LOG_LEVEL_SUCCESS)
+            printf "${FG_GREEN}[%s] ${ICON_CHECK} SUCCESS: %s${COLOR_RESET}\n" "$timestamp" "$message"
+            ;;
+        $LOG_LEVEL_WARNING)
+            printf "${FG_YELLOW}[%s] ${ICON_WARNING} WARNING: %s${COLOR_RESET}\n" "$timestamp" "$message" >&2
+            ;;
+        $LOG_LEVEL_ERROR)
+            printf "${FG_RED}[%s] ${ICON_CROSS} ERROR: %s${COLOR_RESET}\n" "$timestamp" "$message" >&2
+            ;;
+        $LOG_LEVEL_FATAL)
+            printf "${FG_BRIGHT_RED}${COLOR_BOLD}[%s] ${ICON_CROSS} FATAL: %s${COLOR_RESET}\n" "$timestamp" "$message" >&2
+            ;;
+    esac
+}
+
+# Convenience logging functions
+log_debug() { log $LOG_LEVEL_DEBUG "$@"; }
+log_info() { log $LOG_LEVEL_INFO "$@"; }
+log_success() { log $LOG_LEVEL_SUCCESS "$@"; }
+log_warning() { log $LOG_LEVEL_WARNING "$@"; }
+log_error() { log $LOG_LEVEL_ERROR "$@"; }
+log_fatal() { log $LOG_LEVEL_FATAL "$@"; exit 1; }
+
+################################################################################
+# HELPER FUNCTIONS - Formatted Messages
+################################################################################
+
+# Success message
+# Usage: msg_success "Operation completed"
+msg_success() {
+    print_styled "${ICON_CHECK} $*" "$FG_GREEN" "$COLOR_BOLD"
+}
+
+# Error message
+# Usage: msg_error "Operation failed"
+msg_error() {
+    print_styled "${ICON_CROSS} $*" "$FG_RED" "$COLOR_BOLD"
+}
+
+# Warning message
+# Usage: msg_warning "Be careful!"
+msg_warning() {
+    print_styled "${ICON_WARNING} $*" "$FG_YELLOW" "$COLOR_BOLD"
+}
+
+# Info message
+# Usage: msg_info "Processing data..."
+msg_info() {
+    print_styled "${ICON_INFO} $*" "$FG_BLUE" "$COLOR_BOLD"
+}
+
+# Step message (for multi-step processes)
+# Usage: msg_step 1 5 "Installing dependencies"
+msg_step() {
+    local current=$1
+    local total=$2
+    shift 2
+    local message="$*"
+    print_styled "[${current}/${total}] ${ICON_ARROW} ${message}" "$FG_CYAN" "$COLOR_BOLD"
+}
+
+# Header message
+# Usage: msg_header "Configuration"
+msg_header() {
+    local message="$*"
+    printf "\n${FG_BRIGHT_CYAN}${COLOR_BOLD}"
+    printf "%s\n" "$message"
+    printf "%s" "$message" | sed 's/./=/g'
+    printf "${COLOR_RESET}\n\n"
+}
+
+# Subheader message
+# Usage: msg_subheader "Database Settings"
+msg_subheader() {
+    local message="$*"
+    printf "\n${FG_CYAN}${COLOR_BOLD}%s${COLOR_RESET}\n" "$message"
+    printf "%s" "$message" | sed 's/./-/g'
+    printf "\n\n"
+}
+
+# Box message
+# Usage: msg_box "Important Notice" "This is a critical message"
+msg_box() {
+    local title="$1"
+    local message="$2"
+    local width=60
+
+    printf "\n${FG_CYAN}┌"
+    printf "─%.0s" {1..$((width-2))}
+    printf "┐${COLOR_RESET}\n"
+
+    printf "${FG_CYAN}│${COLOR_RESET} ${COLOR_BOLD}%-*s${COLOR_RESET} ${FG_CYAN}│${COLOR_RESET}\n" $((width-4)) "$title"
+
+    printf "${FG_CYAN}├"
+    printf "─%.0s" {1..$((width-2))}
+    printf "┤${COLOR_RESET}\n"
+
+    # Word wrap message
+    echo "$message" | fold -s -w $((width-4)) | while IFS= read -r line; do
+        printf "${FG_CYAN}│${COLOR_RESET} %-*s ${FG_CYAN}│${COLOR_RESET}\n" $((width-4)) "$line"
+    done
+
+    printf "${FG_CYAN}└"
+    printf "─%.0s" {1..$((width-2))}
+    printf "┘${COLOR_RESET}\n\n"
+}
+
+################################################################################
+# HELPER FUNCTIONS - Lists and Tables
+################################################################################
+
+# Print a bullet list
+# Usage: print_list "Item 1" "Item 2" "Item 3"
+print_list() {
+    for item in "$@"; do
+        printf "  ${FG_CYAN}${ICON_BULLET}${COLOR_RESET} %s\n" "$item"
+    done
+}
+
+# Print a numbered list
+# Usage: print_numbered_list "First" "Second" "Third"
+print_numbered_list() {
+    local i=1
+    for item in "$@"; do
+        printf "  ${FG_CYAN}%d.${COLOR_RESET} %s\n" "$i" "$item"
+        ((i++))
+    done
+}
+
+# Print a checklist
+# Usage: print_checklist true "Completed task" false "Pending task"
+print_checklist() {
+    while [[ $# -gt 0 ]]; do
+        local status=$1
+        local item=$2
+        shift 2
+
+        if [[ "$status" == "true" ]]; then
+            printf "  ${FG_GREEN}${ICON_CHECK}${COLOR_RESET} %s\n" "$item"
+        else
+            printf "  ${FG_RED}${ICON_CROSS}${COLOR_RESET} %s\n" "$item"
+        fi
+    done
+}
+
+# Print a key-value pair (aligned)
+# Usage: print_kv "Name" "John Doe" "Email" "john@example.com"
+print_kv() {
+    local max_key_length=0
+    local -a keys
+    local -a values
+
+    # First pass: collect keys and values, find max key length
+    while [[ $# -gt 0 ]]; do
+        local key="$1"
+        local value="$2"
+        shift 2
+
+        keys+=("$key")
+        values+=("$value")
+
+        if [[ ${#key} -gt $max_key_length ]]; then
+            max_key_length=${#key}
+        fi
+    done
+
+    # Second pass: print aligned
+    for i in {1..${#keys[@]}}; do
+        printf "  ${FG_CYAN}%-*s${COLOR_RESET} ${ICON_ARROW} %s\n" \
+            "$max_key_length" "${keys[$i]}" "${values[$i]}"
+    done
+}
+
+# Print a simple table
+# Usage: print_table "Header1,Header2,Header3" "Row1Col1,Row1Col2,Row1Col3" "Row2Col1,Row2Col2,Row2Col3"
+print_table() {
+    local header="$1"
+    shift
+    local -a rows=("$@")
+
+    # Convert header to array
+    IFS=',' read -rA header_cols <<< "$header"
+    local num_cols=${#header_cols[@]}
+
+    # Calculate column widths
+    local -a col_widths
+    for ((i=1; i<=num_cols; i++)); do
+        col_widths[$i]=${#header_cols[$i]}
+    done
+
+    for row in "${rows[@]}"; do
+        IFS=',' read -rA cols <<< "$row"
+        for ((i=1; i<=num_cols; i++)); do
+            if [[ ${#cols[$i]} -gt ${col_widths[$i]} ]]; then
+                col_widths[$i]=${#cols[$i]}
+            fi
+        done
+    done
+
+    # Print header
+    printf "\n${FG_CYAN}${COLOR_BOLD}"
+    for ((i=1; i<=num_cols; i++)); do
+        printf "%-*s" $((col_widths[$i] + 3)) "${header_cols[$i]}"
+    done
+    printf "${COLOR_RESET}\n"
+
+    # Print separator
+    printf "${FG_CYAN}"
+    for ((i=1; i<=num_cols; i++)); do
+        printf "%s" "$(printf '─%.0s' $(seq 1 $((col_widths[$i] + 2))))"
+        [[ $i -lt $num_cols ]] && printf " "
+    done
+    printf "${COLOR_RESET}\n"
+
+    # Print rows
+    for row in "${rows[@]}"; do
+        IFS=',' read -rA cols <<< "$row"
+        for ((i=1; i<=num_cols; i++)); do
+            printf "%-*s" $((col_widths[$i] + 3)) "${cols[$i]}"
+        done
+        printf "\n"
+    done
+    printf "\n"
+}
+
+################################################################################
+# HELPER FUNCTIONS - Progress and Status
+################################################################################
+
+# Progress bar
+# Usage: progress_bar 65 100 "Processing"
+progress_bar() {
+    local current=$1
+    local total=$2
+    local label="${3:-Progress}"
+    local width=40
+
+    local percentage=$((current * 100 / total))
+    local filled=$((current * width / total))
+    local empty=$((width - filled))
+
+    printf "\r${FG_CYAN}${label}:${COLOR_RESET} ["
+    printf "${FG_GREEN}%0.s█${COLOR_RESET}" $(seq 1 $filled)
+    printf "%0.s░" $(seq 1 $empty)
+    printf "] ${COLOR_BOLD}%3d%%${COLOR_RESET}" "$percentage"
+}
+
+# Spinner (requires background process)
+# Usage: long_running_command & show_spinner $! "Loading..."
+show_spinner() {
+    local pid=$1
+    local message="${2:-Processing}"
+    local spinstr='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+
+    printf "\n"
+    while kill -0 "$pid" 2>/dev/null; do
+        local temp=${spinstr#?}
+        printf "\r${FG_CYAN}%s${COLOR_RESET} %s..." "${spinstr:0:1}" "$message"
+        spinstr=$temp${spinstr:0:1}
+        sleep 0.1
+    done
+
+    wait "$pid"
+    local exit_code=$?
+
+    if [[ $exit_code -eq 0 ]]; then
+        printf "\r${FG_GREEN}${ICON_CHECK}${COLOR_RESET} %s... ${FG_GREEN}Done!${COLOR_RESET}\n" "$message"
+    else
+        printf "\r${FG_RED}${ICON_CROSS}${COLOR_RESET} %s... ${FG_RED}Failed!${COLOR_RESET}\n" "$message"
+    fi
+
+    return $exit_code
+}
+
+################################################################################
+# Gum Command cheatsheet
+################################################################################
+
+# Choose
+#
+# echo "Pick a card, any card..."
+# CARD=$(gum choose --height 15 {{A,K,Q,J},{10..2}}" "{♠,♥,♣,♦})
+# echo "Was your card the $CARD?"
+#
+# cat songs.txt | gum choose --limit 5
+#
+# cat foods.txt | gum choose --no-limit --header "Grocery Shopping"
+
+# Filter
+
+################################################################################
+# HELPER FUNCTIONS - Utilities
+################################################################################
+
+# Check if command exists
+# Usage: if command_exists "git"; then ... fi
+command_exists() {
+    command -v "$1" &> /dev/null
+}
+
+# Confirm action
+# Usage: if confirm "Delete file?"; then rm file.txt; fi
+confirm() {
+    local prompt="${1:-Are you sure?}"
+
+    if [[ "$FORCE" == true ]]; then
+        return 0
+    fi
+
+    if check_gum; then
+        gum_confirm "$prompt"
+    else
+        printf "${FG_YELLOW}${prompt}${COLOR_RESET} [y/N]: "
+        read -r response
+        [[ "$response" =~ ^[Yy]$ ]]
+    fi
+}
+
+# Execute command with dry-run support
+# Usage: execute "rm -rf /tmp/test"
+execute() {
+    local cmd="$*"
+
+    if [[ "$DRY_RUN" == true ]]; then
+        msg_info "[DRY RUN] Would execute: $cmd"
+        return 0
+    fi
+
+    if [[ "$VERBOSE" == true ]]; then
+        msg_info "Executing: $cmd"
+    fi
+
+    eval "$cmd"
+}
+
+# Print separator
+# Usage: print_separator 80 "="
+print_separator() {
+    local width="${1:-80}"
+    local char="${2:-─}"
+    printf "${FG_GRAY}"
+    printf "%${width}s" | tr ' ' "$char"
+    printf "${COLOR_RESET}\n"
+}
+
+# Print banner
+# Usage: print_banner "My Script v1.0"
+print_banner() {
+    local title="$1"
+    local width=60
+
+    printf "\n${FG_BRIGHT_CYAN}${COLOR_BOLD}"
+    printf "╔"
+    printf "═%.0s" {1..$((width-2))}
+    printf "╗\n"
+
+    local padding=$(( (width - ${#title} - 2) / 2 ))
+    printf "║"
+    printf " %.0s" {1..$padding}
+    printf "%s" "$title"
+    printf " %.0s" {1..$((width - ${#title} - padding - 2))}
+    printf "║\n"
+
+    printf "╚"
+    printf "═%.0s" {1..$((width-2))}
+    printf "╝${COLOR_RESET}\n\n"
+}
+
+# Cleanup function (trap on EXIT)
+cleanup() {
+    log_debug "Cleaning up..."
+    # Add cleanup code here
+}
+
+# Error handler (trap on ERR)
+error_handler() {
+    local line_no=$1
+    log_error "Script failed at line $line_no"
+}
+
+################################################################################
+# SCRIPT LOGIC
+################################################################################
+
+# Show usage information
+show_usage() {
+    cat << EOF
+${COLOR_BOLD}Usage:${COLOR_RESET}
+    $SCRIPT_NAME [OPTIONS]
+
+${COLOR_BOLD}Description:${COLOR_RESET}
+    Template script demonstrating various helper functions for CLI tools.
+
+${COLOR_BOLD}Options:${COLOR_RESET}
+    -h, --help       Show this help message
+    -v, --verbose    Enable verbose output
+    -d, --dry-run    Show what would be done without doing it
+    -f, --force      Skip confirmation prompts
+    -q, --quiet      Suppress non-error output
+    --version        Show version information
+
+${COLOR_BOLD}Examples:${COLOR_RESET}
+    $SCRIPT_NAME
+    $SCRIPT_NAME --verbose
+    $SCRIPT_NAME --dry-run
+
+EOF
+}
+
+# Parse command-line arguments
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                show_usage
+                exit 0
+                ;;
+            -v|--verbose)
+                VERBOSE=true
+                LOG_LEVEL=$LOG_LEVEL_DEBUG
+                shift
+                ;;
+            -d|--dry-run)
+                DRY_RUN=true
+                shift
+                ;;
+            -f|--force)
+                FORCE=true
+                shift
+                ;;
+            -q|--quiet)
+                QUIET=true
+                shift
+                ;;
+            --version)
+                echo "$SCRIPT_NAME version $SCRIPT_VERSION"
+                exit 0
+                ;;
+            --demo)
+                demo_features
+                exit 0
+                ;;
+            *)
+                msg_error "Unknown option: $1"
+                show_usage
+                exit 1
+                ;;
+        esac
+    done
+}
+
+# Demo function showing all features
+demo_features() {
+    print_banner "$SCRIPT_NAME Demo"
+
+    # Basic messages
+    msg_header "Basic Messages"
+    msg_success "This is a success message"
+    msg_error "This is an error message"
+    msg_warning "This is a warning message"
+    msg_info "This is an info message"
+
+    # Steps
+    msg_header "Multi-Step Process"
+    msg_step 1 5 "Initializing system"
+    sleep 0.25
+    msg_step 2 5 "Loading configuration"
+    sleep 0.25
+    msg_step 3 5 "Connecting to database"
+    sleep 0.25
+    msg_step 4 5 "Processing data"
+    sleep 0.25
+    msg_step 5 5 "Finalizing"
+
+    # Lists
+    msg_header "Lists and Checklists"
+    msg_subheader "Bullet List"
+    print_list "First item" "Second item" "Third item"
+
+    msg_subheader "Numbered List"
+    print_numbered_list "First step" "Second step" "Third step"
+
+    msg_subheader "Checklist"
+    # print_checklist true "Completed task" false "Pending task" true "Another completed task"
+
+    # Key-value pairs
+    msg_header "Configuration Details"
+    print_kv \
+        "Name" "My Application" \
+        "Version" "1.0.0" \
+        "Author" "John Doe" \
+        "Status" "Active"
+
+    # Table
+    msg_header "Data Table"
+    print_table \
+        "ID,Name,Status,Score" \
+        "1,Alice,Active,95" \
+        "2,Bob,Inactive,87" \
+        "3,Charlie,Active,92"
+
+    # Box message
+    msg_box "Important Notice" "This is a demonstration of a boxed message. It can contain multiple lines and will be automatically wrapped to fit within the box."
+
+    # Progress simulation
+    msg_header "Progress Indicators"
+    msg_info "Simulating progress bar..."
+    for i in {0..100..10}; do
+        progress_bar $i 100 "Processing"
+        sleep 0.2
+    done
+    printf "\n\n"
+
+    # Logging
+    msg_header "Logging System"
+    log_debug "This is a debug message"
+    log_info "This is an info log"
+    log_success "Operation completed successfully"
+    log_warning "This is a warning"
+    log_error "This is an error (non-fatal)"
+
+    # Icons showcase
+    msg_header "Available Icons"
+	printf "  ${ICON_INFO} Info  ${ICON_WARNING} Warning  ${ICON_ERROR} Error  ${ICON_SUCCESS} Success\n"
+	printf "  ${ICON_CHECK} Check  ${ICON_CROSS} Cross  ${ICON_ARROW} Arrow  ${ICON_BULLET} Bullet\n"
+	printf "  ${ICON_STAR} Star  ${ICON_ROCKET} Rocket  ${ICON_GEAR} Gear  ${ICON_FOLDER} Folder\n"
+	printf "  ${ICON_FILE} File  ${ICON_SPARKLES} Sparkles  ${ICON_FIRE} Fire  ${ICON_TADA} Celebration\n"
+	printf "  ${ICON_LIGHTNING} Lightning  ${ICON_PACKAGE} Package  ${ICON_SEARCH} Search  ${ICON_WRENCH} Wrench\n"
+	printf "  ${ICON_HAMMER} Hammer  ${ICON_UNLOCK} Unlock  ${ICON_LOCK} Lock  ${ICON_PACKAGE} Package\n"
+	printf "  ${ICON_SEARCH} Search  ${ICON_WRENCH} Wrench  ${ICON_HAMMER} Hammer  ${ICON_UNLOCK} Unlock\n"
+
+
+    # Gum integration demo
+    if check_gum; then
+        msg_header "Interactive Features (Gum)"
+
+        if confirm "Would you like to try interactive inputs?"; then
+            name=$(gum_input "What's your name?" "Enter name...")
+            msg_success "Hello, $name!"
+
+            choice=$(gum_choose "Pick your favorite:" "Option A" "Option B" "Option C")
+            msg_info "You selected: $choice"
+
+            msg_success "Interactive demo complete!"
+        else
+            msg_info "Skipping interactive demo"
+        fi
+    else
+        msg_warning "Gum not installed - skipping interactive features demo"
+        msg_info "Install gum with: brew install gum"
+    fi
+
+    # Final separator
+    print_separator 60
+    msg_success "${ICON_TADA} Demo completed successfully!"
+    print_separator 60
+}
+
+# Main function
+main() {
+    # Set up traps
+    trap cleanup EXIT
+    trap 'error_handler $LINENO' ERR
+
+    # Parse arguments
+    parse_args "$@"
+
+    # Run demo
+    # demo_features
+}
+
+################################################################################
+# SCRIPT ENTRY POINT
+################################################################################
+
+# Only run main if script is executed directly (not sourced)
+if [[ "${ZSH_EVAL_CONTEXT}" == "toplevel" ]]; then
+    main "$@"
+fi

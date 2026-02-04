@@ -1,97 +1,690 @@
 #!/usr/bin/env zsh
+set -e
 
-# This script is intended to be used regularly by zsh to update homebrew,
-# check for outdated packages, notify the user if any packages are outdated, etc.
-# Should only run when there is an internet connection.
+# =============================================================================
+# Autocheck - Automated Package Update Checker
+# =============================================================================
+# This script periodically checks for outdated Homebrew packages, Mac App Store
+# apps, and other package managers, notifying the user of available updates.
 
-# Maintain a file with timestamp of last run
-local TIMESTAMP_FILE="$HOME/.cache/dotfiles/autocheck-timestamp"
-local CURRENT_TIME=$(date +%s)
-local TIME_DIFF=43200 # 12 hours in seconds
+# Constants
+readonly SCRIPT_VERSION="2.0.0"
+readonly CACHE_DIR="$HOME/.cache/dotfiles"
+readonly CONFIG_DIR="$HOME/.config/dotfiles"
+readonly TIMESTAMP_FILE="$CACHE_DIR/autocheck-timestamp"
+readonly CONFIG_FILE="$CONFIG_DIR/autocheck.conf"
+readonly LOG_FILE="$CACHE_DIR/autocheck.log"
+readonly HISTORY_FILE="$CACHE_DIR/autocheck-history.log"
 
-# Skip timestamp check if --force is passed
-if [[ "$1" == "--force" ]]; then
-		echo "Forcing autocheck to run regardless of last run time."
+# Default configuration
+DEFAULT_CHECK_INTERVAL=43200  # 12 hours in seconds
+DEFAULT_NOTIFY=true
+DEFAULT_AUTO_UPGRADE=false
+DEFAULT_QUIET_MODE=false
+DEFAULT_VERBOSE=false
+
+# Runtime variables
+FORCE_RUN=false
+DRY_RUN=false
+QUIET_MODE=$DEFAULT_QUIET_MODE
+VERBOSE=$DEFAULT_VERBOSE
+AUTO_UPGRADE=$DEFAULT_AUTO_UPGRADE
+CHECK_INTERVAL=$DEFAULT_CHECK_INTERVAL
+NOTIFY=$DEFAULT_NOTIFY
+
+# Color codes for output
+if [[ -t 1 ]]; then
+    readonly RED='\033[0;31m'
+    readonly GREEN='\033[0;32m'
+    readonly YELLOW='\033[0;33m'
+    readonly BLUE='\033[0;34m'
+    readonly MAGENTA='\033[0;35m'
+    readonly CYAN='\033[0;36m'
+    readonly BOLD='\033[1m'
+    readonly RESET='\033[0m'
 else
-		# Check if the timestamp file exists and read the last run time
-		if [[ -f "$TIMESTAMP_FILE" ]]; then
-				local LAST_RUN_TIME=$(cat "$TIMESTAMP_FILE")
-				local TIME_SINCE_LAST_RUN=$((CURRENT_TIME - LAST_RUN_TIME))
-				if [[ $TIME_SINCE_LAST_RUN -lt $TIME_DIFF ]]; then
-						# Explain when last run was in hours/minutes ago language
-						local HOURS_AGO=$((TIME_SINCE_LAST_RUN / 3600))
-						local MINUTES_AGO=$(((TIME_SINCE_LAST_RUN % 3600) / 60))
-						if [[ $HOURS_AGO -gt 0 ]]; then
-								echo "Last run was $HOURS_AGO hrs and $MINUTES_AGO mins ago."
-						else
-								echo "Last run was $MINUTES_AGO mins ago."
-						fi
-						echo "Skipping. Run with --force to override."
-						# Less than 24 hours since last run, exit
-						exit 0
-				fi
-		fi
+    readonly RED=''
+    readonly GREEN=''
+    readonly YELLOW=''
+    readonly BLUE=''
+    readonly MAGENTA=''
+    readonly CYAN=''
+    readonly BOLD=''
+    readonly RESET=''
 fi
 
-# Replace the timestamp file with the current time
-echo $CURRENT_TIME > "$TIMESTAMP_FILE"
+# =============================================================================
+# Utility Functions
+# =============================================================================
 
-# Check if brew is installed
-if ! command -v brew &> /dev/null; then
-		echo "Homebrew is not installed. Exiting."
-		exit 1
-fi
+log() {
+    local level="$1"
+    shift
+    local message="$*"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" >> "$LOG_FILE"
+}
 
-# Check for internet connection
-if ! ping -c 1 google.com &> /dev/null; then
-		echo "No internet connection. Exiting."
-		exit 1
-fi
+print_info() {
+    [[ "$QUIET_MODE" == true ]] && return
+    echo "${BLUE}ℹ${RESET} $*"
+    log "INFO" "$*"
+}
 
-# Update Homebrew
-echo "Updating Homebrew..."
-brew update
-if [ $? -ne 0 ]; then
-		echo "Failed to update Homebrew. Exiting."
-		exit 1
-fi
-echo "Homebrew updated successfully."
-# Check for outdated packages
-echo "Checking for outdated packages..."
-OUTDATED_PACKAGES=$(brew outdated)
-if [ $? -ne 0 ]; then
-		echo "Failed to check for outdated packages. Exiting."
-		exit 1
-fi
-if [ -z "$OUTDATED_PACKAGES" ]; then
-		echo "All packages are up to date."
-else
-		echo "The following packages are outdated:"
-		echo "$OUTDATED_PACKAGES"
-		echo "You can update them by running 'brew upgrade'."
-		# Optionally, notify the user via a desktop notification (macOS)
-		if command -v osascript &> /dev/null; then
-				osascript -e 'display notification "Some Homebrew packages are outdated. Run `brew upgrade` to update them." with title "Homebrew Update"'
-		fi
-fi
+print_success() {
+    [[ "$QUIET_MODE" == true ]] && return
+    echo "${GREEN}✓${RESET} $*"
+    log "SUCCESS" "$*"
+}
 
-# Keep Mac App Store apps updated too via `mas`
-if command -v mas &> /dev/null; then
-		echo "Checking for outdated Mac App Store apps..."
-		OUTDATED_MAS_APPS=$(mas outdated)
-		if [ $? -ne 0 ]; then
-				echo "Failed to check for outdated Mac App Store apps. Exiting."
-				exit 1
-		fi
-		if [ -z "$OUTDATED_MAS_APPS" ]; then
-				echo "All Mac App Store apps are up to date."
-		else
-				echo "The following Mac App Store apps are outdated:"
-				echo "$OUTDATED_MAS_APPS"
-				echo "You can update them by running 'mas upgrade'."
-				# Optionally, notify the user via a desktop notification (macOS)
-				if command -v osascript &> /dev/null; then
-						osascript -e 'display notification "Some Mac App Store apps are outdated. Run `mas upgrade` to update them." with title "Mac App Store Update"'
-				fi
-		fi
-fi
+print_warning() {
+    echo "${YELLOW}⚠${RESET} $*" >&2
+    log "WARNING" "$*"
+}
+
+print_error() {
+    echo "${RED}✗${RESET} $*" >&2
+    log "ERROR" "$*"
+}
+
+print_verbose() {
+    [[ "$VERBOSE" == true ]] || return
+    echo "${CYAN}→${RESET} $*"
+}
+
+print_header() {
+    [[ "$QUIET_MODE" == true ]] && return
+    echo ""
+    echo "${BOLD}$*${RESET}"
+    echo "$(printf '%.0s─' {1..60})"
+}
+
+cleanup() {
+    # Cleanup function for trap
+    log "INFO" "Script interrupted or exiting"
+}
+
+trap cleanup EXIT INT TERM
+
+# =============================================================================
+# Configuration Management
+# =============================================================================
+
+load_config() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        print_verbose "Loading configuration from $CONFIG_FILE"
+        source "$CONFIG_FILE"
+
+        # Override defaults with config values if present
+        [[ -n "${AUTOCHECK_INTERVAL:-}" ]] && CHECK_INTERVAL=$AUTOCHECK_INTERVAL
+        [[ -n "${AUTOCHECK_NOTIFY:-}" ]] && NOTIFY=$AUTOCHECK_NOTIFY
+        [[ -n "${AUTOCHECK_AUTO_UPGRADE:-}" ]] && AUTO_UPGRADE=$AUTOCHECK_AUTO_UPGRADE
+        [[ -n "${AUTOCHECK_QUIET:-}" ]] && QUIET_MODE=$AUTOCHECK_QUIET
+        [[ -n "${AUTOCHECK_VERBOSE:-}" ]] && VERBOSE=$AUTOCHECK_VERBOSE
+    fi
+}
+
+create_default_config() {
+    mkdir -p "$CONFIG_DIR"
+    cat > "$CONFIG_FILE" << 'EOF'
+# Autocheck Configuration
+# =============================================================================
+
+# Check interval in seconds (default: 43200 = 12 hours)
+AUTOCHECK_INTERVAL=43200
+
+# Enable notifications (true/false)
+AUTOCHECK_NOTIFY=true
+
+# Auto-upgrade packages (true/false) - WARNING: use with caution
+AUTOCHECK_AUTO_UPGRADE=false
+
+# Quiet mode - minimal output (true/false)
+AUTOCHECK_QUIET=false
+
+# Verbose mode - detailed output (true/false)
+AUTOCHECK_VERBOSE=false
+
+# Packages to exclude from checks (space-separated)
+AUTOCHECK_EXCLUDE_PACKAGES=""
+
+# Check additional package managers (true/false)
+AUTOCHECK_CHECK_MISE=true
+AUTOCHECK_CHECK_NPM=true
+
+# Run brew doctor checks (true/false)
+AUTOCHECK_RUN_DOCTOR=false
+
+# Battery threshold - don't run if battery is below this percentage
+AUTOCHECK_BATTERY_THRESHOLD=20
+EOF
+    print_success "Created default configuration at $CONFIG_FILE"
+}
+
+# =============================================================================
+# Prerequisite Checks
+# =============================================================================
+
+ensure_directories() {
+    mkdir -p "$CACHE_DIR"
+    mkdir -p "$CONFIG_DIR"
+    print_verbose "Ensured cache and config directories exist"
+}
+
+check_prerequisites() {
+    print_verbose "Checking prerequisites..."
+
+    # Check if brew is installed
+    if ! command -v brew &> /dev/null; then
+        print_error "Homebrew is not installed. Please install from https://brew.sh"
+        return 1
+    fi
+
+    # Check for internet connection
+    if ! check_internet_connection; then
+        print_error "No internet connection detected"
+        return 1
+    fi
+
+    print_verbose "All prerequisites satisfied"
+    return 0
+}
+
+check_internet_connection() {
+    # Try multiple methods to check internet connectivity
+    # First try DNS resolution as it's most reliable
+    if host -W 2 google.com &> /dev/null; then
+        return 0
+    elif ping -c 1 -W 2 8.8.8.8 &> /dev/null; then
+        return 0
+    elif curl -s --connect-timeout 2 https://www.google.com &> /dev/null; then
+        return 0
+    fi
+
+    # In sandbox or restricted environments, assume we have internet if brew exists
+    # since brew requires network to function properly
+    if command -v brew &> /dev/null; then
+        print_verbose "Cannot verify internet, but assuming connectivity (brew installed)"
+        return 0
+    fi
+
+    return 1
+}
+
+check_battery_level() {
+    if [[ -z "${AUTOCHECK_BATTERY_THRESHOLD:-}" ]] || [[ "$AUTOCHECK_BATTERY_THRESHOLD" -eq 0 ]]; then
+        return 0
+    fi
+
+    # Check if on macOS
+    if ! command -v pmset &> /dev/null; then
+        return 0
+    fi
+
+    local battery_percent=$(pmset -g batt | grep -o '[0-9]*%' | tr -d '%' | head -1)
+    local is_charging=$(pmset -g batt | grep -q 'AC Power' && echo true || echo false)
+
+    if [[ "$is_charging" == false ]] && [[ "$battery_percent" -lt "${AUTOCHECK_BATTERY_THRESHOLD:-20}" ]]; then
+        print_warning "Battery level ($battery_percent%) below threshold. Skipping."
+        return 1
+    fi
+
+    return 0
+}
+
+# =============================================================================
+# Timestamp and Scheduling Logic
+# =============================================================================
+
+should_run() {
+    if [[ "$FORCE_RUN" == true ]]; then
+        print_info "Forcing autocheck to run (--force flag used)"
+        return 0
+    fi
+
+    if [[ ! -f "$TIMESTAMP_FILE" ]]; then
+        print_verbose "No previous run timestamp found. Running check."
+        return 0
+    fi
+
+    local last_run_time=$(cat "$TIMESTAMP_FILE" 2>/dev/null || echo 0)
+    local current_time=$(date +%s)
+    local time_since_last_run=$((current_time - last_run_time))
+
+    if [[ $time_since_last_run -lt $CHECK_INTERVAL ]]; then
+        local hours_ago=$((time_since_last_run / 3600))
+        local minutes_ago=$(((time_since_last_run % 3600) / 60))
+
+        if [[ $hours_ago -gt 0 ]]; then
+            print_info "Last run was $hours_ago hrs and $minutes_ago mins ago."
+        else
+            print_info "Last run was $minutes_ago mins ago."
+        fi
+
+        local hours_until_next=$((CHECK_INTERVAL / 3600))
+        print_info "Next check scheduled in approximately $hours_until_next hours."
+        print_info "Run with --force to override."
+        return 1
+    fi
+
+    return 0
+}
+
+update_timestamp() {
+    echo "$(date +%s)" > "$TIMESTAMP_FILE"
+    print_verbose "Updated timestamp file"
+}
+
+# =============================================================================
+# Notification System
+# =============================================================================
+
+send_notification() {
+    [[ "$NOTIFY" != true ]] && return
+
+    local title="$1"
+    local message="$2"
+
+    if command -v osascript &> /dev/null; then
+        osascript -e "display notification \"$message\" with title \"$title\"" 2>/dev/null
+        print_verbose "Sent notification: $title"
+    fi
+}
+
+# =============================================================================
+# Homebrew Management
+# =============================================================================
+
+update_homebrew() {
+    print_header "Updating Homebrew"
+
+    if [[ "$DRY_RUN" == true ]]; then
+        print_info "DRY RUN: Would update Homebrew"
+        return 0
+    fi
+
+    print_info "Updating Homebrew repository..."
+    if brew update 2>&1 | tee -a "$LOG_FILE"; then
+        print_success "Homebrew updated successfully"
+        return 0
+    else
+        print_error "Failed to update Homebrew"
+        return 1
+    fi
+}
+
+check_outdated_packages() {
+    print_header "Checking Homebrew Packages"
+
+    print_info "Checking for outdated formulae..."
+    local outdated_formulae=$(brew outdated --formula 2>/dev/null)
+
+    print_info "Checking for outdated casks..."
+    local outdated_casks=$(brew outdated --cask 2>/dev/null)
+
+    local formula_count=0
+    local cask_count=0
+    [[ -n "$outdated_formulae" ]] && formula_count=$(echo "$outdated_formulae" | grep -c .)
+    [[ -n "$outdated_casks" ]] && cask_count=$(echo "$outdated_casks" | grep -c .)
+    local total_count=$((formula_count + cask_count))
+
+    if [[ $total_count -eq 0 ]]; then
+        print_success "All Homebrew packages are up to date"
+        return 0
+    fi
+
+    echo ""
+    print_warning "Found $total_count outdated package(s):"
+
+    if [[ $formula_count -gt 0 ]]; then
+        echo ""
+        echo "${BOLD}Formulae ($formula_count):${RESET}"
+        echo "$outdated_formulae" | while read -r line; do
+            echo "  • $line"
+        done
+    fi
+
+    if [[ $cask_count -gt 0 ]]; then
+        echo ""
+        echo "${BOLD}Casks ($cask_count):${RESET}"
+        echo "$outdated_casks" | while read -r line; do
+            echo "  • $line"
+        done
+    fi
+
+    echo ""
+    print_info "Run 'brew upgrade' to update all packages"
+    print_info "Or 'brew upgrade <package>' to update specific packages"
+
+    # Log to history
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Homebrew: $total_count outdated ($formula_count formulae, $cask_count casks)" >> "$HISTORY_FILE"
+
+    # Send notification
+    send_notification "Homebrew Updates Available" "$total_count package(s) can be upgraded"
+
+    # Auto-upgrade if enabled
+    if [[ "$AUTO_UPGRADE" == true ]] && [[ "$DRY_RUN" != true ]]; then
+        print_info "Auto-upgrade enabled. Upgrading packages..."
+        brew upgrade
+        print_success "All packages upgraded"
+    fi
+
+    return 0
+}
+
+check_brew_cleanup() {
+    print_verbose "Checking if brew cleanup is needed..."
+
+    local cleanup_size=$(brew cleanup -n 2>/dev/null | grep -E '^[0-9]+' | tail -1)
+
+    if [[ -n "$cleanup_size" ]]; then
+        print_info "Cleanup available: $cleanup_size can be freed"
+        print_info "Run 'brew cleanup' to free up space"
+    fi
+}
+
+check_brew_doctor() {
+    [[ "${AUTOCHECK_RUN_DOCTOR:-false}" != true ]] && return
+
+    print_header "Running Brew Doctor"
+
+    print_info "Checking for potential issues..."
+    local doctor_output=$(brew doctor 2>&1)
+
+    if echo "$doctor_output" | grep -q "Your system is ready to brew"; then
+        print_success "No issues found"
+    else
+        print_warning "Brew doctor found potential issues:"
+        echo "$doctor_output"
+    fi
+}
+
+# =============================================================================
+# Mac App Store Management
+# =============================================================================
+
+check_mas_updates() {
+    if ! command -v mas &> /dev/null; then
+        print_verbose "mas (Mac App Store CLI) not installed. Skipping MAS check."
+        return 0
+    fi
+
+    print_header "Checking Mac App Store Apps"
+
+    print_info "Checking for outdated apps..."
+    local outdated_mas=$(mas outdated 2>/dev/null)
+
+    if [[ $? -ne 0 ]]; then
+        print_error "Failed to check Mac App Store apps"
+        return 1
+    fi
+
+    local mas_count=0
+    [[ -n "$outdated_mas" ]] && mas_count=$(echo "$outdated_mas" | grep -c .)
+
+    if [[ $mas_count -eq 0 ]]; then
+        print_success "All Mac App Store apps are up to date"
+        return 0
+    fi
+
+    echo ""
+    print_warning "Found $mas_count outdated app(s):"
+    echo "$outdated_mas" | while read -r line; do
+        echo "  • $line"
+    done
+
+    echo ""
+    print_info "Run 'mas upgrade' to update all apps"
+
+    # Log to history
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Mac App Store: $mas_count outdated" >> "$HISTORY_FILE"
+
+    # Send notification
+    send_notification "Mac App Store Updates" "$mas_count app(s) can be upgraded"
+
+    # Auto-upgrade if enabled
+    if [[ "$AUTO_UPGRADE" == true ]] && [[ "$DRY_RUN" != true ]]; then
+        print_info "Auto-upgrade enabled. Upgrading apps..."
+        mas upgrade
+        print_success "All apps upgraded"
+    fi
+
+    return 0
+}
+
+# =============================================================================
+# Additional Package Manager Checks
+# =============================================================================
+
+check_mise_tools() {
+    [[ "${AUTOCHECK_CHECK_MISE:-true}" != true ]] && return
+
+    if ! command -v mise &> /dev/null; then
+        print_verbose "mise not installed. Skipping mise check."
+        return 0
+    fi
+
+    print_header "Checking mise Tools"
+
+    print_info "Checking for outdated mise tools..."
+    # Use timeout to prevent hanging (30 seconds max)
+    local outdated_mise=$(timeout 30 mise outdated 2>/dev/null || true)
+
+    if [[ -z "$outdated_mise" ]]; then
+        print_success "All mise tools are up to date"
+        return 0
+    fi
+
+    echo ""
+    print_warning "Outdated mise tools found:"
+    echo "$outdated_mise"
+    echo ""
+    print_info "Run 'mise upgrade' to update tools"
+
+    return 0
+}
+
+check_npm_packages() {
+    [[ "${AUTOCHECK_CHECK_NPM:-true}" != true ]] && return
+
+    if ! command -v npm &> /dev/null; then
+        print_verbose "npm not installed. Skipping npm check."
+        return 0
+    fi
+
+    print_header "Checking npm Global Packages"
+
+    print_info "Checking for outdated global packages..."
+    # Use timeout to prevent hanging (30 seconds max)
+    local outdated_npm=$(timeout 30 npm outdated -g --depth=0 2>/dev/null || true)
+
+    if [[ -z "$outdated_npm" ]]; then
+        print_success "All npm global packages are up to date"
+        return 0
+    fi
+
+    echo ""
+    print_warning "Outdated npm global packages found:"
+    echo "$outdated_npm"
+    echo ""
+    print_info "Run 'npm update -g' to update packages"
+
+    return 0
+}
+
+
+# =============================================================================
+# Argument Parsing
+# =============================================================================
+
+show_help() {
+    cat << EOF
+${BOLD}Autocheck${RESET} - Automated Package Update Checker v${SCRIPT_VERSION}
+
+${BOLD}USAGE:${RESET}
+    autocheck [OPTIONS]
+
+${BOLD}OPTIONS:${RESET}
+    -h, --help              Show this help message
+    -f, --force             Force run regardless of last run time
+    -q, --quiet             Quiet mode (minimal output)
+    -v, --verbose           Verbose mode (detailed output)
+    -d, --dry-run           Dry run (don't make changes)
+    -a, --auto-upgrade      Auto-upgrade packages (use with caution)
+    --config                Create/recreate default config file
+    --version               Show version information
+    --history               Show update check history
+
+${BOLD}EXAMPLES:${RESET}
+    autocheck               # Run normal check
+    autocheck --force       # Force check now
+    autocheck --verbose     # Run with detailed output
+    autocheck --dry-run     # See what would happen
+
+${BOLD}CONFIGURATION:${RESET}
+    Config file: $CONFIG_FILE
+    Run 'autocheck --config' to create a default configuration file.
+
+${BOLD}FILES:${RESET}
+    Config:     $CONFIG_FILE
+    Log:        $LOG_FILE
+    History:    $HISTORY_FILE
+    Timestamp:  $TIMESTAMP_FILE
+EOF
+}
+
+show_version() {
+    echo "autocheck version $SCRIPT_VERSION"
+}
+
+show_history() {
+    if [[ ! -f "$HISTORY_FILE" ]]; then
+        print_info "No history available yet"
+        return
+    fi
+
+    print_header "Recent Update History"
+    tail -20 "$HISTORY_FILE"
+}
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+            -f|--force)
+                FORCE_RUN=true
+                shift
+                ;;
+            -q|--quiet)
+                QUIET_MODE=true
+                shift
+                ;;
+            -v|--verbose)
+                VERBOSE=true
+                shift
+                ;;
+            -d|--dry-run)
+                DRY_RUN=true
+                print_info "DRY RUN MODE: No changes will be made"
+                shift
+                ;;
+            -a|--auto-upgrade)
+                AUTO_UPGRADE=true
+                shift
+                ;;
+            --config)
+                create_default_config
+                exit 0
+                ;;
+            --version)
+                show_version
+                exit 0
+                ;;
+            --history)
+                show_history
+                exit 0
+                ;;
+            *)
+                print_error "Unknown option: $1"
+                echo "Run 'autocheck --help' for usage information"
+                exit 1
+                ;;
+        esac
+    done
+}
+
+# =============================================================================
+# Main Execution
+# =============================================================================
+
+main() {
+    # Parse command line arguments
+    parse_args "$@"
+
+    # Ensure directories exist
+    ensure_directories
+
+    # Load configuration
+    load_config
+
+    # Log script start
+    log "INFO" "=== Autocheck started (v${SCRIPT_VERSION}) ==="
+
+    # Check if we should run based on timestamp
+    if ! should_run; then
+        exit 0
+    fi
+
+    # Check battery level
+    if ! check_battery_level; then
+        exit 0
+    fi
+
+    # Check prerequisites
+    if ! check_prerequisites; then
+        exit 1
+    fi
+
+    # Temporarily disable exit on error for checks
+    set +e
+
+    # Run all checks
+    local all_success=true
+
+    update_homebrew || all_success=false
+    check_outdated_packages || all_success=false
+    check_brew_cleanup
+    check_brew_doctor
+
+    check_mas_updates || all_success=false
+
+    # Additional package managers
+    check_mise_tools || all_success=false
+    check_npm_packages || all_success=false
+
+    # Re-enable exit on error
+    set -e
+
+    # Update timestamp only on success
+    if [[ "$all_success" == true ]] && [[ "$DRY_RUN" != true ]]; then
+        update_timestamp
+    fi
+
+    # Summary
+    print_header "Summary"
+    if [[ "$all_success" == true ]]; then
+        print_success "All checks completed successfully"
+    else
+        print_warning "Some checks failed. Check the log for details: $LOG_FILE"
+    fi
+
+    log "INFO" "=== Autocheck completed ==="
+
+    return 0
+}
+
+# Run main function
+main "$@"

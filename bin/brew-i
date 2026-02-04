@@ -1,0 +1,293 @@
+#!/usr/bin/env zsh
+
+# brew i: A cleaner output for brew info
+# Usage: brew i <package1> [package2] [package3] ...
+#
+# This script is my set of improvements for the output of 'brew info' command.
+# It shows the following fields, formatted in a more readable way.
+
+
+# Example brew info output:
+# brew info wget
+# ==> wget: stable 1.25.0 (bottled), HEAD
+# Internet file retriever
+# https://www.gnu.org/software/wget/
+# Installed
+# /opt/homebrew/Cellar/wget/1.25.0 (92 files, 4.5MB) *
+#   Poured from bottle using the formulae.brew.sh API on 2025-03-15 at 10:35:40
+# From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/w/wget.rb
+# License: GPL-3.0-or-later
+# ==> Dependencies
+# Build: pkgconf ✔
+# Required: libidn2 ✔, openssl@3 ✔, gettext ✔, libunistring ✔
+# ==> Options
+# --HEAD
+# 	Install HEAD version
+# ==> Analytics
+# install: 34,774 (30 days), 110,236 (90 days), 830,191 (365 days)
+# install-on-request: 34,446 (30 days), 109,475 (90 days), 826,188 (365 days)
+# build-error: 8 (30 days)
+
+# Example brew info output as json:
+# [
+#   {
+#     "name": "wget",
+#     "full_name": "wget",
+#     "tap": "homebrew/core",
+#     "oldnames": [],
+#     "aliases": [],
+#     "versioned_formulae": [],
+#     "desc": "Internet file retriever",
+#     "license": "GPL-3.0-or-later",
+#     "homepage": "https://www.gnu.org/software/wget/",
+#     "versions": {
+#       "stable": "1.25.0",
+#       "head": "HEAD",
+#       "bottle": true
+#     },
+#     "urls": {
+#       "stable": {
+#         "url": "https://ftpmirror.gnu.org/gnu/wget/wget-1.25.0.tar.gz",
+#         "tag": null,
+#         "revision": null,
+#         "using": null,
+#         "checksum": "766e48423e79359ea31e41db9e5c289675947a7fcf2efdcedb726ac9d0da3784"
+#       },
+#       "head": {
+#         "url": "https://git.savannah.gnu.org/git/wget.git",
+#         "branch": "master",
+#         "using": null
+#       }
+#     },
+#     "revision": 0,
+#     "version_scheme": 0,
+#     "compatibility_version": null,
+#     "autobump": true,
+#     "no_autobump_message": null,
+#     "skip_livecheck": false,
+#     "bottle": {
+#       "stable": {
+#         "rebuild": 0,
+#         "root_url": "https://ghcr.io/v2/homebrew/core",
+#         "files": {
+#           "arm64_tahoe": {
+#             "cellar": "/opt/homebrew/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:8cbb5d277cd207e543c9b2e75953e89c7cc89105b2322f3ce652616c5d0f62fe",
+#             "sha256": "8cbb5d277cd207e543c9b2e75953e89c7cc89105b2322f3ce652616c5d0f62fe"
+#           },
+#           "arm64_sequoia": {
+#             "cellar": "/opt/homebrew/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:a93dd95c5d63036e026b526e000d33fae7fb44d9a8fda5afc89bff112438c6b3",
+#             "sha256": "a93dd95c5d63036e026b526e000d33fae7fb44d9a8fda5afc89bff112438c6b3"
+#           },
+#           "arm64_sonoma": {
+#             "cellar": "/opt/homebrew/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:4d180cd4ead91a34e2c2672189fc366b87ae86e6caa3acbf4845b272f57c859a",
+#             "sha256": "4d180cd4ead91a34e2c2672189fc366b87ae86e6caa3acbf4845b272f57c859a"
+#           },
+#           "arm64_ventura": {
+#             "cellar": "/opt/homebrew/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:7fce09705a52a2aff61c4bdd81b9d2a1a110539718ded2ad45562254ef0f5c22",
+#             "sha256": "7fce09705a52a2aff61c4bdd81b9d2a1a110539718ded2ad45562254ef0f5c22"
+#           },
+#           "sonoma": {
+#             "cellar": "/usr/local/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:5650778a8e7a60c2dea9412dd21d2f5e8ff4f224dbefbdf54924b99012062edc",
+#             "sha256": "5650778a8e7a60c2dea9412dd21d2f5e8ff4f224dbefbdf54924b99012062edc"
+#           },
+#           "ventura": {
+#             "cellar": "/usr/local/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:78cee523a9b58a7b824b51767935f68c9838e9f673e70d001982858001e766ff",
+#             "sha256": "78cee523a9b58a7b824b51767935f68c9838e9f673e70d001982858001e766ff"
+#           },
+#           "arm64_linux": {
+#             "cellar": "/home/linuxbrew/.linuxbrew/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:2f06529fc47fa99e9d4a5ebd19f25c046dda236278c7c5979e080ad7e5387236",
+#             "sha256": "2f06529fc47fa99e9d4a5ebd19f25c046dda236278c7c5979e080ad7e5387236"
+#           },
+#           "x86_64_linux": {
+#             "cellar": "/home/linuxbrew/.linuxbrew/Cellar",
+#             "url": "https://ghcr.io/v2/homebrew/core/wget/blobs/sha256:ab5f3c1c60bef4e2a4781e9b29af8afb48ead837136c419edd7febdf44b59058",
+#             "sha256": "ab5f3c1c60bef4e2a4781e9b29af8afb48ead837136c419edd7febdf44b59058"
+#           }
+#         }
+#       }
+#     },
+#     "pour_bottle_only_if": null,
+#     "keg_only": false,
+#     "keg_only_reason": null,
+#     "options": [],
+#     "build_dependencies": [
+#       "pkgconf"
+#     ],
+#     "dependencies": [
+#       "libidn2",
+#       "openssl@3",
+#       "gettext",
+#       "libunistring"
+#     ],
+#     "test_dependencies": [],
+#     "recommended_dependencies": [],
+#     "optional_dependencies": [],
+#     "uses_from_macos": [
+#       "zlib"
+#     ],
+#     "uses_from_macos_bounds": [
+#       {}
+#     ],
+#     "requirements": [],
+#     "conflicts_with": [],
+#     "conflicts_with_reasons": [],
+#     "link_overwrite": [],
+#     "caveats": null,
+#     "installed": [
+#       {
+#         "version": "1.25.0",
+#         "used_options": [],
+#         "built_as_bottle": true,
+#         "poured_from_bottle": true,
+#         "time": 1741988140,
+#         "runtime_dependencies": [
+#           {
+#             "full_name": "libunistring",
+#             "version": "1.3",
+#             "revision": 0,
+#             "pkg_version": "1.3",
+#             "declared_directly": true
+#           },
+#           {
+#             "full_name": "gettext",
+#             "version": "0.24",
+#             "revision": 0,
+#             "pkg_version": "0.24",
+#             "declared_directly": true
+#           },
+#           {
+#             "full_name": "libidn2",
+#             "version": "2.3.8",
+#             "revision": 0,
+#             "pkg_version": "2.3.8",
+#             "declared_directly": true
+#           },
+#           {
+#             "full_name": "ca-certificates",
+#             "version": "2025-02-25",
+#             "revision": 0,
+#             "pkg_version": "2025-02-25",
+#             "declared_directly": false
+#           },
+#           {
+#             "full_name": "openssl@3",
+#             "version": "3.4.1",
+#             "revision": 0,
+#             "pkg_version": "3.4.1",
+#             "declared_directly": true
+#           }
+#         ],
+#         "installed_as_dependency": false,
+#         "installed_on_request": true
+#       }
+#     ],
+#     "linked_keg": "1.25.0",
+#     "pinned": false,
+#     "outdated": false,
+#     "deprecated": false,
+#     "deprecation_date": null,
+#     "deprecation_reason": null,
+#     "deprecation_replacement_formula": null,
+#     "deprecation_replacement_cask": null,
+#     "disabled": false,
+#     "disable_date": null,
+#     "disable_reason": null,
+#     "disable_replacement_formula": null,
+#     "disable_replacement_cask": null,
+#     "post_install_defined": false,
+#     "service": null,
+#     "tap_git_head": "461ca5f03be0d016571ad3e9a51ddc47d929064e",
+#     "ruby_source_path": "Formula/w/wget.rb",
+#     "ruby_source_checksum": {
+#       "sha256": "173856181a96d6d402afb115f329a38af8661f65c41000cddb9f0405235483b1"
+#     },
+#     "head_dependencies": {
+#       "build_dependencies": [
+#         "autoconf",
+#         "automake",
+#         "xz",
+#         "pkgconf"
+#       ],
+#       "dependencies": [
+#         "libidn2",
+#         "openssl@3",
+#         "gettext",
+#         "libunistring"
+#       ],
+#       "test_dependencies": [],
+#       "recommended_dependencies": [],
+#       "optional_dependencies": [],
+#       "uses_from_macos": [
+#         "zlib"
+#       ],
+#       "uses_from_macos_bounds": [
+#         {}
+#       ]
+#     }
+#   }
+# ]
+
+
+# Example output of this script (incredibly pretty table format/pretty-printed with underlines and ANSI colors etc.):
+# Package Version Description             Homepage
+# wget ✔  1.25.0  Internet file retriever https://www.gnu.org/software/wget/
+
+
+# Exit on error
+set -e
+
+# Variables
+
+# Check if at least one package name was provided
+if [ $# -eq 0 ]; then
+    echo "Usage: brew i <package1> [package2] ..." >&2
+    echo "Example: brew i wget curl jq" >&2
+    exit 1
+fi
+
+# For pretty output formatting, underlined headers, colors, etc.
+# We can use ANSI escape codes.
+# For example:
+# \033[4m - underline
+# \033[32m - green
+# \033[31m - red
+# \033[33m - yellow
+# \033[34m - blue
+# \033[35m - magenta
+# \033[36m - cyan
+# \033[0m - reset
+
+local header="\033[4m%-10s\033[0m | %-10s | %-10s | %-10s\n" "Package" "Version" "Description" "Homepage"
+
+# Function to process a single package
+process_package() {
+    local package="$1"
+    local info_output
+
+    # Get the info as json from brew info
+    info_output=$(brew info --json "$package")
+
+    # Parse the json
+    local name=$(echo "$info_output" | jq -r '.[0].name')
+    local description=$(echo "$info_output" | jq -r '.[0].desc')
+    local version=$(echo "$info_output" | jq -r '.[0].versions.stable')
+    local homepage=$(echo "$info_output" | jq -r '.[0].homepage')
+    local installed=$(echo "$info_output" | jq -r '.[0].installed')
+
+    local output="%-10s ✔ %-10s %-10s %-10s\n" "$name" "$version" "$description" "$homepage"
+
+    echo -e "$output"
+}
+
+# Print the header and output for each package
+printf "$header"
+for package in "$@"; do
+    process_package "$package"
+done
