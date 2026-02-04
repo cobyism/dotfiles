@@ -1,0 +1,450 @@
+# ============= TAPS =============
+tap "archivebox/archivebox"  # Third-party repository
+tap "cantino/mcfly"          # Third-party repository
+tap "charmbracelet/tap"      # Third-party repository
+tap "heroku/brew"            # Third-party repository
+tap "macos-fuse-t/cask"      # Third-party repository
+tap "sidneys/homebrew"       # Third-party repository
+tap "zero-sh/tap"            # Third-party repository
+
+# ============= BREWS =============
+brew "age"                                        # Simple, modern, secure file encryption
+brew "xz"                                         # General-purpose data compression with high compression ratio
+brew "jpeg-xl"                                    # New file format for still image compression
+brew "aom"                                        # Codec library for encoding and decoding AV1 video streams
+brew "aria2"                                      # Download with resuming and segmented downloading
+brew "autoconf"                                   # Automatic configure script builder
+brew "libtool"                                    # Generic library support script
+brew "pkgconf"                                    # Package compiler and linker metadata toolkit
+brew "autogen"                                    # Automated text file generator
+brew "automake"                                   # Tool for generating GNU Standards-compliant Makefiles
+brew "libgit2"                                    # C library of Git core methods that is re-entrant and linkable
+brew "bat"                                        # Clone of cat(1) with syntax highlighting and Git integration
+brew "bottom"                                     # Yet another cross-platform graphical process/system monitor
+brew "broot"                                      # New way to see and navigate directory trees
+brew "btop"                                       # Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "cabextract"                                 # Extract files from Microsoft cabinet files
+brew "glib"                                       # Core application library for C
+brew "libx11"                                     # X.Org: Core X11 protocol client library
+brew "cairo"                                      # Vector graphics library with cross-device output support
+brew "cdrtools"                                   # CD/DVD/Blu-ray premastering and recording software
+brew "cheops"                                     # CHEss OPponent Simulator
+brew "cloc"                                       # Statistics utility to count lines of code
+brew "cloudflared"                                # Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "cmake"                                      # Cross-platform make
+brew "coreutils"                                  # GNU File, Shell, and Text utilities
+brew "dcraw"                                      # Digital camera RAW photo decoding software
+brew "diff-so-fancy"                              # Good-lookin' diffs with diff-highlight and more
+brew "diffoscope"                                 # In-depth comparison of files, archives, and directories
+brew "diffutils"                                  # File comparison utilities
+brew "docker-compose"                             # Isolated development environments using Docker
+brew "duf"                                        # Disk Usage/Free Utility - a better 'df' alternative
+brew "dupseek"                                    # Interactive program to find and remove duplicate files
+brew "dust"                                       # More intuitive version of du in rust
+brew "exiftool"                                   # Perl lib for reading and writing EXIF metadata
+brew "eza"                                        # Modern, maintained replacement for ls
+brew "fclones"                                    # Efficient Duplicate File Finder
+brew "fd"                                         # Simple, fast and user-friendly alternative to find
+brew "fdupes"                                     # Identify or delete duplicate files
+brew "libogg"                                     # Ogg Bitstream Library
+brew "flac"                                       # Free lossless audio codec
+brew "unbound"                                    # Validating, recursive, caching DNS resolver
+brew "gnutls"                                     # GNU Transport Layer Security (TLS) Library
+brew "harfbuzz"                                   # OpenType text shaping engine
+brew "libass"                                     # Subtitle renderer for the ASS/SSA subtitle format
+brew "libvorbis"                                  # Vorbis general audio compression codec
+brew "mpg123"                                     # MP3 player for Linux and UNIX
+brew "opus"                                       # Audio codec
+brew "pango"                                      # Framework for layout and rendering of i18n text
+brew "tesseract"                                  # OCR (Optical Character Recognition) engine
+brew "ffmpeg"                                     # Play, record, convert, and stream audio and video
+brew "pmix"                                       # Process Management Interface for HPC environments
+brew "open-mpi"                                   # High performance message passing library
+brew "findutils"                                  # Collection of GNU find, xargs, and locate
+brew "flyctl"                                     # Command-line tools for fly.io services
+brew "fx"                                         # Terminal JSON viewer
+brew "fzf"                                        # Command-line fuzzy finder written in Go
+brew "gdrive"                                     # Google Drive CLI Client
+brew "node"                                       # Platform built on V8 to build network applications
+brew "gemini-cli"                                 # Interact with Google Gemini AI models from the command-line
+brew "gh"                                         # GitHub command-line tool
+brew "ghostscript"                                # Interpreter for PostScript and PDF
+brew "git"                                        # Distributed revision control system
+brew "git-delta"                                  # Syntax-highlighting pager for git and diff output
+brew "git-lfs"                                    # Git extension for versioning large files
+brew "glow"                                       # Render markdown on the CLI
+brew "libassuan"                                  # Assuan IPC Library
+brew "gpac"                                       # Multimedia framework for research and academic purposes
+brew "grep"                                       # GNU grep, egrep and fgrep
+brew "gum"                                        # Tool for glamorous shell scripts
+brew "handbrake"                                  # Open-source video transcoder available for Linux, Mac, and Windows
+brew "html2markdown"                              # Convert HTML to Markdown
+brew "htop"                                       # Improved top (interactive process viewer)
+brew "hut"                                        # CLI tool for sr.ht
+brew "libheif"                                    # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
+brew "imagemagick"                                # Tools and libraries to manipulate images in many formats
+brew "jdupes"                                     # Duplicate file finder and an enhanced fork of 'fdupes'
+brew "jq"                                         # Lightweight and flexible command-line JSON processor
+brew "kubernetes-cli"                             # Kubernetes command-line interface
+brew "lazygit"                                    # Simple terminal UI for git commands
+brew "libmediainfo"                               # Shared library for mediainfo
+brew "libpq"                                      # Postgres C API library
+brew "llvm"                                       # Next-gen compiler infrastructure
+brew "lunchy"                                     # Friendly wrapper for launchctl
+brew "lynx"                                       # Text-based web browser
+brew "mas"                                        # Mac App Store command-line interface
+brew "media-info"                                 # Unified display of technical and tag data for audio/video
+brew "mise"                                       # Polyglot runtime manager (asdf rust clone)
+brew "mupdf"                                      # Lightweight PDF and XPS viewer
+brew "ncdu"                                       # NCurses Disk Usage
+brew "netlify-cli"                                # Netlify command-line tool
+brew "nmap"                                       # Port scanning utility for large networks
+brew "nnn"                                        # Tiny, lightning fast, feature-packed file manager
+brew "openblas"                                   # Optimized BLAS library
+brew "numpy"                                      # Package for scientific computing with Python
+brew "protobuf"                                   # Protocol buffers (Google's data interchange format)
+brew "openvino"                                   # Open Visual Inference And Optimization toolkit for AI inference
+brew "perl"                                       # Highly capable, feature-rich programming language
+brew "pinentry-mac"                               # Pinentry for GPG on Mac
+brew "postgresql@15", restart_service: :changed   # Object-relational database system
+brew "procs"                                      # Modern replacement for ps written in Rust
+brew "pv"                                         # Monitor data's progress through a pipe
+brew "python@3.10"                                # Interpreted, interactive, object-oriented programming language
+brew "python@3.11"                                # Interpreted, interactive, object-oriented programming language
+brew "python@3.12"                                # Interpreted, interactive, object-oriented programming language
+brew "ruby-build"                                 # Install various Ruby versions and implementations
+brew "rbenv"                                      # Ruby version manager
+brew "rclone"                                     # Rsync for cloud storage
+brew "rcm"                                        # RC file (dotfile) management
+brew "rdfind"                                     # Find duplicate files based on content (NOT file names)
+brew "redis", restart_service: :changed           # Persistent key-value database, with built-in net interface
+brew "ripgrep"                                    # Search tool like grep and The Silver Searcher
+brew "rsync"                                      # Utility that provides fast incremental file transfer
+brew "sox"                                        # SOund eXchange: universal sound sample translator
+brew "spaceship"                                  # Zsh prompt for Astronauts
+brew "speedtest-cli"                              # Command-line interface for https://speedtest.net bandwidth tests
+brew "starship"                                   # Cross-shell prompt for astronauts
+brew "stockfish"                                  # Strong open-source chess engine
+brew "tailscale"                                  # Easiest, most secure way to use WireGuard and 2FA
+brew "telnet"                                     # User interface to the TELNET protocol
+brew "testdisk"                                   # Powerful free data recovery utility
+brew "the_silver_searcher"                        # Code-search similar to ack
+brew "tree"                                       # Display directories as trees (with optional color/HTML output)
+brew "typewritten"                                # Minimal zsh prompt
+brew "tz"                                         # CLI time zone visualizer
+brew "uni2ascii"                                  # Bi-directional conversion between UTF-8 and various ASCII flavors
+brew "vim"                                        # Vi 'workalike' with many additional features
+brew "waon"                                       # Wave-to-notes transcriber
+brew "watchman"                                   # Watch files and take action when they change
+brew "wget"                                       # Internet file retriever
+brew "wimlib"                                     # Library to create, extract, and modify Windows Imaging files
+brew "yt-dlp"                                     # Feature-rich command-line audio/video downloader
+brew "zlib"                                       # General-purpose lossless data-compression library
+brew "zoxide"                                     # Shell extension to navigate your filesystem faster
+brew "zsh-completions"                            # Additional completion definitions for zsh
+
+brew "charmbracelet/tap/charm"           # The Charm Tool and Library 🌟
+brew "charmbracelet/tap/melt"            # Backup and restore Ed25519 SSH keys with seed words
+brew "charmbracelet/tap/skate"           # A personal key value store 🛼
+brew "heroku/brew/heroku"                # Everything you need to get started with Heroku
+brew "zero-sh/tap/apply-user-defaults"   # Small tool to set macOS user defaults from a YAML file
+
+# ============= CASKS =============
+cask "1password"                # Password manager that keeps all passwords secure behind one password
+cask "1password-cli"            # Command-line interface for 1Password
+cask "adobe-creative-cloud"     # Collection of apps and services for photography, design, video, web, and UX
+cask "airflow"                  # Watch local content on Apple TV and Chromecast
+cask "anytype"                  # Local-first and end-to-end encrypted notes app
+cask "appcleaner"               # Application uninstaller
+cask "audacity"                 # Multi-track audio editor and recorder
+cask "balenaetcher"             # Tool to flash OS images to SD cards & USB drives
+cask "bartender"                # Menu bar icon organiser
+cask "blender"                  # 3D creation suite
+cask "brave-browser"            # Web browser focusing on privacy
+cask "chatgpt"                  # OpenAI's official ChatGPT desktop app
+cask "claude"                   # Anthropic's official Claude AI desktop app
+cask "cleanshot"                # Screen capturing tool
+cask "comfyui"                  # Node-based image, video and audio generator
+cask "cryptomator"              # Multi-platform client-side cloud file encryption tool
+cask "cursor"                   # Write, edit, and chat about your code with AI
+cask "cyberduck"                # Server and cloud storage browser
+cask "daisydisk"                # Disk space visualiser
+cask "diffusionbee"             # Run Stable Diffusion locally
+cask "discord"                  # Voice and text chat software
+cask "docker-desktop"           # App to build and share containerised applications and microservices
+cask "element"                  # Matrix collaboration client
+cask "figma"                    # Collaborative team software
+cask "firefox"                  # Web browser
+cask "fujifilm-tether-app"      # For Fujifilm GFX/X series camera tether shooting
+cask "fujifilm-x-raw-studio"    # Convert RAW images captured with Fujifilm cameras
+cask "fuse-t-sshfs"             # SSHFS implementation based on FUSE-T
+cask "gas-mask"                 # Hosts file editor/manager
+cask "gcloud-cli"               # Set of tools to manage resources and applications hosted on Google Cloud
+cask "ghostty"                  # Terminal emulator that uses platform-native UI and GPU acceleration
+cask "github"                   # Desktop client for GitHub repositories
+cask "godot"                    # Game development engine
+cask "google-chrome"            # Web browser
+cask "google-drive"             # Client for the Google Drive storage service
+cask "gpg-suite"                # Tools to protect your emails and files
+cask "gpt4all"                  # Run LLMs locally
+cask "handbrake-app"            # Open-source video transcoder
+cask "hex-fiend"                # Hex editor focussing on speed
+cask "imageoptim"               # Tool to optimise images to a smaller size
+cask "inkscape"                 # Vector graphics editor
+cask "iterm2"                   # Terminal emulator as alternative to Apple's Terminal app
+cask "karabiner-elements"       # Keyboard customiser
+cask "keyboard-cleaner"         # Desktop shield and keystroke interceptor
+cask "kicad"                    # Electronics design automation suite
+cask "lm-studio"                # Discover, download, and run local LLMs
+cask "localsend"                # Open-source cross-platform alternative to AirDrop
+cask "loom"                     # Screen and video recording software
+cask "macfuse"                  # File system integration
+cask "messenger"                # Native desktop app for Messenger (formerly Facebook Messenger)
+cask "mountain-duck"            # Mounts servers and cloud storages as a disk on the desktop
+cask "mullvad-browser"          # Web browser focused on privacy and on minimizing tracking and fingerprinting
+cask "native-access"            # Administration tool for Native Instruments products
+cask "notion"                   # App to write, plan, collaborate, and get organised
+cask "ollama-app"               # Get up and running with large language models locally
+cask "openaudible"              # Audiobook manager for Audible users
+cask "openzfs"                  # ZFS driver and utilities
+cask "protokol"                 # MIDI and OSC Monitor
+cask "proton-drive"             # Client for Proton Drive
+cask "proton-mail-bridge"       # Bridges Proton Mail to email clients supporting IMAP and SMTP protocols
+cask "protonvpn"                # VPN client focusing on security
+cask "prusaslicer"              # G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
+cask "raspberry-pi-imager"      # Imaging utility to install operating systems to a microSD card
+cask "raycast"                  # Control your tools with a few keystrokes
+cask "readest"                  # Ebook reader
+cask "rectangle"                # Move and resize windows using keyboard shortcuts or snap areas
+cask "rekordbox"                # Free Dj app to prepare and manage your music files
+cask "sequel-ace"               # MySQL/MariaDB database management
+cask "signal"                   # Instant messaging application focusing on security
+cask "slack"                    # Team communication and collaboration software
+cask "snapmaker-luban"          # 3D printing software
+cask "spotify"                  # Music streaming service
+cask "steam"                    # Video game digital distribution service
+cask "stremio"                  # Open-source media center
+cask "the-unarchiver"           # Unpacks archive files
+cask "thingsmacsandboxhelper"   # Helper application for Things
+cask "thorium"                  # Epub reader
+cask "thunderbird"              # Customizable email client
+cask "topnotch"                 # Utility to hide the notch
+cask "tor-browser"              # Web browser focusing on security
+cask "touchosc"                 # MIDI and OSC Controller Software
+cask "transmission"             # Open-source BitTorrent client
+cask "ultimaker-cura"           # 3D printer and slicing GUI
+cask "utm"                      # Virtual machines UI using QEMU
+cask "vagrant"                  # Development environment
+cask "visual-studio-code"       # Open-source code editor
+cask "vlc"                      # Multimedia player
+cask "warp"                     # Rust-based terminal
+cask "whatsapp"                 # Native desktop client for WhatsApp
+cask "windsurf"                 # Agentic IDE powered by AI Flow paradigm
+cask "workflowy"                # Notetaking tool
+cask "zed"                      # Multiplayer code editor
+cask "zen"                      # Gecko based web browser
+cask "zoom"                     # Video communication and virtual meeting platform
+
+# --- Fonts ---
+cask "font-anonymice-nerd-font"
+cask "font-anonymous-pro"
+cask "font-barlow"
+cask "font-blex-mono-nerd-font"
+cask "font-cascadia-code"
+cask "font-cascadia-mono"
+cask "font-caskaydia-cove-nerd-font"
+cask "font-chivo"
+cask "font-code-new-roman-nerd-font"
+cask "font-cousine"
+cask "font-cousine-nerd-font"
+cask "font-dm-mono"
+cask "font-droid-sans-mono-nerd-font"
+cask "font-epilogue"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono"
+cask "font-fira-mono-nerd-font"
+cask "font-fira-sans"
+cask "font-flow-block"
+cask "font-flow-circular"
+cask "font-flow-rounded"
+cask "font-geist"
+cask "font-geist-mono"
+cask "font-geist-mono-nerd-font"
+cask "font-hack"
+cask "font-hack-nerd-font"
+cask "font-hubot-sans"
+cask "font-ia-writer-duo"
+cask "font-ia-writer-mono"
+cask "font-ia-writer-quattro"
+cask "font-ibm-plex-math"
+cask "font-ibm-plex-mono"
+cask "font-ibm-plex-sans"
+cask "font-ibm-plex-sans-condensed"
+cask "font-ibm-plex-serif"
+cask "font-im-writing-nerd-font"
+cask "font-inconsolata"
+cask "font-inconsolata-nerd-font"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-libre-baskerville"
+cask "font-libre-bodoni"
+cask "font-libre-caslon-display"
+cask "font-libre-caslon-text"
+cask "font-libre-franklin"
+cask "font-lilex"
+cask "font-lilex-nerd-font"
+cask "font-mona-sans"
+cask "font-monaspace"
+cask "font-monaspice-nerd-font"
+cask "font-noto-mono"
+cask "font-noto-nerd-font"
+cask "font-noto-sans"
+cask "font-noto-sans-mono"
+cask "font-nova-mono"
+cask "font-open-sans"
+cask "font-overpass"
+cask "font-overpass-nerd-font"
+cask "font-plus-jakarta-sans"
+cask "font-pt-sans"
+cask "font-pt-serif"
+cask "font-quattrocento-sans"
+cask "font-recursive"
+cask "font-recursive-code"
+cask "font-red-hat-display"
+cask "font-red-hat-mono"
+cask "font-red-hat-text"
+cask "font-roboto-mono"
+cask "font-roboto-mono-nerd-font"
+cask "font-sauce-code-pro-nerd-font"
+cask "font-sf-mono"
+cask "font-source-code-pro"
+cask "font-source-sans-3"
+cask "font-space-grotesk"
+cask "font-space-mono"
+cask "font-space-mono-nerd-font"
+cask "font-victor-mono"
+cask "font-victor-mono-nerd-font"
+cask "font-work-sans"
+
+# ============= MAS =============
+mas "1Password for Safari", id: 1569813296       # By: AgileBits Inc.
+mas "Affinity Designer 2", id: 1616831348
+mas "Amphetamine", id: 937984704                 # Amphetamine 5.3.2 [Free]
+mas "Blackmagic Disk Speed Test", id: 425264550  # Blackmagic Disk Speed Test 3.4.2 [Free]
+mas "Darkroom", id: 953286746                    # Darkroom: Photo & Video Editor 6.8.21 [Free]
+mas "djay Pro", id: 450527929                    # By: Algoriddim GmbH
+mas "GarageBand", id: 682658836                  # GarageBand 10.4.12 [Free]
+mas "GoPro Quik", id: 561350520                  # GoPro Quik 2.2 [Free]
+mas "HazeOver", id: 430798174                    # HazeOver • Distraction Dimmer™ 1.9.6 [$9.99]
+mas "iA Writer", id: 775737590                   # By: Information Architects AG
+mas "iMovie", id: 408981434                      # By: Apple Pty Limited
+mas "Keynote", id: 409183694                     # Keynote 14.4 [Free]
+mas "Numbers", id: 409203825                     # Numbers 14.4 [Free]
+mas "Pages", id: 409201541                       # Pages 14.4 [Free]
+mas "Photomator", id: 1444636541                 # Photomator 3.4.11 [Free]
+mas "Pixelmator Pro", id: 1289583905             # Pixelmator Pro 3.7 [$99.99]
+mas "Tailscale", id: 1475387142                  # Tailscale 1.88.4 [Free]
+mas "Things", id: 904280696                      # Things 3 3.22.5 [$99.99]
+
+# ============= VSCODE =============
+vscode "1yib.rust-bundle"                             # VSCode extension
+vscode "ahmadawais.shades-of-purple"                  # VSCode extension
+vscode "alefragnani.project-manager"                  # VSCode extension
+vscode "aminer.codegeex"                              # VSCode extension
+vscode "astro-build.astro-vscode"                     # VSCode extension
+vscode "austenc.tailwind-docs"                        # VSCode extension
+vscode "basys.vscode-basys"                           # VSCode extension
+vscode "bibhasdn.unique-lines"                        # VSCode extension
+vscode "bradlc.vscode-tailwindcss"                    # VSCode extension
+vscode "bung87.rails"                                 # VSCode extension
+vscode "bung87.vscode-gemfile"                        # VSCode extension
+vscode "ccimage.jsonviewer"                           # VSCode extension
+vscode "cesium.gltf-vscode"                           # VSCode extension
+vscode "csstools.postcss"                             # VSCode extension
+vscode "dart-code.dart-code"                          # VSCode extension
+vscode "dart-code.flutter"                            # VSCode extension
+vscode "dbaeumer.vscode-eslint"                       # VSCode extension
+vscode "dnicolson.binary-plist"                       # VSCode extension
+vscode "docker.docker"                                # VSCode extension
+vscode "dotjoshjohnson.xml"                           # VSCode extension
+vscode "doublebot.doublebot"                          # VSCode extension
+vscode "dracula-theme.theme-dracula"                  # VSCode extension
+vscode "dtoplak.vscode-glsllint"                      # VSCode extension
+vscode "dtsvet.vscode-wasm"                           # VSCode extension
+vscode "dustypomerleau.rust-syntax"                   # VSCode extension
+vscode "eamodio.gitlens"                              # VSCode extension
+vscode "emmanuelbeziat.vscode-great-icons"            # VSCode extension
+vscode "enkia.tokyo-night"                            # VSCode extension
+vscode "esbenp.prettier-vscode"                       # VSCode extension
+vscode "extemporelang.vscode-extempore"               # VSCode extension
+vscode "figma.figma-vscode-extension"                 # VSCode extension
+vscode "fill-labs.dependi"                            # VSCode extension
+vscode "foxundermoon.shell-format"                    # VSCode extension
+vscode "gamunu.vscode-yarn"                           # VSCode extension
+vscode "github.copilot"                               # VSCode extension
+vscode "github.copilot-chat"                          # VSCode extension
+vscode "github.vscode-github-actions"                 # VSCode extension
+vscode "github.vscode-pull-request-github"            # VSCode extension
+vscode "grapecity.gc-excelviewer"                     # VSCode extension
+vscode "gulajavaministudio.mayukaithemevsc"           # VSCode extension
+vscode "hbenl.vscode-test-explorer"                   # VSCode extension
+vscode "hsnazar.hyper-term-theme"                     # VSCode extension
+vscode "idealley.gql"                                 # VSCode extension
+vscode "janisdd.vscode-edit-csv"                      # VSCode extension
+vscode "jscearcy.rust-doc-viewer"                     # VSCode extension
+vscode "kumar-harsh.graphql-for-vscode"               # VSCode extension
+vscode "l13rary.l13-diff"                             # VSCode extension
+vscode "macieklad.tailwind-sass-syntax"               # VSCode extension
+vscode "mactkg.sonic-pi"                              # VSCode extension
+vscode "mathematic.vscode-pdf"                        # VSCode extension
+vscode "mechatroner.rainbow-csv"                      # VSCode extension
+vscode "mike-co.import-sorter"                        # VSCode extension
+vscode "mikestead.dotenv"                             # VSCode extension
+vscode "moshfeu.compare-folders"                      # VSCode extension
+vscode "ms-azuretools.vscode-containers"              # VSCode extension
+vscode "ms-azuretools.vscode-docker"                  # VSCode extension
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"  # VSCode extension
+vscode "ms-python.debugpy"                            # VSCode extension
+vscode "ms-python.python"                             # VSCode extension
+vscode "ms-python.vscode-pylance"                     # VSCode extension
+vscode "ms-python.vscode-python-envs"                 # VSCode extension
+vscode "ms-toolsai.jupyter"                           # VSCode extension
+vscode "ms-toolsai.jupyter-keymap"                    # VSCode extension
+vscode "ms-toolsai.jupyter-renderers"                 # VSCode extension
+vscode "ms-toolsai.vscode-jupyter-cell-tags"          # VSCode extension
+vscode "ms-toolsai.vscode-jupyter-slideshow"          # VSCode extension
+vscode "ms-vscode-remote.remote-containers"           # VSCode extension
+vscode "ms-vscode.cmake-tools"                        # VSCode extension
+vscode "ms-vscode.cpptools"                           # VSCode extension
+vscode "ms-vscode.cpptools-extension-pack"            # VSCode extension
+vscode "ms-vscode.cpptools-themes"                    # VSCode extension
+vscode "ms-vscode.test-adapter-converter"             # VSCode extension
+vscode "ms-vscode.vscode-speech"                      # VSCode extension
+vscode "nash.awesome-flutter-snippets"                # VSCode extension
+vscode "octref.vetur"                                 # VSCode extension
+vscode "openai.chatgpt"                               # VSCode extension
+vscode "phoenisx.cssvar"                              # VSCode extension
+vscode "pkosta2005.heroku-command"                    # VSCode extension
+vscode "prisma.prisma"                                # VSCode extension
+vscode "randomfractalsinc.vscode-data-preview"        # VSCode extension
+vscode "redhat.vscode-yaml"                           # VSCode extension
+vscode "robbowen.synthwave-vscode"                    # VSCode extension
+vscode "ronnidc.nunjucks"                             # VSCode extension
+vscode "rust-lang.rust-analyzer"                      # VSCode extension
+vscode "rvest.vs-code-prettier-eslint"                # VSCode extension
+vscode "shopify.ruby-lsp"                             # VSCode extension
+vscode "sianglim.slim"                                # VSCode extension
+vscode "sissel.shopify-liquid"                        # VSCode extension
+vscode "slevesque.shader"                             # VSCode extension
+vscode "sourcegraph.cody-ai"                          # VSCode extension
+vscode "svelte.svelte-vscode"                         # VSCode extension
+vscode "swellaby.vscode-rust-test-adapter"            # VSCode extension
+vscode "tamasfe.even-better-toml"                     # VSCode extension
+vscode "tidalcycles.vscode-tidalcycles"               # VSCode extension
+vscode "tobiah.language-pde"                          # VSCode extension
+vscode "tyriar.sort-lines"                            # VSCode extension
+vscode "vscodevim.vim"                                # VSCode extension
+vscode "vue.volar"                                    # VSCode extension
+vscode "yzhang.markdown-all-in-one"                   # VSCode extension
+

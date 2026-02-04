@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
 ## Docs https://thoughtbot.github.io/rcm/rcrc.5.html
-EXCLUDES="README.md LICENSE bin resources script wip"
+EXCLUDES="README.md LICENSE bin resources script wip Brewfile.raw Brewfile.sorted"
 SYMLINK_DIRS="config conda"
 UNDOTTED="Brewfile"

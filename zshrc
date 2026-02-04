@@ -59,21 +59,38 @@ source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
 
 # =============================== Homebrew
 
-export HOMEBREW_UPGRADE_GREEDY="1"
+# export HOMEBREW_UPGRADE_GREEDY="1"
+export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/code/dotfiles/Brewfile"
 
 # =============================== ALIASES
 
 ## Shell
 
 alias eza="eza --icons -F --git --git-repos --time-style=relative" # --color-scale # --group-directories-first
-alias ls="eza"
-alias l="eza --git -ah"
-alias ll="eza --git -lah"
+alias ls="eza --group-directories-first"
+alias l="eza --git -ah --group-directories-first"
+alias ll="eza --git -lah --group-directories-first"
+alias la="eza --git -lah"
 alias cd="z"
 alias ..="cd .."
 # alias grep="grepp"
 alias rc="rclone copy --fast-list --progress --progress-terminal-title --verbose --stats 3s --transfers 10"
 alias zed="/opt/homebrew/bin/zed"
+alias cat="bat"
+alias c="cursor"
+
+# Homebrew
+
+alias b="brew"
+alias bi="brew i"
+alias bs="brew search"
+alias bin="brew install"
+# alias bun="brew uninstall"
+alias bup="brew update"
+alias bupg="brew upgrade"
+alias bupga="brew upgrade --all"
+alias bupgo="brew outdated"
+
 
 ## Projects
 
@@ -125,7 +142,11 @@ export PATH="/Users/cobyism/.codeium/windsurf/bin:$PATH"
 export PATH="$PATH:/Users/cobyism/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
 # =============================== EVALS
+
+# Autocheck for brew updates and outdated packages
+$DOTFILES/bin/autocheck
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(/opt/homebrew/bin/mise activate zsh)"
@@ -136,7 +157,6 @@ eval "$(starship init zsh)"
 source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
 source_file "$HOME/.cargo/env"
 
-eval "$(zoxide init zsh)"
 
 # source_file "$(brew --prefix asdf)/libexec/asdf.sh"
 # source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
@@ -160,7 +180,6 @@ eval "$(zoxide init zsh)"
 # Added by OrbStack: command-line tools and integration
 # source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
-### Finally…
-
-# Autocheck for brew updates and outdated packages
-$DOTFILES/bin/autocheck
+eval "$(zoxide init zsh)" # Must be last or it complains in some situations like Cursor AI editor commands.
+# Added by Antigravity
+export PATH="/Users/cobyism/.antigravity/antigravity/bin:$PATH"
