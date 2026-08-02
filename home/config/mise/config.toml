@@ -1,6 +1,6 @@
 [tools]
 node = "latest"
-ruby = "4.0.4"
+ruby = "latest"
 python = "latest"
 rust = "latest"
 go = "latest"

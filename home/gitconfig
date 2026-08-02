@@ -1,7 +1,7 @@
 [user]
 	name = @cobyism
 	email = _+git@coby.io
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLfUl1WcJGXOIlXyFeRocb0ti56jYvpfOh14JEfM3Md
+	signingkey = /Users/chapc3/.ssh/id_chapc3_airnz_rsa.pub
 [github]
 	user = cobyism
 [heroku]
@@ -72,7 +72,7 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  #program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 [commit]
   gpgsign = true
 [pull]

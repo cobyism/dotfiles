@@ -46,9 +46,21 @@
   "icon_theme": "Colored Zed Icons Theme Dark",
   "theme": "Dracula",
   "edit_predictions": {
-    "provider": "mercury"
+    "provider": "copilot"
   },
   "agent": {
+    "use_modifier_to_send": true,
+    "thinking_display": "preview",
+    "expand_terminal_card": false,
+    "expand_edit_card": false,
+    "enable_feedback": false,
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
     "dock": "left",
     "default_model": {
       "effort": "medium",
