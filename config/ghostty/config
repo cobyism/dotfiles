@@ -1,0 +1,70 @@
+font-family = "Monaspace Neon NF"
+font-family-bold = "Monaspace Neon NF Bold"
+font-family-italic = "Monaspace Neon NF Italic"
+font-family-bold-italic = "Monaspace Neon NF Bold Italic"
+font-size = 14
+font-feature = +calt,+liga,+ss01,+ss02,+ss03,+ss04,+ss05,+ss06,+ss08,+ss09,+ss10
+#font-family = "Geist Mono"
+#font-family-bold = "Geist Mono Bold"
+#font-family-italic = "Geist Mono Italic"
+#font-family-bold-italic = "Geist Mono Bold Italic"
+
+window-title-font-family = "Geist Pixel"
+
+theme = "Catppuccin Mocha"
+# Oxocarbon, Argonaut, Framer, iTerm2 Tanko Dark, Purple Rain, Wez
+
+window-padding-x = 20
+window-padding-y = 20
+
+# macos-titlebar-style = hidden
+macos-titlebar-style = tabs
+
+shell-integration = detect
+shell-integration-features = cursor,title,sudo,path,ssh-env,ssh-terminfo
+
+window-inherit-working-directory = false
+tab-inherit-working-directory = false
+split-inherit-working-directory = true
+
+bell-features = border,title,attention,system
+app-notifications = clipboard-copy,config-reload
+
+macos-window-buttons = visible
+macos-titlebar-style = transparent
+window-show-tab-bar = always
+macos-window-shadow = false
+
+#background-image = ~/Pictures/cc-wallpaper/wallpaper-ipad/Awe_Dropping_iPad_Gradient.png
+#background-image-opacity = 0.05
+#background-image-fit = cover
+
+background-opacity = 0.975
+background-opacity-cells = true
+background-blur = macos-glass-clear
+
+cursor-color = "#FF0000"
+cursor-click-to-move = true
+link-previews = true
+
+# keybind = global:cmd+shift+ctrl+opt+backquote=toggle_quick_terminal
+keybind = global:cmd+shift+ctrl+opt+backquote=toggle_quick_terminal
+
+#custom-shader = ~/code/ghostty-cursor-shaders/cursor_warp.glsl
+#custom-shader = ~/code/ghostty-cursor-shaders/ripple_cursor.glsl
+
+#custom-shader = ~/code/ghostty-shader-playground/public/shaders/blaze_sparks.glsl
+custom-shader = ~/code/ghostty-shader-playground/public/shaders/cursor_smear_gradient.glsl
+custom-shader = ~/code/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
+
+#custom-shader = ~/code/ghostty_shaders/crt_glitch.glsl
+#custom-shader = ~/code/ghostty_shaders/flicker.glsl
+#custom-shader = ~/code/ghostty_shaders/glow.glsl
+#custom-shader = ~/code/my-ghostty-shaders/base.glsl
+#custom-shader = ~/code/my-ghostty-shaders/glow-rgbsplit-twitchy.glsl
+#custom-shader = ~/code/my-ghostty-shaders/inside-the-matrix.glsl
+#custom-shader = ~/code/gshaders/matrix-hallway.glsl
+#custom-shader = ~/code/gshaders/retro-terminal.glsl
+#custom-shader = ~/code/gshaders/tft.glsl
+#custom-shader = ~/code/Fearless-Geek-Shaders-for-Ghostty/static.glsl
+#custom-shader = ~/code/gshaders/tft.glsl

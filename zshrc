@@ -16,16 +16,16 @@ autoload -U promptinit; promptinit
 # =============================== ENV
 
 export DOTFILES="$HOME/.dotfiles"
-export EDITOR="code -w"
+export EDITOR="zed"
 
 # =============================== PATH
 
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="$DOTFILES/wip:./wip:$PATH"
 export PATH="$DOTFILES/bin:./bin:$PATH"
+export PATH="$HOME/bin:$HOME/.bin/:$HOME/.local/bin:$PATH"
 export PATH="/Users/cobyism/.yarn/bin:$PATH"
 export PATH="./script:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
 
 # =============================== FUNCTIONS
 
@@ -41,16 +41,6 @@ function source_file() {
 # =============================== Completions
 
 export FPATH="$DOTFILES/completions:$FPATH" # Eza etc.
-
-# Installed via homebrew - zsh-completions
-# See https://github.com/zsh-users/zsh-completions
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  autoload -Uz compinit
-  compinit
-fi
-
-source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
 
 # =============================== OMZ
 
@@ -78,6 +68,7 @@ alias rc="rclone copy --fast-list --progress --progress-terminal-title --verbose
 alias zed="/opt/homebrew/bin/zed"
 alias cat="bat"
 alias c="cursor"
+alias ccstatusline="npx -y ccstatusline@latest" # Claude Code status line configuration TUI (https://github.com/sirmalloc/ccstatusline)
 
 # Homebrew
 
@@ -125,6 +116,9 @@ alias gg="git log --graph --all --oneline"
 alias gwho="git show -s --pretty=fuller"
 # alias grmc="git rm -r --cached"
 
+# Spotify DL code custom
+alias spdl="spotify-dl --format mp3 --parallel 1 --save-playlist --destination ~/Documents/cc-dj-music-library/music-library/"
+
 # =============================== LOCALRC
 
 # Use .localrc for secret crap since this is a public, versioned repo.
@@ -133,7 +127,37 @@ then
   source $HOME/.localrc
 fi
 
-# Thanks for reading! ^_^
+# =============================== EVALS
+
+# Autocheck for brew updates and outdated packages
+# $DOTFILES/bin/autocheck # Currently in the naughty bin as it doesn't seem to be working.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/mise activate zsh)"
+
+# =============================== PROMPT
+
+# source_file "$DOTFILES/resources/prompt-typewritten.zsh" # Old prompt
+eval "$(starship init zsh)"
+
+# =============================== SHELL INTEGRATIONS
+
+# source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
+source /Users/cobyism/.iterm2_shell_integration.zsh
+source_file "$HOME/.cargo/env"
+# source_file "$(brew --prefix asdf)/libexec/asdf.sh"
+# source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+# =============================== ADDED BY MISC PROGRAMS
+
+# Installed via homebrew - zsh-completions
+# See https://github.com/zsh-users/zsh-completions
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+
+source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
 
 # Added by Windsurf
 export PATH="/Users/cobyism/.codeium/windsurf/bin:$PATH"
@@ -142,24 +166,11 @@ export PATH="/Users/cobyism/.codeium/windsurf/bin:$PATH"
 export PATH="$PATH:/Users/cobyism/.lmstudio/bin"
 # End of LM Studio CLI section
 
+# Added by Antigravity
+export PATH="/Users/cobyism/.antigravity/antigravity/bin:$PATH"
 
-# =============================== EVALS
-
-# Autocheck for brew updates and outdated packages
-$DOTFILES/bin/autocheck
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(/opt/homebrew/bin/mise activate zsh)"
-
-#source_file "$DOTFILES/resources/prompt-typewritten.zsh"
-eval "$(starship init zsh)"
-
-source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
-source_file "$HOME/.cargo/env"
-
-
-# source_file "$(brew --prefix asdf)/libexec/asdf.sh"
-# source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"
 
 # # Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
 # # >>> conda initialize >>>
@@ -180,6 +191,6 @@ source_file "$HOME/.cargo/env"
 # Added by OrbStack: command-line tools and integration
 # source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
+# =============================== MUST BE LAST!
+
 eval "$(zoxide init zsh)" # Must be last or it complains in some situations like Cursor AI editor commands.
-# Added by Antigravity
-export PATH="/Users/cobyism/.antigravity/antigravity/bin:$PATH"
