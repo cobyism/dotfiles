@@ -1,10 +1,28 @@
 [tools]
 node = "latest"
-ruby = "latest"
+ruby = "4.0.4"
 python = "latest"
 rust = "latest"
 go = "latest"
 bun = "latest"
+pipx = "latest"
+npm = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby"]
+
+[settings.ruby]
+compile = false
+
+[shell_alias]
+m = "mise"
+a = "ansible"
+ap = "ansible-playbook"
+
+[env]
+CC_TEST = "sup"
+RESTIC_REPOSITORY = "/Volumes/data/restic-repo"
+SPOTIPY_CLIENT_ID = "b48e9d09b47b400ba2dad91154268baf"
+SPOTIPY_CLIENT_SECRET = "263537a6f1d64bd4acc5e27fb175eb3b"
+PKB_API_KEY = "pk1_5eb92ed334f63f5a9e013f7000d96a3b137cc7842954fc733652074a0863d7af"
+PKB_API_SECRET = "sk1_1a41f0cdc0c90354e11befdfd4ecbf53a83468793ad4ab20662e1e804a60584f"
