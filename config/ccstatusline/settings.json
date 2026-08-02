@@ -1,0 +1,92 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan",
+        "rawValue": true
+      },
+      {
+        "id": "67b827f0-22f8-45d1-a4e7-370c5c434106",
+        "type": "thinking-effort",
+        "backgroundColor": "bgBrightGreen",
+        "rawValue": true
+      },
+      {
+        "id": "118b33ce-5b70-4abc-a239-1491e9fbf8a8",
+        "type": "context-percentage-usable",
+        "backgroundColor": "bgBrightBlack",
+        "rawValue": true
+      },
+      {
+        "id": "3",
+        "type": "context-length",
+        "color": "brightBlack",
+        "rawValue": true
+      },
+      {
+        "id": "06bd9145-3f09-4803-9b00-2a5ea261d623",
+        "type": "flex-separator",
+        "backgroundColor": "bgBrightBlue"
+      },
+      {
+        "id": "042e7df1-fa27-4180-8356-617cd432fdc8",
+        "type": "current-working-dir",
+        "backgroundColor": "bgRed",
+        "rawValue": true,
+        "metadata": {
+          "abbreviateHome": "true"
+        }
+      },
+      {
+        "id": "8d5f6a80-8da9-48ae-9036-f06975761e58",
+        "type": "git-branch",
+        "backgroundColor": "bgMagenta"
+      },
+      {
+        "id": "f3fd6bb1-4591-43dd-8078-b781c5b02005",
+        "type": "git-ahead-behind",
+        "backgroundColor": "bgBrightBlue",
+        "rawValue": false
+      },
+      {
+        "id": "d127cc0a-c3ed-4539-82a8-6a537ae7232a",
+        "type": "git-status",
+        "backgroundColor": "bgBrightMagenta"
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "defaultPadding": " ",
+  "defaultPaddingSide": "both",
+  "inheritSeparatorColors": false,
+  "globalBold": true,
+  "gitCacheTtlSeconds": 5,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [
+      ""
+    ],
+    "endCaps": [
+      ""
+    ],
+    "theme": "onedark",
+    "autoAlign": false,
+    "continueThemeAcrossLines": true
+  },
+  "installation": {
+    "method": "pinned",
+    "installedVersion": "2.2.27"
+  }
+}

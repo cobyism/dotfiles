@@ -1,0 +1,58 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "ui_font_family": "Geist",
+  "markdown_preview_code_font_family": "Monaspace Krypton NF",
+  "markdown_preview_font_family": "Geist",
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "buffer_line_height": "comfortable",
+  "buffer_font_weight": 100.0,
+  "buffer_font_family": "Monaspace Neon NF",
+  "redact_private_values": true,
+  "use_system_path_prompts": true,
+  "accessible_mode": true,
+  "agent_servers": {
+    "gemini": {
+      "type": "registry"
+    },
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "icon_theme": "Colored Zed Icons Theme Dark",
+  "theme": "Dracula",
+  "edit_predictions": {
+    "provider": "mercury",
+  },
+  "agent": {
+    "dock": "left",
+    "default_model": {
+      "effort": "medium",
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "enable_thinking": true,
+    },
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 16.0,
+}
