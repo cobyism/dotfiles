@@ -1,5 +1,11 @@
 #!/usr/bin/env zsh
 
+
+#
+# Manual/non-brew installation of stuff
+# Particle CLI $ bash <( curl -sL https://particle.io/install-cli )
+# Claude Code?
+
 # Assumes this repo is cloned into ~/code/dotfiles
 local DOTFILES_REPO="$HOME/code/dotfiles"
 
@@ -21,3 +27,12 @@ echo "Linking ~/.dotfiles/rcrc as ~/.rcrc"
 ln -swi ~/.dotfiles/rcrc ~/.rcrc
 
 # Next up: ensure brew installed, install rcm, rest of Brewfile, etc.
+
+# Check if rcm is installed
+if ! command -v rcup &> /dev/null; then
+  echo "rcm could not be found. Please install rcm (e.g., via Homebrew: brew install rcm) and run this script again."
+  exit 1
+fi
+
+echo "Running rcup to symlink dotfiles into place..."
+rcup -v

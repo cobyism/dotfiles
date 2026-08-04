@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+export DOTFILES="$HOME/.dotfiles"
+
+echo "Ensuring $DOTFILES/bin and $DOTFILES/script are executable..."
+
+chmod +x $DOTFILES/bin/*
+chmod +x $DOTFILES/script/*

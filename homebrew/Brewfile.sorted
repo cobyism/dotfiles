@@ -1,0 +1,327 @@
+# ============= TAPS =============
+tap "charmbracelet/tap"  # Third-party repository
+tap "zero-sh/tap"        # Third-party repository
+
+# ============= BREWS =============
+brew "bat"                   # Clone of cat(1) with syntax highlighting and Git integration
+brew "btop"                  # Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "diff-so-fancy"         # Good-lookin' diffs with diff-highlight and more
+brew "diffoscope"            # In-depth comparison of files, archives, and directories
+brew "diffutils"             # File comparison utilities
+brew "docker-compose"        # Isolated development environments using Docker
+brew "dockutil"              # Tool for managing dock items
+brew "duf"                   # Disk Usage/Free Utility - a better 'df' alternative
+brew "dupseek"               # Interactive program to find and remove duplicate files
+brew "exiftool"              # Perl lib for reading and writing EXIF metadata
+brew "eza"                   # Modern, maintained replacement for ls
+brew "fclones"               # Efficient Duplicate File Finder
+brew "fd"                    # Simple, fast and user-friendly alternative to find
+brew "fdupes"                # Identify or delete duplicate files
+brew "ffmpeg"                # Play, record, convert, and stream select audio and video codecs
+brew "findutils"             # Collection of GNU find, xargs, and locate
+brew "fx"                    # Terminal JSON viewer
+brew "fzf"                   # Command-line fuzzy finder written in Go
+brew "gdu"                   # Disk usage analyzer with console interface written in Go
+brew "gemini-cli"            # Interact with Google Gemini AI models from the command-line
+brew "gh"                    # GitHub command-line tool
+brew "git"                   # Distributed revision control system
+brew "git-delta"             # Syntax-highlighting pager for git and diff output
+brew "git-lfs"               # Git extension for versioning large files
+brew "glow"                  # Render markdown on the CLI
+brew "gum"                   # Tool for glamorous shell scripts
+brew "handbrake"             # Open-source video transcoder available for Linux, Mac, and Windows
+brew "html2markdown"         # Convert HTML to Markdown
+brew "htop"                  # Improved top (interactive process viewer)
+brew "hyperfine"             # Command-line benchmarking tool
+brew "imagemagick"           # Tools and libraries to manipulate images in select formats
+brew "jdupes"                # Duplicate file finder and an enhanced fork of 'fdupes'
+brew "jq"                    # Lightweight and flexible command-line JSON processor
+brew "lazygit"               # Simple terminal UI for git commands
+brew "lunchy"                # Friendly wrapper for launchctl
+brew "mas"                   # Mac App Store command-line interface
+brew "media-info"            # Unified display of technical and tag data for audio/video
+brew "mise"                  # Polyglot runtime manager (asdf rust clone)
+brew "ncdu"                  # NCurses Disk Usage
+brew "netlify-cli"           # Netlify command-line tool
+brew "nmap"                  # Port scanning utility for large networks
+brew "nnn"                   # Tiny, lightning fast, feature-packed file manager
+brew "pinentry-mac"          # Pinentry for GPG on Mac
+brew "rclone"                # Rsync for cloud storage
+brew "rcm"                   # RC file (dotfile) management
+brew "rdfind"                # Find duplicate files based on content (NOT file names)
+brew "rsync"                 # Utility that provides fast incremental file transfer
+brew "spaceship"             # Zsh prompt for Astronauts
+brew "speedtest-cli"         # Command-line interface for https://speedtest.net bandwidth tests
+brew "starship"              # Cross-shell prompt for astronauts
+brew "tailscale"             # Easiest, most secure way to use WireGuard and 2FA
+brew "tesseract"             # OCR (Optical Character Recognition) engine
+brew "testdisk"              # Powerful free data recovery utility
+brew "the_silver_searcher"   # Code-search similar to ack
+brew "tmux"                  # Terminal multiplexer
+brew "tree"                  # Display directories as trees (with optional color/HTML output)
+brew "tz"                    # CLI time zone visualizer
+brew "vim"                   # Vi 'workalike' with many additional features
+brew "watchman"              # Watch files and take action when they change
+brew "wget"                  # Internet file retriever
+brew "yt-dlp"                # Feature-rich command-line audio/video downloader
+brew "zoxide"                # Shell extension to navigate your filesystem faster
+brew "zsh-completions"       # Additional completion definitions for zsh
+
+brew "charmbracelet/tap/charm"           # The Charm Tool and Library 🌟
+brew "charmbracelet/tap/melt"            # Backup and restore Ed25519 SSH keys with seed words
+brew "charmbracelet/tap/skate"           # A personal key value store 🛼
+brew "zero-sh/tap/apply-user-defaults"   # Small tool to set macOS user defaults from a YAML file
+brew "zero-sh/tap/zero"                  # Radically simple personal bootstrapping tool for macOS
+
+# ============= CASKS =============
+cask "1password"               # Password manager that keeps all passwords secure behind one password
+cask "1password-cli"           # Command-line interface for 1Password
+cask "airflow"                 # Watch local content on Apple TV and Chromecast
+cask "appcleaner"              # Application uninstaller
+cask "arq"                     # Multi-cloud backup application
+cask "brave-browser"           # Web browser focusing on privacy
+cask "cleanshot"               # Screen capturing tool
+cask "codex-app"               # OpenAI's Codex desktop app for managing coding agents
+cask "cryptomator"             # Multi-platform client-side cloud file encryption tool
+cask "cyberduck"               # Server and cloud storage browser
+cask "daisydisk"               # Disk space visualiser
+cask "discord"                 # Voice and text chat software
+cask "docker-desktop"          # App to build and share containerised applications and microservices
+cask "figma"                   # Collaborative team software
+cask "fujifilm-tether-app"     # For Fujifilm GFX/X series camera tether shooting
+cask "fujifilm-x-raw-studio"   # Convert RAW images captured with Fujifilm cameras
+cask "google-chrome"           # Web browser
+cask "gpg-suite"               # Tools to protect your emails and files
+cask "handbrake-app"           # Open-source video transcoder
+cask "hex-fiend"               # Hex editor focussing on speed
+cask "hyperkey"                # Convert your caps lock key or any of your modifier keys to the hyper key
+cask "imageoptim"              # Tool to optimise images to a smaller size
+cask "iterm2"                  # Terminal emulator as alternative to Apple's Terminal app
+cask "karabiner-elements"      # Keyboard customiser
+cask "keyboard-cleaner"        # Desktop shield and keystroke interceptor
+cask "lm-studio"               # Discover, download, and run local LLMs
+cask "localsend"               # Open-source cross-platform alternative to AirDrop
+cask "mountain-duck"           # Mounts servers and cloud storages as a disk on the desktop
+cask "mullvad-browser"         # Web browser focused on privacy and on minimizing tracking and fingerprinting
+cask "native-access"           # Administration tool for Native Instruments products
+cask "proton-drive"            # Client for Proton Drive
+cask "proton-mail"             # Client for Proton Mail and Proton Calendar
+cask "proton-mail-bridge"      # Bridges Proton Mail to email clients supporting IMAP and SMTP protocols
+cask "proton-pass"             # Desktop client for Proton Pass
+cask "protonvpn"               # VPN client focusing on security
+cask "raycast"                 # Control your tools with a few keystrokes
+cask "rectangle"               # Move and resize windows using keyboard shortcuts or snap areas
+cask "rekordbox"               # Free Dj app to prepare and manage your music files
+cask "signal"                  # Instant messaging application focusing on security
+cask "slack"                   # Team communication and collaboration software
+cask "spotify"                 # Music streaming service
+cask "tailscale-app"           # Mesh VPN based on WireGuard
+cask "tor-browser"             # Web browser focusing on security
+cask "transmission"            # Open-source BitTorrent client
+cask "utm"                     # Virtual machines UI using QEMU
+cask "visual-studio-code"      # Open-source code editor
+cask "vlc"                     # Multimedia player
+cask "whatsapp"                # Native desktop client for WhatsApp
+cask "workflowy"               # Notetaking tool
+cask "zed"                     # Multiplayer code editor
+cask "zen"                     # Gecko based web browser
+cask "zoom"                    # Video communication and virtual meeting platform
+
+# --- Fonts ---
+cask "font-anonymice-nerd-font"
+cask "font-anonymous-pro"
+cask "font-barlow"
+cask "font-blex-mono-nerd-font"
+cask "font-cascadia-code"
+cask "font-cascadia-mono"
+cask "font-caskaydia-cove-nerd-font"
+cask "font-chivo"
+cask "font-code-new-roman-nerd-font"
+cask "font-cousine"
+cask "font-cousine-nerd-font"
+cask "font-dm-mono"
+cask "font-droid-sans-mono-nerd-font"
+cask "font-epilogue"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono"
+cask "font-fira-mono-nerd-font"
+cask "font-fira-sans"
+cask "font-flow-block"
+cask "font-flow-circular"
+cask "font-flow-rounded"
+cask "font-geist"
+cask "font-geist-mono"
+cask "font-geist-mono-nerd-font"
+cask "font-hack"
+cask "font-hack-nerd-font"
+cask "font-hubot-sans"
+cask "font-ia-writer-duo"
+cask "font-ia-writer-mono"
+cask "font-ia-writer-quattro"
+cask "font-ibm-plex-math"
+cask "font-ibm-plex-mono"
+cask "font-ibm-plex-sans"
+cask "font-ibm-plex-sans-condensed"
+cask "font-ibm-plex-serif"
+cask "font-im-writing-nerd-font"
+cask "font-inconsolata"
+cask "font-inconsolata-nerd-font"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-libre-baskerville"
+cask "font-libre-bodoni"
+cask "font-libre-caslon-display"
+cask "font-libre-caslon-text"
+cask "font-libre-franklin"
+cask "font-lilex"
+cask "font-lilex-nerd-font"
+cask "font-mona-sans"
+cask "font-monaspace"
+cask "font-monaspice-nerd-font"
+cask "font-noto-nerd-font"
+cask "font-noto-sans"
+cask "font-noto-sans-mono"
+cask "font-nova-mono"
+cask "font-open-sans"
+cask "font-overpass"
+cask "font-overpass-nerd-font"
+cask "font-plus-jakarta-sans"
+cask "font-pt-sans"
+cask "font-pt-serif"
+cask "font-quattrocento-sans"
+cask "font-recursive"
+cask "font-recursive-code"
+cask "font-red-hat-display"
+cask "font-red-hat-mono"
+cask "font-red-hat-text"
+cask "font-roboto-mono"
+cask "font-roboto-mono-nerd-font"
+cask "font-sauce-code-pro-nerd-font"
+cask "font-sf-mono"
+cask "font-source-code-pro"
+cask "font-source-sans-3"
+cask "font-space-grotesk"
+cask "font-space-mono"
+cask "font-space-mono-nerd-font"
+cask "font-victor-mono"
+cask "font-victor-mono-nerd-font"
+cask "font-work-sans"
+
+# ============= MAS =============
+mas "1Password for Safari", id: 1569813296  # By: AgileBits Inc.
+mas "Amphetamine", id: 937984704            # Amphetamine 5.3.2 [Free]
+mas "Darkroom", id: 953286746               # Darkroom: Photo & Video Editor 7.0.22 [Free]
+mas "HazeOver", id: 430798174               # HazeOver • Distraction Dimmer™ 1.9.6 [$9.99]
+mas "iA Writer", id: 775737590              # By: Information Architects AG
+mas "iMovie", id: 408981434                 # By: Apple Pty Limited
+mas "Keynote", id: 409183694                # Keynote 14.5 14.5 [Free]
+mas "Numbers", id: 409203825                # Numbers 14.5 14.5 [Free]
+mas "Pages", id: 409201541                  # Pages 14.5 14.5 [Free]
+mas "Photomator", id: 1444636541            # Photomator 3.4.13 [Free]
+mas "Pixelmator Pro", id: 1289583905        # Pixelmator Pro 3.7.1 [$99.99]
+
+# ============= VSCODE =============
+vscode "1yib.rust-bundle"                             # VSCode extension
+vscode "ahmadawais.shades-of-purple"                  # VSCode extension
+vscode "alefragnani.project-manager"                  # VSCode extension
+vscode "aminer.codegeex"                              # VSCode extension
+vscode "anthropic.claude-code"                        # VSCode extension
+vscode "astro-build.astro-vscode"                     # VSCode extension
+vscode "austenc.tailwind-docs"                        # VSCode extension
+vscode "basys.vscode-basys"                           # VSCode extension
+vscode "bibhasdn.unique-lines"                        # VSCode extension
+vscode "bradlc.vscode-tailwindcss"                    # VSCode extension
+vscode "bung87.rails"                                 # VSCode extension
+vscode "bung87.vscode-gemfile"                        # VSCode extension
+vscode "ccimage.jsonviewer"                           # VSCode extension
+vscode "cesium.gltf-vscode"                           # VSCode extension
+vscode "csstools.postcss"                             # VSCode extension
+vscode "dart-code.dart-code"                          # VSCode extension
+vscode "dart-code.flutter"                            # VSCode extension
+vscode "dbaeumer.vscode-eslint"                       # VSCode extension
+vscode "dnicolson.binary-plist"                       # VSCode extension
+vscode "docker.docker"                                # VSCode extension
+vscode "dotjoshjohnson.xml"                           # VSCode extension
+vscode "doublebot.doublebot"                          # VSCode extension
+vscode "dracula-theme.theme-dracula"                  # VSCode extension
+vscode "dtoplak.vscode-glsllint"                      # VSCode extension
+vscode "dtsvet.vscode-wasm"                           # VSCode extension
+vscode "dustypomerleau.rust-syntax"                   # VSCode extension
+vscode "eamodio.gitlens"                              # VSCode extension
+vscode "emmanuelbeziat.vscode-great-icons"            # VSCode extension
+vscode "enkia.tokyo-night"                            # VSCode extension
+vscode "esbenp.prettier-vscode"                       # VSCode extension
+vscode "extemporelang.vscode-extempore"               # VSCode extension
+vscode "figma.figma-vscode-extension"                 # VSCode extension
+vscode "fill-labs.dependi"                            # VSCode extension
+vscode "foxundermoon.shell-format"                    # VSCode extension
+vscode "gamunu.vscode-yarn"                           # VSCode extension
+vscode "github.copilot"                               # VSCode extension
+vscode "github.copilot-chat"                          # VSCode extension
+vscode "github.vscode-github-actions"                 # VSCode extension
+vscode "github.vscode-pull-request-github"            # VSCode extension
+vscode "grapecity.gc-excelviewer"                     # VSCode extension
+vscode "gulajavaministudio.mayukaithemevsc"           # VSCode extension
+vscode "hbenl.vscode-test-explorer"                   # VSCode extension
+vscode "hsnazar.hyper-term-theme"                     # VSCode extension
+vscode "idealley.gql"                                 # VSCode extension
+vscode "janisdd.vscode-edit-csv"                      # VSCode extension
+vscode "jscearcy.rust-doc-viewer"                     # VSCode extension
+vscode "kilocode.kilo-code"                           # VSCode extension
+vscode "kumar-harsh.graphql-for-vscode"               # VSCode extension
+vscode "l13rary.l13-diff"                             # VSCode extension
+vscode "macieklad.tailwind-sass-syntax"               # VSCode extension
+vscode "mactkg.sonic-pi"                              # VSCode extension
+vscode "mathematic.vscode-pdf"                        # VSCode extension
+vscode "mechatroner.rainbow-csv"                      # VSCode extension
+vscode "mike-co.import-sorter"                        # VSCode extension
+vscode "mikestead.dotenv"                             # VSCode extension
+vscode "moshfeu.compare-folders"                      # VSCode extension
+vscode "ms-azuretools.vscode-containers"              # VSCode extension
+vscode "ms-azuretools.vscode-docker"                  # VSCode extension
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"  # VSCode extension
+vscode "ms-python.debugpy"                            # VSCode extension
+vscode "ms-python.python"                             # VSCode extension
+vscode "ms-python.vscode-pylance"                     # VSCode extension
+vscode "ms-python.vscode-python-envs"                 # VSCode extension
+vscode "ms-toolsai.jupyter"                           # VSCode extension
+vscode "ms-toolsai.jupyter-keymap"                    # VSCode extension
+vscode "ms-toolsai.jupyter-renderers"                 # VSCode extension
+vscode "ms-toolsai.vscode-jupyter-cell-tags"          # VSCode extension
+vscode "ms-toolsai.vscode-jupyter-slideshow"          # VSCode extension
+vscode "ms-vscode-remote.remote-containers"           # VSCode extension
+vscode "ms-vscode.cmake-tools"                        # VSCode extension
+vscode "ms-vscode.cpptools"                           # VSCode extension
+vscode "ms-vscode.cpptools-extension-pack"            # VSCode extension
+vscode "ms-vscode.cpptools-themes"                    # VSCode extension
+vscode "ms-vscode.test-adapter-converter"             # VSCode extension
+vscode "ms-vscode.vscode-speech"                      # VSCode extension
+vscode "nash.awesome-flutter-snippets"                # VSCode extension
+vscode "octref.vetur"                                 # VSCode extension
+vscode "openai.chatgpt"                               # VSCode extension
+vscode "phoenisx.cssvar"                              # VSCode extension
+vscode "pkosta2005.heroku-command"                    # VSCode extension
+vscode "prisma.prisma"                                # VSCode extension
+vscode "randomfractalsinc.vscode-data-preview"        # VSCode extension
+vscode "redhat.vscode-yaml"                           # VSCode extension
+vscode "robbowen.synthwave-vscode"                    # VSCode extension
+vscode "ronnidc.nunjucks"                             # VSCode extension
+vscode "rust-lang.rust-analyzer"                      # VSCode extension
+vscode "rvest.vs-code-prettier-eslint"                # VSCode extension
+vscode "sharat.vscode-brewfile"                       # VSCode extension
+vscode "shopify.ruby-lsp"                             # VSCode extension
+vscode "sianglim.slim"                                # VSCode extension
+vscode "sissel.shopify-liquid"                        # VSCode extension
+vscode "slevesque.shader"                             # VSCode extension
+vscode "sourcegraph.cody-ai"                          # VSCode extension
+vscode "svelte.svelte-vscode"                         # VSCode extension
+vscode "swellaby.vscode-rust-test-adapter"            # VSCode extension
+vscode "tamasfe.even-better-toml"                     # VSCode extension
+vscode "tidalcycles.vscode-tidalcycles"               # VSCode extension
+vscode "tobiah.language-pde"                          # VSCode extension
+vscode "tyriar.sort-lines"                            # VSCode extension
+vscode "vscodevim.vim"                                # VSCode extension
+vscode "vue.volar"                                    # VSCode extension
+vscode "yzhang.markdown-all-in-one"                   # VSCode extension
+

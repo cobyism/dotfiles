@@ -1,0 +1,52 @@
+#!/usr/bin/env zsh
+set -e
+
+# bb (Better Brew) - a wrapper around Homebrew for better quality of life and more efficient workflow.
+
+# Note: Uses `gum` for output styling and interactivity so everything is super flash.
+
+# Print usage information
+function print_usage() {
+	gum style --border double --padding "0 2" --border-foreground 212 "Better Brew (bb)"
+	gum style --bold --padding "1 0" "Usage: bb [options] [command]"
+}
+
+# Otherwise, let's begin!
+
+## Utilities
+
+function log() {
+	echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
+}
+
+## Commands
+
+function bb_status() {
+	log "Checking bb status..."
+	brew outdated
+	brew doctor
+}
+
+# Main logic
+
+function main() {
+	local cmd="$1"
+	# shift # Remove the first argument so that $@ now contains only the arguments for the subcommand
+
+	case "$cmd" in
+		"status")
+			bb_status
+			;;
+		*)
+			# if the command is present but unknown, say so, otherwise just print usage without an error message
+			if [[ -n "$cmd" ]]; then
+				gum log --level error "Unknown command: $cmd"
+				echo ""
+			fi
+			print_usage
+			exit 1
+			;;
+	esac
+}
+
+main "$@"

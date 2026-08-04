@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+#########################
+# Dock Apps with docutil
+#########################
+
+# Check if dockutil is installed, if so, apply dock layout
+if command -v dockutil &> /dev/null
+then
+
+	# Array of app names under /Applications.
+	# Note: these must match the actual app names in /Applications, including spaces and capitalization.
+	# Finder is always first, no need to mention here.
+	apps=(
+		"Brave Browser.app"
+		"iTerm.app"
+		"Visual Studio Code.app"
+		"Spotify.app"
+		"1Password.app"
+		"Proton Pass.app"
+		"ProtonVPN.app"
+		"Proton Mail.app"
+		"Claude.app"
+	)
+
+	# Iterate over the array and add each app to the dock with dockutil.
+	dockutil --no-restart --remove all
+	for app in "${apps[@]}"
+	do
+		dockutil --no-restart --add "/Applications/$app"
+	done
+
+	# Finally add system apps at the end.
+	# dockutil --add '' --type small-spacer --section apps
+	dockutil --no-restart --add "/System/Applications/Utilities/Activity Monitor.app"
+	dockutil --add "/System/Applications/System Settings.app"
+	# Note: above command will force the dock to restart and apply changes.
+fi

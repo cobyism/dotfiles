@@ -1,0 +1,337 @@
+#!/usr/bin/env zsh
+set -e
+
+## Variables
+
+HOME="$HOME"
+DOTFILES="$HOME/.dotfiles"
+
+## Utilities
+
+# Check if a command exists and is available in PATH, with helpful messages and exit codes.
+function check_command() {
+	local cmd="$1"
+	if command -v "$cmd" &> /dev/null; then
+		echo "✅ '$cmd' command is installed and available in your \$PATH."
+	else
+		echo "🚨 Error: '$cmd' is not installed or not available in PATH. Please install '$cmd' and ensure it's in your PATH before running this script." >&2
+		exit 1
+	fi
+}
+
+# Check if homebrew formula/cask is installed, with helpful messages and exit codes.
+function check_brew_package() {
+	local pkg="$1"
+	if brew list --formula | grep -q "^$pkg\$" || brew list --cask | grep -q "^$pkg\$"; then
+		echo "✅ Homebrew package '$pkg' is installed."
+	else
+		echo "🚨 Error: Homebrew package '$pkg' is not installed. Please install it (e.g., via 'brew install $pkg') before running this script." >&2
+		exit 1
+	fi
+}
+
+# Check multiple homebrew packages at once
+function check_brew_packages() {
+	local pkgs=("$@")
+	for pkg in "${pkgs[@]}"; do
+		check_brew_package "$pkg"
+	done
+}
+
+# Function to check for "lastrun" file for a given concern to see if ever has been run.
+function check_if_run() {
+	local concern="$1"
+	local lastrun_file="$DOTFILES/config/dotfiles/.lastrun_$concern"
+	if [ -f "$lastrun_file" ]; then
+		echo "✅ '$concern' has been run before (lastrun file exists)."
+	else
+		echo "⚠️ '$concern' has never been run before (lastrun file does not exist)."
+	fi
+}
+
+# Function to create or update "lastrun" file for a given concern to mark that it has been run.
+function mark_ran() {
+	local concern="$1"
+	local lastrun_dir="$DOTFILES/config/dotfiles"
+	mkdir -p "$lastrun_dir"
+	local lastrun_file="$lastrun_dir/.lastrun_$concern"
+	touch "$lastrun_file"
+	echo "Marked '$concern' as having been run (updated lastrun file)."
+}
+
+## Done for now
+# - Computer hostname is chosen and default is updated.
+# - FileVault/FDE is enabled.
+# - Homebrew is installed and available in PATH.
+# - `rcm` is installed and available in PATH.
+# - mise is installed and available in PATH.
+# - mise has latest versions of node, ruby, python, etc. installed and set as default.
+# - AI tools from third parties and local stuff like LM Studio are installed and configured.
+# - iTerm2 shell integration is installed and configured.
+# - iTerm2 color scheme is set.
+# - Brave sync chain is set up.
+# - GPG keys are instantiated and configured.
+# - Command Line tools and/or XCode is installed and configured.
+
+## Later
+# - Homebrew packages are installed (e.g., via `brew bundle` and Brewfile)
+# - `rcup` is run to symlink dotfiles into place.
+# - Dotfiles are symlinked into place (e.g., via `script/bootstrap`).
+# - MacOS defaults are set.
+# - go, rust, and other language-specific version managers are installed and configured.
+# - SSH keys are instantiated and configured.
+# - 1Password CLI is installed and configured.
+# - Starship prompt is installed and configured.
+# - Tailscale is installed and configured.
+# - Fonts are installed and configured.
+# - Misc tools are installed and configured (e.g., fzf, tmux, etc.).
+# - VS Code settings and extensions are installed and configured.
+
+## Checklist for dotfiles management and computer setup
+# - software updates are installed and configured (e.g., via `mas` for App Store apps).
+# - Check if the Xcode license is agreed to and agree if not.
+# - Arq backups are set up and configured.
+# - Time Machine is set up and configured.
+# - Add GitHub credentials if missing
+# - Configure menu bar / system tray icons and settings (e.g., Bartender, iStat Menus, etc.).
+# - Configure Dock and Mission Control settings.
+# - Configure Notification Center settings.
+# - ensure /etc/hosts is configured (e.g., via `hosts` file in this repo).
+
+# Check FileVault/FDE status, with helpful messages and exit codes.
+function check_filevault() {
+	if fdesetup status | grep -q "FileVault is On."; then
+		echo "✅ FileVault is enabled."
+	elif fdesetup status | grep -q "FileVault is Off, but will be enabled after the next restart."; then
+		echo "⚠️ FileVault is not currently enabled, but will be enabled after the next restart. Please restart your computer to enable FileVault before running this script again."
+		exit 1
+	else
+		echo "🚨 Error: FileVault is not enabled. Please enable FileVault (System Preferences > Security & Privacy > FileVault) before running this script." >&2
+		exit 1
+	fi
+}
+
+# Check for default hostname and prompt to change it, with helpful messages and exit codes.
+function check_hostname() {
+	local current_hostname=$(scutil --get ComputerName)
+
+	# Check if contains "Mac"
+	if [[ "$current_hostname" == *"Mac"* ]]; then
+		echo "⚠️ Your computer's hostname is currently set to '$current_hostname', which appears to be the default hostname that includes an apostrophe and computer type (e.g., 'Coby's MacBook Pro')."
+		echo "It's recommended to change this to a unique hostname without special characters for better compatibility with various tools and services."
+
+		# Check if they want to update it now, with yes/no prompt.
+		read "set_hostname_now?Do you want to update your hostname now? (y/n) "
+		if [[ "$set_hostname_now" == "y" || "$set_hostname_now" == "Y" ]]; then
+
+			# Prompt for new hostname and update
+			read "new_hostname?Please enter a new hostname (without apostrophes or special characters): "
+			if [[ -z "$new_hostname" || "$new_hostname" == *"Mac"* ]]; then
+				echo "🚨 Error: Hostname cannot be empty or contain 'Mac'. Please run this script again and provide a valid hostname." >&2
+				exit 1
+			fi
+			sudo scutil --set ComputerName "$new_hostname"
+			sudo scutil --set HostName "$new_hostname"
+			sudo scutil --set LocalHostName "$new_hostname"
+			echo "✅ Hostname updated to '$new_hostname'."
+		else
+			echo "Please update your hostname before running this script again. Exiting."
+			exit 1
+		fi
+	else
+		echo "✅ Hostname '$current_hostname' looks good."
+	fi
+}
+
+# Check that file is a symlink to the expected target, with helpful messages and exit codes.
+function check_symlink() {
+	local link_path="$1"
+	local expected_target="$2"
+	if [ -L "$link_path" ]; then
+		local actual_target=$(readlink "$link_path")
+		# echo "Checking symlink '$link_path' -> '$actual_target' is '$expected_target'..."
+		if [ "$actual_target" = "$expected_target" ]; then
+			echo "✅ Symlink '$link_path' correctly points to '$expected_target'."
+		else
+			echo "🚨 Error: Symlink '$link_path' points to '$actual_target' but expected '$expected_target'. Please fix this symlink"
+		fi
+	else
+		echo "🚨 Error: '$link_path' is not a symlink. Please create a symlink from '$link_path' to '$expected_target' before running this script again." >&2
+		exit 1
+	fi
+}
+
+# Check mise has latest versions of node, ruby, python, etc. installed and set as default, with helpful messages and exit codes.
+function check_mise() {
+	local tools=("node" "ruby" "python" "go" "bun")
+	# Check that binary for each tool is managed by mise.
+	for tool in "${tools[@]}"; do
+		local tool_path=$(which "$tool" 2>/dev/null || true)
+		if [ -z "$tool_path" ]; then
+			echo "🚨 Error: '$tool' is not installed or not available in PATH. Please install '$tool' and ensure it's in your PATH before running this script again." >&2
+			exit 1
+		elif [[ "$tool_path" == *"mise/installs"* ]]; then
+			local version=$(echo "$tool_path" | sed -E 's/.*mise\/installs\/[^\/]+\/([^\/]+)\/.*/\1/')
+			echo "✅ '$tool' ($version) is installed and managed by mise."
+		else
+			echo "🚨 Error: '$tool' is installed at '$tool_path' but is not managed by mise. Please use mise to manage '$tool' and ensure it's in your PATH before running this script again." >&2
+			exit 1
+		fi
+	done
+}
+
+# Function to print a section header for better readability of checklist output.
+function section() {
+	local section_name="$1"
+	echo ""
+	echo "============================== $section_name =============================="
+	echo ""
+}
+
+# Function to check for a specific GPG key.
+function check_gpg_key() {
+	local key_id="$1"
+	local key_info=$(gpg --list-secret-keys --keyid-format=long "$key_id" 2>/dev/null || true)
+	if [[ -n "$key_info" ]]; then
+
+		# Current info looks like
+		# sec   rsa4096/019F864A45DA8539 2024-05-17 [SC]
+		# 	616186A62E4E40AA61DC37C6019F864A45DA8539
+		# uid                 [ unknown] @cobyism <_+git@coby.io>
+		# ssb   rsa4096/8CEA84D900B7656B 2024-05-17 [E]
+
+
+
+		local fingerprint=$(echo "$key_info" | grep "sec" | head -n 1 | awk '{print $2}')
+		local uid=$(echo "$key_info" | grep "uid" | head -n 1 | sed -E 's/.*uid\s+\[[^]]+\]\s+//')
+		local uid_without_email=$(echo "$uid" | sed -E 's/([^<]+)<[^>]+>/\1/' | xargs)
+
+		# Remove "uid and any extra whitespace from the beginning of the name, e.g., "uid @cobyism " -> "@cobyism"
+		local uid_strip_uid=$(echo "$uid_without_email" | sed -E 's/^uid //')
+
+		# Remove any prefixes like "uid " or "unknown " from the beginning of the name, e.g., "uid @cobyism " -> "@cobyism"
+		local uid_name=$(echo "$uid_strip_uid" | sed -E 's/^\[ unknown\] //')
+		local uid_email=$(echo "$uid" | sed -E 's/[^<]+<([^>]+)>/\1/' | xargs)
+
+		# echo "debug: key_info='$key_info'"
+		# echo "debug: fingerprint='$fingerprint'"
+		# echo "debug: uid='$uid'"
+		# echo "debug: uid_without_email='$uid_without_email'"
+		# echo "debug: uid_strip_uid='$uid_strip_uid'"
+		# echo "debug: uid_name='$uid_name'"
+		# echo "debug: uid_email='$uid_email'"
+
+		echo "✅ GPG key $key_id found: $uid_name <$uid_email> ($fingerprint)"
+	else
+		echo "🚨 Error: GPG key with ID '$key_id' is not found. Please generate or import this GPG key before running this script again." >&2
+		exit 1
+	fi
+}
+
+# Check for command line tools and Xcode, with helpful messages and exit codes.
+function check_command_line_tools() {
+	if xcode-select -p &> /dev/null; then
+		echo "✅ Command Line Tools are installed."
+	else
+		echo "🚨 Error: Command Line Tools are not installed. Please install them using 'xcode-select --install'." >&2
+		exit 1
+	fi
+}
+
+# Check xcode license agreement, with helpful messages and exit codes.
+# xcode_license() {
+#   if /usr/bin/xcrun clang 2>&1 | grep $Q license; then
+#     if [ -n "$STRAP_INTERACTIVE" ]; then
+#       logn "Asking for Xcode license confirmation:"
+#       sudo_askpass xcodebuild -license
+#       logk
+#     else
+#       abort "Run 'sudo xcodebuild -license' to agree to the Xcode license."
+#     fi
+#   fi
+# }
+function check_xcode_license() {
+	if /usr/bin/xcrun clang 2>&1 | grep -q "license"; then
+		echo "🚨 Error: Xcode license is not agreed to yet. Run 'sudo xcodebuild -license' to agree to the Xcode license." >&2
+		exit 1
+	else
+		echo "✅ Xcode license is agreed to."
+	fi
+}
+
+# Check and install any remaining software updates.
+# logn "Checking for software updates:"
+# if softwareupdate -l 2>&1 | grep $Q "No new software available."; then
+#   logk
+# else
+#   echo
+#   log "Installing software updates:"
+#   if [ -z "$STRAP_CI" ] && [ -z "$STRAP_NO_SOFTWAREUPDATE" ]; then
+#     sudo_askpass softwareupdate --install --all
+#     xcode_license
+#     logk
+#   elif [ -n "$STRAP_CI" ]; then
+#     echo "SKIPPED (for CI)"
+#   else
+#     echo "SKIPPED (by STRAP_NO_SOFTWAREUPDATE)"
+#   fi
+# fi
+function check_software_updates() {
+	if softwareupdate -l 2>&1 | grep -q "No new software available."; then
+		echo "✅ No new software updates are available."
+	else
+		echo "🚨 Error: Software updates are available. Please install all software updates (System Preferences > Software Update) before running this script again." >&2
+		exit 1
+	fi
+}
+
+# Check for outdated mac app store apps via `mas` and prompt to update, with helpful messages and exit codes.
+function check_mas_updates() {
+	local outdated_apps=$(mas outdated)
+	if [ -z "$outdated_apps" ]; then
+		echo "✅ No Mac App Store updates are available."
+	else
+		echo "🚨 Error: The following Mac App Store updates are available:"
+		echo "$outdated_apps"
+		exit 1
+	fi
+}
+
+# Run the checklist
+
+section "Pre-checks"
+check_hostname
+check_filevault
+
+section "Homebrew and packages"
+check_command "brew"
+check_brew_packages "git" "rcm" "mise" "gpg-suite"
+
+section "Dotfiles"
+check_if_run "dotfilesBootstrap"
+check_if_run "dotfilesBrewBundle"
+check_if_run "dotfilesDefaults"
+check_if_run "dotfilesDocksetup"
+check_symlink "$HOME/.dotfiles" "$HOME/code/dotfiles"
+check_symlink "$HOME/.rcrc" "$DOTFILES/rcrc"
+check_symlink "$HOME/.zshrc" "$DOTFILES/zshrc"
+check_symlink "$HOME/.config" "$DOTFILES/config"
+check_symlink "$HOME/Brewfile" "$DOTFILES/Brewfile"
+
+section "Developer tools"
+check_mise
+check_command_line_tools
+check_xcode_license
+
+section "GPG keys"
+check_gpg_key "616186A62E4E40AA61DC37C6019F864A45DA8539"
+check_gpg_key "BCF8D3B87C04FE67674FA6AC3F4EC3D457897FB8"
+check_gpg_key "49E196EE67585FCA326DBB8197DCE0F28AAC75D6"
+check_gpg_key "827C68A096A7B82002BEA0F0E2EB0570CBCB5462"
+check_gpg_key "801A0C3BCAF40AB24A36E735D621A150169B08C8"
+check_gpg_key "694E777B29E5B6510F36AA7F68B64B11BDD1CE8E"
+check_gpg_key "9638ABC4D566DA655CFA67FDDBD6A2A8B4177194"
+
+section "Software updates"
+check_software_updates
+check_mas_updates

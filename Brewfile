@@ -1,1 +1,1 @@
-/Users/cobyism/code/dotfiles/Brewfile.sorted
+/Users/cobyism/code/dotfiles/homebrew/Brewfile.sorted
