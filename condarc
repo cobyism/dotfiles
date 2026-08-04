@@ -1,4 +1,0 @@
-# auto_activate_base (bool)
-#   Automatically activate the base environment during shell
-#   initialization. for `conda init`
-auto_activate_base: false

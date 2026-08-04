@@ -21,7 +21,6 @@ config/sonic-pi.net
 config/SweetScape
 config/Xplist
 config/yarn
-conda/*
 config/gatsby/*
 
 # op CLI - device-specific state, not a shareable preference

@@ -172,25 +172,6 @@ export PATH="/Users/cobyism/.antigravity/antigravity/bin:$PATH"
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"
 
-# # Conda insists on automagically managing this whole block of stuff… ಠ_ಠ
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh" ]; then
-#         . "/Users/cobyism/.asdf/installs/python/miniconda3-latest/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/Users/cobyism/.asdf/installs/python/miniconda3-latest/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# # <<< conda initialize <<<
-
-# Added by OrbStack: command-line tools and integration
-# source ~/.orbstack/shell/init.zsh 2>/dev/null || :
-
 # =============================== MUST BE LAST!
 
 eval "$(zoxide init zsh)" # Must be last or it complains in some situations like Cursor AI editor commands.
