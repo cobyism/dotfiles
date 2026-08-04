@@ -2,5 +2,5 @@
 
 ## Docs https://thoughtbot.github.io/rcm/rcrc.5.html
 EXCLUDES="README.md LICENSE TODO.md bin resources script wip homebrew"
-SYMLINK_DIRS="config conda claude"
+SYMLINK_DIRS="config conda"
 UNDOTTED="Brewfile AGENTS.md"

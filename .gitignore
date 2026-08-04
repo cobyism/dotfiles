@@ -23,3 +23,30 @@ config/Xplist
 config/yarn
 conda/*
 config/gatsby/*
+
+# op CLI - device-specific state, not a shareable preference
+config/op/*
+
+# crush/goose - skill symlinks resolve outside this repo
+config/crush/skills
+
+# uv - installer receipt, machine-specific
+config/uv/*
+
+# darktable - SQLite library/cache databases, corruption-prone to sync
+config/darktable/*
+
+# herdr - ephemeral session/log state and bundled asset
+config/herdr/session.json
+config/herdr/session-history.json
+config/herdr/*.log
+config/herdr/.plugins.lock
+config/herdr/release-notes.json
+
+# zed - binary prompt library DB, not portable/sync-safe
+config/zed/prompts/
+
+# fizzy - config.yaml contains a live API token
+config/fizzy/
+
+config/tmux/*.local

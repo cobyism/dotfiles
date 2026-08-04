@@ -11,3 +11,4 @@
 **/.vscode
 **/.mise.toml
 **/pnpm-lock.yaml
+**/.claude/settings.local.json
