@@ -35,6 +35,7 @@
     "dock": "left"
   },
   "git_panel": {
+    "group_by": "staging",
     "dock": "left"
   },
   "icon_theme": "Colored Zed Icons Theme Dark",

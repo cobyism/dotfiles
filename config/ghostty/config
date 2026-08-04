@@ -2,7 +2,7 @@ font-family = "Monaspace Neon NF"
 font-family-bold = "Monaspace Neon NF Bold"
 font-family-italic = "Monaspace Neon NF Italic"
 font-family-bold-italic = "Monaspace Neon NF Bold Italic"
-font-size = 14
+font-size = 16
 font-feature = +calt,+liga,+ss01,+ss02,+ss03,+ss04,+ss05,+ss06,+ss08,+ss09,+ss10
 #font-family = "Geist Mono"
 #font-family-bold = "Geist Mono Bold"
@@ -53,9 +53,9 @@ keybind = global:cmd+shift+ctrl+opt+backquote=toggle_quick_terminal
 #custom-shader = ~/code/ghostty-cursor-shaders/cursor_warp.glsl
 #custom-shader = ~/code/ghostty-cursor-shaders/ripple_cursor.glsl
 
-#custom-shader = ~/code/ghostty-shader-playground/public/shaders/blaze_sparks.glsl
+custom-shader = ~/code/ghostty-shader-playground/public/shaders/blaze_sparks.glsl
 custom-shader = ~/code/ghostty-shader-playground/public/shaders/cursor_smear_gradient.glsl
-custom-shader = ~/code/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
+#custom-shader = ~/code/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
 
 #custom-shader = ~/code/ghostty_shaders/crt_glitch.glsl
 #custom-shader = ~/code/ghostty_shaders/flicker.glsl

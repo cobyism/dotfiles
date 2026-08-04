@@ -18,11 +18,3 @@ compile = false
 m = "mise"
 a = "ansible"
 ap = "ansible-playbook"
-
-[env]
-CC_TEST = "sup"
-RESTIC_REPOSITORY = "/Volumes/data/restic-repo"
-SPOTIPY_CLIENT_ID = "b48e9d09b47b400ba2dad91154268baf"
-SPOTIPY_CLIENT_SECRET = "***REMOVED-SPOTIFY-SECRET***"
-PKB_API_KEY = "***REMOVED-PKB-KEY***"
-PKB_API_SECRET = "***REMOVED-PKB-SECRET***"
