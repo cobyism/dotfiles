@@ -67,6 +67,7 @@ alias ..="cd .."
 alias rc="rclone copy --fast-list --progress --progress-terminal-title --verbose --stats 3s --transfers 10"
 alias zed="/opt/homebrew/bin/zed"
 alias cat="bat"
+alias chezmoi="chezmoi --config $DOTFILES/resources/chezmoi-config.toml"
 alias c="cursor"
 alias ccstatusline="npx -y ccstatusline@latest" # Claude Code status line configuration TUI (https://github.com/sirmalloc/ccstatusline)
 

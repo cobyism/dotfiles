@@ -15,24 +15,35 @@ if [ -L ~/.dotfiles ]; then
   rm ~/.dotfiles
 fi
 
-# check if ~/.rcrc is a symlink and if it is, remove it
-if [ -L ~/.rcrc ]; then
-  echo "Removing ~/.rcrc symlink"
-  rm ~/.rcrc
-fi
-
 echo "Linking ${DOTFILES_REPO} as ~/.dotfiles"
 ln -swi $DOTFILES_REPO ~/.dotfiles
-echo "Linking ~/.dotfiles/rcrc as ~/.rcrc"
-ln -swi ~/.dotfiles/rcrc ~/.rcrc
 
-# Next up: ensure brew installed, install rcm, rest of Brewfile, etc.
+# ~/Brewfile is kept as a plain symlink outside chezmoi's management, since
+# bin/brew-decant regenerates and re-symlinks $DOTFILES_REPO/Brewfile on every
+# run; chezmoi managing it as a copied file would go stale between runs.
+if [ -L ~/Brewfile ]; then
+  echo "Removing ~/Brewfile symlink"
+  rm ~/Brewfile
+fi
+echo "Linking ${DOTFILES_REPO}/Brewfile as ~/Brewfile"
+ln -swi $DOTFILES_REPO/Brewfile ~/Brewfile
 
-# Check if rcm is installed
-if ! command -v rcup &> /dev/null; then
-  echo "rcm could not be found. Please install rcm (e.g., via Homebrew: brew install rcm) and run this script again."
+# Next up: ensure brew installed, install chezmoi, rest of Brewfile, etc.
+
+# Check if chezmoi is installed
+if ! command -v chezmoi &> /dev/null; then
+  echo "chezmoi could not be found. Please install it (e.g., via Homebrew: brew install chezmoi) and run this script again."
   exit 1
 fi
 
-echo "Running rcup to symlink dotfiles into place..."
-rcup -v
+CHEZMOI_CONFIG="$DOTFILES_REPO/resources/chezmoi-config.toml"
+
+# Regenerated fresh each run so it's correct for wherever $DOTFILES_REPO
+# actually resolves to on this machine, rather than trusting a committed
+# absolute path from whichever machine last wrote it.
+echo "sourceDir = \"$DOTFILES_REPO\"" > "$CHEZMOI_CONFIG"
+
+echo "Initializing chezmoi against ${DOTFILES_REPO}..."
+chezmoi --config "$CHEZMOI_CONFIG" init --source="$DOTFILES_REPO"
+echo "Applying chezmoi to symlink dotfiles into place..."
+chezmoi --config "$CHEZMOI_CONFIG" apply -v

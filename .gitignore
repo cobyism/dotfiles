@@ -49,3 +49,7 @@ config/zed/prompts/
 config/fizzy/
 
 config/tmux/*.local
+
+# regenerated fresh by script/bootstrap on every run - see that script
+resources/chezmoi-config.toml
+resources/chezmoistate.boltdb

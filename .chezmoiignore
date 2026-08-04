@@ -1,0 +1,16 @@
+bin
+bin/**
+script
+script/**
+resources
+resources/**
+wip
+wip/**
+homebrew
+homebrew/**
+config
+config/**
+README.md
+LICENSE
+Brewfile
+rcrc
