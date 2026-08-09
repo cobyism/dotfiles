@@ -51,12 +51,27 @@ analyse_repo() {
   # ── Remotes ───────────────────────────────────────────────────────────────
   local remotes
   remotes=($(git remote 2>/dev/null))
+  local remote_url
+  remote_url=$(git config --get remote.origin.url 2>/dev/null)
 
   if (( ${#remotes} == 0 )); then
     tags+=("${C_MAGENTA}LOCAL-ONLY${C_RESET}")
   else
-    tags+=("${C_BLUE}remote:${remotes[1]}${C_RESET}")
-    (( ${#remotes} > 1 )) && tags+=("${C_BLUE}+$((${#remotes}-1)) more${C_RESET}")
+      if [[ -n "$remote_url" ]]; then
+        # Format: [remote::github::username/repo]
+        local remote_name
+        remote_name="${remotes[1]}"
+        local remote_provider # e.g. github, gitlab, other…
+        if [[ "$remote_url" =~ github\.com[:/](.+) ]]; then
+          remote_provider="github"
+          local github_repo="${BASH_REMATCH[1]}"
+          tags+=("${C_CYAN}${remote_name}:${github_repo}${C_RESET}")
+        else
+          remote_provider="other"
+          tags+=("${C_BLUE}${remote_name}${C_RESET}")
+        fi
+      fi
+
   fi
 
   # ── Ahead / behind remote ─────────────────────────────────────────────────

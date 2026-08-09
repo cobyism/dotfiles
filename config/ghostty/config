@@ -1,8 +1,8 @@
 font-family = "Monaspace Neon NF"
-font-family-bold = "Monaspace Neon NF Bold"
-font-family-italic = "Monaspace Neon NF Italic"
-font-family-bold-italic = "Monaspace Neon NF Bold Italic"
-font-size = 16
+font-family-bold = "Monaspace Neon NF"
+font-family-italic = "Monaspace Radon NF"
+font-family-bold-italic = "Monaspace Radon NF"
+font-size = 18
 font-feature = +calt,+liga,+ss01,+ss02,+ss03,+ss04,+ss05,+ss06,+ss08,+ss09,+ss10
 #font-family = "Geist Mono"
 #font-family-bold = "Geist Mono Bold"
@@ -11,8 +11,10 @@ font-feature = +calt,+liga,+ss01,+ss02,+ss03,+ss04,+ss05,+ss06,+ss08,+ss09,+ss10
 
 window-title-font-family = "Geist Pixel"
 
-theme = "Catppuccin Mocha"
+theme = "Neobones Dark"
 # Oxocarbon, Argonaut, Framer, iTerm2 Tanko Dark, Purple Rain, Wez
+
+split-divider-color = "#c00"
 
 window-padding-x = 20
 window-padding-y = 20
@@ -26,6 +28,7 @@ shell-integration-features = cursor,title,sudo,path,ssh-env,ssh-terminfo
 window-inherit-working-directory = false
 tab-inherit-working-directory = false
 split-inherit-working-directory = true
+window-new-tab-position = end
 
 bell-features = border,title,attention,system
 app-notifications = clipboard-copy,config-reload
@@ -39,9 +42,9 @@ macos-window-shadow = false
 #background-image-opacity = 0.05
 #background-image-fit = cover
 
-background-opacity = 0.975
+background-opacity = 1
 background-opacity-cells = true
-background-blur = macos-glass-clear
+background-blur = 0
 
 cursor-color = "#FF0000"
 cursor-click-to-move = true
@@ -68,3 +71,7 @@ custom-shader = ~/code/ghostty-shader-playground/public/shaders/cursor_smear_gra
 #custom-shader = ~/code/gshaders/tft.glsl
 #custom-shader = ~/code/Fearless-Geek-Shaders-for-Ghostty/static.glsl
 #custom-shader = ~/code/gshaders/tft.glsl
+
+# Added by boo
+#macos-icon = blueprint
+macos-icon = holographic

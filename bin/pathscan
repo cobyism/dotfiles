@@ -1,0 +1,262 @@
+#!/usr/bin/env zsh
+
+# pathscan
+#
+# Clearly reports what's going on with $PATH: which directories are in it,
+# what's executable inside them, which commands get shadowed by an earlier
+# directory, which commands override the system's own /usr/bin /bin /etc,
+# and which of those get further shadowed by aliases/functions from your
+# shell startup files. Also flags a few PATH security smells (relative
+# entries, world/group-writable directories, duplicate entries).
+#
+# Usage:
+#   pathscan            Full report
+#   pathscan <command>  Focused lookup: where does `<command>` actually
+#                        resolve from, and what's shadowing it?
+#
+# Requires https://github.com/charmbracelet/gum for the pretty output.
+
+command -v gum >/dev/null || {
+	print -u2 "pathscan: requires 'gum' (brew install gum)"
+	exit 1
+}
+
+emulate -L zsh
+setopt local_options extended_glob
+unsetopt xtrace verbose
+
+local sep=$'\t'
+local rs=$'\x1e'   # record separator for joining provider-dir lists (paths may contain spaces)
+local -a SYSTEM_DIRS
+SYSTEM_DIRS=(/usr/bin /bin /usr/sbin /sbin /Library/Apple/usr/bin /System/Cryptexes/App/usr/bin)
+
+# ── Helpers ────────────────────────────────────────────────────────────────
+heading() {
+	gum style --bold --foreground 212 --border rounded --padding '0 1' --margin '1 0' "$1"
+}
+
+subheading() {
+	gum style --foreground 244 --margin '0 0 0 1' "$1"
+}
+
+table() {
+	# table <columns-csv> <row> ...
+	local columns=$1
+	shift
+	printf '%s\n' "$@" | gum table -s "$sep" -c "$columns" --border rounded --print
+}
+
+is_system_dir() {
+	local d=$1 sd
+	for sd in $SYSTEM_DIRS; do
+		[[ $d == $sd ]] && return 0
+	done
+	return 1
+}
+
+# ── Gather $PATH dirs (order preserved, not de-duped — we want to see dupes) ─
+local -a pathdirs
+pathdirs=("${(@s/:/)PATH}")
+
+# ── Build name -> provider dirs map (first entry per name = the winner) ─────
+typeset -A providers
+local d f name
+
+for d in $pathdirs; do
+	[[ -d $d ]] || continue
+	for f in $d/*(N-*); do
+		name=${f:t}
+		if [[ -z ${providers[$name]} ]]; then
+			providers[$name]=$d
+		else
+			providers[$name]+="${rs}${d}"
+		fi
+	done
+done
+
+# ── Aliases & functions from a real interactive shell startup (one shot) ────
+# A single bulk fetch — spawning zsh -ic per lookup leaks terminal
+# shell-integration escape sequences (iTerm2/Ghostty/Warp OSC codes) into
+# the captured output, since -i triggers prompt/precmd hooks.
+local -a shell_aliases shell_functions
+shell_aliases=("${(@f)$(zsh -ic 'alias' 2>/dev/null)}")
+shell_functions=("${(@f)$(zsh -ic 'print -l ${(ok)functions}' 2>/dev/null)}")
+
+typeset -A alias_of
+local line aname
+for line in $shell_aliases; do
+	aname=${line%%=*}
+	[[ $aname == [a-zA-Z_][a-zA-Z0-9_]# ]] || continue
+	alias_of[$aname]=${line#*=}
+done
+
+# ── Focused lookup mode ──────────────────────────────────────────────────────
+if [[ -n $1 ]]; then
+	local query=$1
+	heading "pathscan: ${query}"
+
+	if [[ -z ${providers[$query]} ]]; then
+		gum style --foreground 196 "No executable named '${query}' found anywhere on \$PATH."
+		exit 1
+	fi
+
+	local -a hits
+	hits=("${(@ps.$rs.)providers[$query]}")
+
+	subheading "Resolution order (winner first)"
+	local rows=() i=1 hd
+	for hd in $hits; do
+		rows+=("${i}${sep}${hd}/${query}${sep}$([[ $i == 1 ]] && print 'wins')")
+		((i++))
+	done
+	table 'order,path,winner' "${rows[@]}"
+
+	local is_func=0
+	(( ${shell_functions[(Ie)$query]} )) && is_func=1
+
+	if [[ -n ${alias_of[$query]} ]]; then
+		gum style --foreground 214 "⚠ Shadowed by an alias in your shell: ${alias_of[$query]}"
+	fi
+	if (( is_func )); then
+		gum style --foreground 214 "⚠ Shadowed by a shell function of the same name (defined in your zsh startup files)."
+	fi
+	if [[ -z ${alias_of[$query]} ]] && (( ! is_func )); then
+		gum style --foreground 245 "No alias or function shadows '${query}' — the PATH winner above is what actually runs."
+	fi
+
+	if (( ${#hits} > 1 )); then
+		gum style --foreground 214 "⚠ Shadowed in \$PATH by $(( ${#hits} - 1 )) other director$([ $(( ${#hits} - 1 )) -eq 1 ] && print y || print ies): ${hits[2,-1]}"
+	fi
+
+	if ! is_system_dir "${hits[1]}"; then
+		local sd=""
+		for sd in $SYSTEM_DIRS; do
+			[[ -x $sd/$query ]] && gum style --foreground 214 "⚠ Overrides system binary: ${sd}/${query}"
+		done
+	fi
+
+	exit 0
+fi
+
+# ── Full report ──────────────────────────────────────────────────────────────
+heading "\$PATH report"
+
+# 1. Directory overview
+subheading "Directories, in resolution order"
+local rows=() idx=1
+typeset -A dir_seen_count
+for d in $pathdirs; do (( dir_seen_count[$d]++ )); done
+
+local n_missing=0 n_relative=0 n_writable=0
+for d in $pathdirs; do
+	local dstatus="" count="–"
+
+	if [[ $d != /* ]]; then
+		dstatus="relative!"
+		((n_relative++))
+	elif [[ ! -e $d ]]; then
+		dstatus="missing"
+		((n_missing++))
+	elif [[ ! -d $d ]]; then
+		dstatus="not a dir"
+		((n_missing++))
+	else
+		local exe=($d/*(N-*))
+		count=${#exe}
+		dstatus="ok"
+		if (( dir_seen_count[$d] > 1 )); then
+			dstatus="${dstatus}, dup×${dir_seen_count[$d]}"
+		fi
+		local perm=$(stat -f '%OLp' "$d" 2>/dev/null)
+		if [[ -n $perm ]] && (( (8#$perm & 8#022) != 0 )); then
+			dstatus="${dstatus}, writable!"
+			((n_writable++))
+		fi
+	fi
+
+	rows+=("${idx}${sep}${d}${sep}${dstatus}${sep}${count}")
+	((idx++))
+done
+table 'order,directory,status,executables' "${rows[@]}"
+
+if (( n_relative > 0 )); then
+	gum style --foreground 196 "⚠ ${n_relative} relative (non-absolute) entr$([ $n_relative -eq 1 ] && print y || print ies) in \$PATH — these resolve relative to your current directory and are a classic security footgun."
+fi
+if (( n_missing > 0 )); then
+	gum style --foreground 214 "⚠ ${n_missing} \$PATH entr$([ $n_missing -eq 1 ] && print y || print ies) that don't exist (or aren't directories) — harmless, but dead weight."
+fi
+if (( n_writable > 0 )); then
+	gum style --foreground 196 "⚠ ${n_writable} \$PATH director$([ $n_writable -eq 1 ] && print y || print ies) writable by group or other — anyone with write access could plant a binary that shadows a real command."
+fi
+
+# 2. Shadowed executables (same name provided by more than one dir)
+subheading "Shadowed executables (same name, multiple directories — first one wins)"
+local rows=()
+for name in ${(k)providers}; do
+	local -a dirs
+	dirs=("${(@ps.$rs.)providers[$name]}")
+	(( ${#dirs} > 1 )) || continue
+	rows+=("${name}${sep}${dirs[1]}${sep}$(( ${#dirs} - 1 )) other")
+done
+
+if (( ${#rows} > 0 )); then
+	table 'command,winner,also found in' "${rows[@]}"
+	gum style --foreground 245 "Run 'pathscan <command>' for the full resolution order of any of these."
+else
+	gum style --foreground 245 "No shadowing — every command name on \$PATH is unique."
+fi
+
+# 3. Overrides of system binaries
+subheading "Overrides of system binaries (/usr/bin, /bin, /usr/sbin, /sbin)"
+local rows=()
+for name in ${(k)providers}; do
+	local -a dirs
+	dirs=("${(@ps.$rs.)providers[$name]}")
+	local winner=${dirs[1]}
+	is_system_dir "$winner" && continue
+	local sd=""
+	for sd in $SYSTEM_DIRS; do
+		if [[ -x $sd/$name ]]; then
+			rows+=("${name}${sep}${winner}${sep}${sd}")
+			break
+		fi
+	done
+done
+
+if (( ${#rows} > 0 )); then
+	table 'command,your version,system version' "${rows[@]}"
+else
+	gum style --foreground 245 "Nothing on \$PATH shadows a system binary."
+fi
+
+# 4. Alias / function conflicts from shell startup files
+subheading "Aliases & functions that shadow a \$PATH executable"
+
+local rows=()
+for aname in ${(k)alias_of}; do
+	[[ -n ${providers[$aname]} ]] || continue
+	rows+=("${aname}${sep}alias${sep}${alias_of[$aname]}${sep}${providers[$aname]%%${rs}*}")
+done
+for aname in $shell_functions; do
+	[[ -n ${providers[$aname]} ]] || continue
+	rows+=("${aname}${sep}function${sep}(defined in shell startup)${sep}${providers[$aname]%%${rs}*}")
+done
+
+if (( ${#rows} > 0 )); then
+	table 'command,kind,definition,shadowed path' "${rows[@]}"
+	gum style --foreground 245 "These win over \$PATH in an interactive shell — the executable column never runs unless called with its full path or 'command <name>'."
+else
+	gum style --foreground 245 "No aliases or functions shadow a \$PATH executable."
+fi
+
+# 5. Summary
+subheading "Summary"
+local n_dirs=${#pathdirs}
+local n_exe_total=0 n_exe_unique=${#providers}
+for d in $pathdirs; do
+	[[ -d $d ]] || continue
+	local exe=($d/*(N-*))
+	((n_exe_total += ${#exe}))
+done
+gum style --margin '0 0 1 1' --foreground 245 \
+	"${n_dirs} directories on \$PATH · ${n_exe_total} executables total · ${n_exe_unique} unique command names"

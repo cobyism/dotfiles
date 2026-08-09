@@ -15,15 +15,15 @@
         "rawValue": true
       },
       {
-        "id": "118b33ce-5b70-4abc-a239-1491e9fbf8a8",
-        "type": "context-percentage-usable",
-        "backgroundColor": "bgBrightBlack",
+        "id": "3ac85139-8b77-43ec-a6de-ba47cfd7702c",
+        "type": "session-usage",
+        "backgroundColor": "bgBrightMagenta",
         "rawValue": true
       },
       {
-        "id": "3",
-        "type": "context-length",
-        "color": "brightBlack",
+        "id": "26192aae-7d78-45f4-840c-e195ed27442d",
+        "type": "reset-timer",
+        "backgroundColor": "bgBrightWhite",
         "rawValue": true
       },
       {

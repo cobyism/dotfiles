@@ -3,30 +3,56 @@ command_timeout = 200
 format = "[$directory$git_branch$git_status]($style)$character"
 
 [character]
-error_symbol = "[✗](bold cyan)"
+error_symbol = "[✗](bold red)"
+success_symbol = "[➜](bold green)"
 # success_symbol = "[❯](bold cyan)"
-success_symbol = "[➜](bold cyan)"
 
 [directory]
 truncation_length = 2
 truncation_symbol = "…/"
-repo_root_style = "bold cyan"
-repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+truncate_to_repo = true
+before_repo_root_style = "bold purple"
+repo_root_style = "bold purple"
+repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+read_only = " 󰌾"
+read_only_style = "red"
+home_symbol = "~"
+# home_symbol = ""
+# substitutions = [
+#   { from = "code", to = "", regex = true },
+# ]
+# substitutions = [
+#   { from = "^/", to = "<root>/", regex = true },
+#   { from = "/", to = " | " },
+#   { from = "^<root>", to = "/", regex = true },
+#   { from = "code", to = "  󰅩 󰘦 󰅨   ", regex = true }
+# ]
+#home_symbol = "~󰋜󱂵󰋞"
+# code = "󰅩󰘦󰅨"
 
 [git_branch]
-format = "[$branch]($style) "
-style = "italic cyan"
+format = "[](purple)[](bg:purple fg:black)[](purple) [$branch]($style) "
+style = "italic purple"
+
+#branch_symbols = "    󰘬 "
+# useful powerline symbols = "🭬🭮"
+#
+# \uE0B0 , \uE0B1 , \uE0B2 , \uE0B3 , \uE0B4 , \uE0B5 , \uE0B6 , \uE0B7 
+# \uE0B8 , \uE0B9 , \uE0BA , \uE0BB , \uE0BC , \uE0BD , \uE0BE , \uE0BF 
+# \uE0C0 , \uE0C1 , \uE0C2 , \uE0C3 , \uE0C4 , \uE0C5 , \uE0C6 , \uE0C7 
+# \uE0C8 , \uE0C9 , \uE0CA , \uE0CB , \uE0CC , \uE0CD , \uE0CE , \uE0CF 
+# \uE0D0 , \uE0D1 , \uE0D2 , \uE0D3 , \uE0D4 ,
 
 [git_status]
 format     = '[$all_status]($style)'
 style      = "cyan"
-ahead      = "⇡${count} "
-diverged   = "⇕⇡${ahead_count}⇣${behind_count} "
-behind     = "⇣${count} "
-conflicted = " "
-up_to_date = " "
-untracked  = "? "
-modified   = " "
+ahead      = "[⇡](orange)${count} "
+diverged   = "[⇕](orange) [⇡](orange)${ahead_count} [⇣](orange)${behind_count} "
+behind     = "[⇣](orange)${count} "
+conflicted = "[](red) "
+up_to_date = "[](green) "
+untracked  = "[?](yellow) "
+modified   = "[](red) "
 stashed    = ""
 staged     = ""
 renamed    = ""

@@ -7,6 +7,10 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "markdown_preview": {
+    "limit_content_width": false
+  },
+  "cli_default_open_behavior": "new_window",
   "ui_font_family": "Geist",
   "markdown_preview_code_font_family": "Monaspace Krypton NF",
   "markdown_preview_font_family": "Geist",

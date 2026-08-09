@@ -1,0 +1,574 @@
+#!/usr/bin/env zsh
+
+## gradient - print text with a smooth truecolor gradient, as foreground and/or background color.
+##
+## Usage:
+##   gradient [options] [text...]
+##   printf '...' | gradient [options]
+##
+## Options:
+##   -s, --start COLOR   start color of a foreground gradient (shorthand for --fg)
+##   -e, --end COLOR     end color of a foreground gradient (shorthand for --fg)
+##   -n, --named NAME    use a named gradient as the foreground (shorthand for --fg)
+##   --fg SPEC           set the foreground: a solid color, a "start:end" gradient,
+##                        or a named gradient (see --list)
+##   --bg SPEC           set the background: same forms as --fg
+##                        (--fg and --bg are independent — use either or both,
+##                        each its own solid color or its own gradient)
+##                        A color is a hex value (ff0000, #ff0000) or one of the
+##                        16 standard ANSI color names, e.g. red, bright-blue
+##                        (see --colors)
+##   -p, --pad N         add N spaces of padding before and after the text
+##                        (padding is inside any background color block)
+##   -m, --multiline     apply the gradient to each line on its own, instead of
+##                        stretching one gradient down across all the lines
+##   -w, --width N       treat a gradient as spanning N characters, instead of
+##                        the length of each line — shorter lines then use only
+##                        part of the gradient, so colors line up by column
+##                        across lines of different lengths (with --multiline)
+##   -W, --output-width N  pad the output to N characters wide, with the text
+##                        positioned by --align (default: start)
+##   -a, --align WHERE   where to position the text within --output-width:
+##                        start, center, or end (default: start)
+##                        (the fill is inside any background color block)
+##   --cap NAME          cap both ends of a --bg block with a powerline glyph,
+##                        colored to match that end's color (see --cap-list)
+##   --cap-start NAME    cap only the start of a --bg block
+##   --cap-end NAME      cap only the end of a --bg block
+##   --cap-list          list the available cap glyph names and exit
+##   -B, --bold          bold text
+##   -D, --dim           dim text
+##   -I, --italic        italic text
+##   -U, --underline     underlined text
+##   -S, --strike        strikethrough text
+##   -R, --reverse       reverse video
+##       --blink         blinking text
+##   -l, --list          list named gradients, with a preview of each, and exit
+##   --colors            list the 16 ANSI color names, with a preview of each,
+##                        and exit
+##   --demo              run a tour of the script's features and exit
+##   -h, --help          show this help and exit
+##
+## If no text is given as an argument, gradient reads from stdin.
+##
+## Examples:
+##   gradient --named sunset "Hello, world!"
+##   gradient -s 00ffff -e ff00ff --bold "custom fade"
+##   gradient --fg red --bg blue "ANSI color names work too"
+##   echo "background fade" | gradient --bg ocean
+##   gradient --bg fire --pad 2 "label"
+##   gradient --bg fire --fg ffffff "white text on a fire background"
+##   gradient --fg sunset --bg ocean "two independent gradients"
+##   figlet "HI" | gradient --multiline --named sunset
+##   figlet "HI" | gradient --multiline --width 40 --named sunset
+##   gradient --bg fire --output-width 20 --align center "menu"
+##   gradient --bg ocean --cap round-right --cap-start round-left "segment"
+##   gradient --list
+##   gradient --cap-list
+##   gradient --colors
+##   gradient --demo
+
+emulate -L zsh
+setopt pipefail extended_glob
+
+# Inside a function, $0 is the function name, not the script path — capture it up front.
+local self=$0
+
+# The 16 standard ANSI color names, mapped to their common xterm default hex
+# values, so they can be used anywhere a hex color is accepted.
+typeset -A ANSI_COLORS=(
+	black            000000
+	red              CD0000
+	green            00CD00
+	yellow           CDCD00
+	blue             0000EE
+	magenta          CD00CD
+	cyan             00CDCD
+	white            E5E5E5
+	bright-black     7F7F7F
+	gray             7F7F7F
+	grey             7F7F7F
+	bright-red       FF0000
+	bright-green     00FF00
+	bright-yellow    FFFF00
+	bright-blue      5C5CFF
+	bright-magenta   FF00FF
+	bright-cyan      00FFFF
+	bright-white     FFFFFF
+)
+
+typeset -A GRADIENTS=(
+	sunset    'FF512F:F09819'
+	ocean     '2E3192:1BFFFF'
+	fire      'F00000:FFD200'
+	mint      '00B09B:96C93D'
+	purple    'DA22FF:9733EE'
+	passion   'FF0844:FFB199'
+	cyberpunk 'FC00FF:00DBDE'
+	forest    '134E5E:71B280'
+	peach     'ED4264:FFEDBC'
+	sky       '2980B9:6DD5FA'
+	gold      'F7971E:FFD200'
+	ice       '74EBD5:9FACE6'
+	lime      'A8E063:56AB2F'
+	berry     '8E2DE2:4A00E0'
+	flamingo  'F953C6:B91D73'
+)
+
+# Powerline/Nerd Font cap glyphs, colored to match the edge of a --bg block so
+# they read as a rounded/angled cap jutting into the terminal's background.
+# NOTE: the glyphs requested in chat arrived here as blank/whitespace (verified
+# byte-for-byte — no codepoints came through), so these are transcribed from
+# memory of the Nerd Fonts "Powerline Extra Symbols" block (U+E0B0-U+E0BA)
+# instead. If any cap renders as the wrong shape or mirrored, say which one.
+# A cap glyph always gets its color from the foreground channel, with the
+# background left unset (transparent) — matching how Powerline, Powerlevel10k,
+# and oh-my-posh render an edge divider with nothing adjacent on that side.
+# Which specific glyph to use (i.e. which way it visually points) is a
+# separate choice, made per name below, independent of this color rule.
+typeset -A CAPS=(
+	round-left            $''
+	round-right           $''
+	triangle-right        $''
+	triangle-left         $''
+	slant-right           $''
+	slant-left            $''
+)
+
+usage() {
+	sed -n '2,/^$/p' "$self" | sed 's/^## \{0,1\}//'
+}
+
+hex_to_rgb() {
+	# hex_to_rgb <hex-or-ansi-name> — sets r, g, b in the caller's scope
+	local hex=${1#\#}
+	local name=${(L)1}
+	if [[ -n ${ANSI_COLORS[$name]} ]]; then
+		hex=${ANSI_COLORS[$name]}
+	elif [[ $hex != [0-9a-fA-F](#c6) ]]; then
+		print -u2 "gradient: not a valid hex color or ANSI color name: $1 (see --colors)"
+		exit 1
+	fi
+	r=$((16#${hex[1,2]}))
+	g=$((16#${hex[3,4]}))
+	b=$((16#${hex[5,6]}))
+}
+
+parse_spec() {
+	# parse_spec <spec> — sets kind (solid|gradient) in the caller's scope, and
+	# either r/g/b (solid) or r0/g0/b0/r1/g1/b1 (gradient), also in the caller's scope.
+	local spec=$1
+	if [[ $spec == *:* ]]; then
+		kind=gradient
+		hex_to_rgb "${spec%%:*}"
+		r0=$r; g0=$g; b0=$b
+		hex_to_rgb "${spec##*:}"
+		r1=$r; g1=$g; b1=$b
+	elif [[ -n ${GRADIENTS[$spec]} ]]; then
+		kind=gradient
+		hex_to_rgb "${GRADIENTS[$spec]%%:*}"
+		r0=$r; g0=$g; b0=$b
+		hex_to_rgb "${GRADIENTS[$spec]##*:}"
+		r1=$r; g1=$g; b1=$b
+	else
+		kind=solid
+		hex_to_rgb "$spec"
+	fi
+}
+
+list_gradients() {
+	command -v gum >/dev/null || {
+		print -u2 "gradient: --list requires 'gum' (brew install gum)"
+		exit 1
+	}
+	local arrow=$'→' tsv=$'\t'
+	local name pair start end fg bg rgb_start rgb_end r g b
+	local rows=()
+	for name in ${(ko)GRADIENTS}; do
+		pair=${GRADIENTS[$name]}
+		start=${pair%%:*}
+		end=${pair##*:}
+		hex_to_rgb "$start"
+		rgb_start=$(printf 'rgb(%3d, %3d, %3d)' "$r" "$g" "$b")
+		hex_to_rgb "$end"
+		rgb_end=$(printf 'rgb(%3d, %3d, %3d)' "$r" "$g" "$b")
+		fg=$("$self" --fg "${start}:${end}" -- "  #${start} ${arrow} #${end}  ")
+		bg=$("$self" --bg "${start}:${end}" -- "  ${rgb_start} ${arrow} ${rgb_end}  ")
+		rows+=("${name}${tsv}${fg}${tsv}${bg}")
+	done
+	printf '%s\n' "${rows[@]}" | gum table -s "$tsv" -c 'Name,Foreground,Reversed' --border rounded --print
+}
+
+list_caps() {
+	command -v gum >/dev/null || {
+		print -u2 "gradient: --cap-list requires 'gum' (brew install gum)"
+		exit 1
+	}
+	local tsv=$'\t' name preview
+	local rows=()
+	for name in ${(ko)CAPS}; do
+		preview=$("$self" --bg ocean --cap "$name" -- '  segment  ')
+		rows+=("${name}${tsv}${preview}")
+	done
+	printf '%s\n' "${rows[@]}" | gum table -s "$tsv" -c 'Name,Preview' --border rounded --print
+}
+
+list_ansi_colors() {
+	command -v gum >/dev/null || {
+		print -u2 "gradient: --colors requires 'gum' (brew install gum)"
+		exit 1
+	}
+	local tsv=$'\t' name hex fg bg
+	local rows=()
+	for name in ${(ko)ANSI_COLORS}; do
+		hex=${ANSI_COLORS[$name]}
+		fg=$("$self" --fg "$name" -- "  ${name}  ")
+		bg=$("$self" --bg "$name" -- "  #${hex}  ")
+		rows+=("${name}${tsv}${fg}${tsv}${bg}")
+	done
+	printf '%s\n' "${rows[@]}" | gum table -s "$tsv" -c 'Name,Foreground,Background' --border rounded --print
+}
+
+run_demo() {
+	demo_heading() {
+		printf '\n\e[1;4m%s\e[0m\n' "$1"
+	}
+
+	demo_heading 'Solid colors (--fg / --bg with a plain hex)'
+	"$self" --fg ffffff -- 'solid white foreground'
+	printf '\n'
+	"$self" --bg 222222 --fg ffffff -- '  solid background + solid foreground  '
+	printf '\n'
+
+	demo_heading 'Named gradient, foreground (-n / --fg NAME)'
+	"$self" -n sunset -- 'named foreground gradient: sunset'
+
+	demo_heading 'Named gradient, background (--bg NAME)'
+	"$self" --bg ocean -- '  named background gradient: ocean  '
+
+	demo_heading 'Independent fg + bg gradients at once'
+	"$self" --fg sunset --bg ocean -- 'two different gradients, together'
+
+	demo_heading 'Text attributes'
+	"$self" -n purple -B -U -- 'bold + underline'
+	"$self" -n fire -I -S -- 'italic + strike'
+
+	demo_heading 'Padding (--pad)'
+	"$self" --bg fire -p 3 -- 'padded label'
+
+	demo_heading 'Output width + alignment (--output-width / --align)'
+	"$self" --bg fire -W 30 -a start -- 'start'
+	"$self" --bg fire -W 30 -a center -- 'center'
+	"$self" --bg fire -W 30 -a end -- 'end'
+
+	demo_heading 'One gradient per line (--multiline)'
+	printf 'short\nmuch longer line of text\nmid\n' | "$self" -n mint -m --
+
+	demo_heading 'Multiline with columns aligned (--multiline --width)'
+	printf 'short\nmuch longer line of text\nmid\n' | "$self" -n mint -m -w 26 --
+
+	demo_heading 'Powerline caps (--cap / --cap-start / --cap-end)'
+	"$self" --bg fire --cap-start round-left --cap round-right -- '  rounded  '
+	"$self" --bg ocean --cap-start triangle-left --cap triangle-right -- '  triangle  '
+	"$self" --bg purple --cap-start slant-right --cap-end slant-right -- '  slant-right  '
+	"$self" --bg purple --cap-start slant-left --cap-end slant-left -- '  slant-left  '
+
+	printf '\n\e[2mSee also: gradient --list, gradient --cap-list, gradient --help\e[0m\n'
+}
+
+local start_hex='' end_hex='' named='' fg_spec='' bg_spec='' attrs='' pad=0 multiline=0 width=0 out_width=0 align=start
+local cap_start_name='' cap_end_name=''
+
+validate_cap_name() {
+	# validate_cap_name <flag> <name> — errors out if <name> isn't a known cap
+	[[ -n ${CAPS[$2]} ]] && return
+	print -u2 "gradient: $1 expects one of: ${(ko)CAPS} — got: $2 (see --cap-list)"
+	exit 1
+}
+
+while (($#)); do
+	case $1 in
+		-s | --start) start_hex=$2; shift 2 ;;
+		-e | --end) end_hex=$2; shift 2 ;;
+		-n | --named) named=$2; shift 2 ;;
+		--fg) fg_spec=$2; shift 2 ;;
+		--bg) bg_spec=$2; shift 2 ;;
+		--cap)
+			validate_cap_name --cap "$2"
+			cap_start_name=$2
+			cap_end_name=$2
+			shift 2
+			;;
+		--cap-start)
+			validate_cap_name --cap-start "$2"
+			cap_start_name=$2
+			shift 2
+			;;
+		--cap-end)
+			validate_cap_name --cap-end "$2"
+			cap_end_name=$2
+			shift 2
+			;;
+		-p | --pad)
+			if [[ $2 != <-> ]]; then
+				print -u2 "gradient: --pad expects a non-negative integer, got: $2"
+				exit 1
+			fi
+			pad=$2
+			shift 2
+			;;
+		-m | --multiline) multiline=1; shift ;;
+		-w | --width)
+			if [[ $2 != <1-> ]]; then
+				print -u2 "gradient: --width expects a positive integer, got: $2"
+				exit 1
+			fi
+			width=$2
+			shift 2
+			;;
+		-W | --output-width)
+			if [[ $2 != <1-> ]]; then
+				print -u2 "gradient: --output-width expects a positive integer, got: $2"
+				exit 1
+			fi
+			out_width=$2
+			shift 2
+			;;
+		-a | --align)
+			case $2 in
+				start | left) align=start ;;
+				end | right) align=end ;;
+				center) align=center ;;
+				*)
+					print -u2 "gradient: --align expects start, center, or end, got: $2"
+					exit 1
+					;;
+			esac
+			shift 2
+			;;
+		-B | --bold) attrs+='1;'; shift ;;
+		-D | --dim) attrs+='2;'; shift ;;
+		-I | --italic) attrs+='3;'; shift ;;
+		-U | --underline) attrs+='4;'; shift ;;
+		-S | --strike) attrs+='9;'; shift ;;
+		-R | --reverse) attrs+='7;'; shift ;;
+		--blink) attrs+='5;'; shift ;;
+		-l | --list) list_gradients; exit 0 ;;
+		--cap-list) list_caps; exit 0 ;;
+		--colors) list_ansi_colors; exit 0 ;;
+		--demo) run_demo; exit 0 ;;
+		-h | --help) usage; exit 0 ;;
+		--) shift; break ;;
+		-*)
+			print -u2 "gradient: unknown option: $1"
+			exit 1
+			;;
+		*) break ;;
+	esac
+done
+
+local text
+if (($#)); then
+	text="$*"
+elif [[ -t 0 ]]; then
+	print -u2 'gradient: no text given and no input piped in (see --help)'
+	exit 1
+else
+	text=$(cat)
+fi
+
+if [[ -n $named ]]; then
+	if [[ -z ${GRADIENTS[$named]} ]]; then
+		print -u2 "gradient: unknown named gradient: $named (see --list)"
+		exit 1
+	fi
+	start_hex=${GRADIENTS[$named]%%:*}
+	end_hex=${GRADIENTS[$named]##*:}
+fi
+
+if [[ -n $start_hex && -n $end_hex ]]; then
+	[[ -z $fg_spec ]] && fg_spec="${start_hex}:${end_hex}"
+elif [[ -n $start_hex || -n $end_hex ]]; then
+	print -u2 'gradient: specify both --start and --end'
+	exit 1
+fi
+
+if [[ -z $fg_spec && -z $bg_spec ]]; then
+	print -u2 'gradient: specify --fg and/or --bg (or --start/--end/--named — see --list)'
+	exit 1
+fi
+
+local r g b kind r0 g0 b0 r1 g1 b1
+local fg_kind=none fg_r=0 fg_g=0 fg_b=0 fg_r0=0 fg_g0=0 fg_b0=0 fg_r1=0 fg_g1=0 fg_b1=0
+local bg_kind=none bg_r=0 bg_g=0 bg_b=0 bg_r0=0 bg_g0=0 bg_b0=0 bg_r1=0 bg_g1=0 bg_b1=0
+
+if [[ -n $fg_spec ]]; then
+	parse_spec "$fg_spec"
+	fg_kind=$kind
+	if [[ $kind == gradient ]]; then
+		fg_r0=$r0; fg_g0=$g0; fg_b0=$b0; fg_r1=$r1; fg_g1=$g1; fg_b1=$b1
+	else
+		fg_r=$r; fg_g=$g; fg_b=$b
+	fi
+fi
+
+if [[ -n $bg_spec ]]; then
+	parse_spec "$bg_spec"
+	bg_kind=$kind
+	if [[ $kind == gradient ]]; then
+		bg_r0=$r0; bg_g0=$g0; bg_b0=$b0; bg_r1=$r1; bg_g1=$g1; bg_b1=$b1
+	else
+		bg_r=$r; bg_g=$g; bg_b=$b
+	fi
+fi
+
+if [[ (-n $cap_start_name || -n $cap_end_name) && $bg_kind == none ]]; then
+	print -u2 'gradient: --cap/--cap-start/--cap-end require --bg'
+	exit 1
+fi
+
+local cap_start_glyph='' cap_end_glyph=''
+[[ -n $cap_start_name ]] && cap_start_glyph=${CAPS[$cap_start_name]}
+[[ -n $cap_end_name ]] && cap_end_glyph=${CAPS[$cap_end_name]}
+
+# Most caps read correctly with fg-only color (see the CAPS comment above),
+# but a handful of glyph/role combinations visually need the color on the
+# other channel instead — confirmed by eye in a real terminal, not derived.
+local cap_start_channel=fg cap_end_channel=fg
+case $cap_start_name in
+	triangle-right | slant-left) cap_start_channel=bg ;;
+esac
+case $cap_end_name in
+	triangle-left | slant-right) cap_end_channel=bg ;;
+esac
+
+local padstr=''
+((pad > 0)) && padstr=$(printf '%*s' "$pad" '')
+
+render_span() {
+	# render_span <text> — prints one gradient sweep across <text>, start to end.
+	local span=$1
+
+	# --output-width pads the whole line (text + --pad) out to N characters,
+	# with the extra fill positioned by --align.
+	local core_chars=()
+	[[ -n $span ]] && core_chars=("${(@s::)span}")
+	local total=$((${#core_chars} + 2 * pad))
+	local extra=0
+	((out_width > total)) && extra=$((out_width - total))
+
+	local left_extra=0 right_extra=0
+	case $align in
+		start) right_extra=$extra ;;
+		end) left_extra=$extra ;;
+		center)
+			left_extra=$((extra / 2))
+			right_extra=$((extra - left_extra))
+			;;
+	esac
+
+	local leftfill='' rightfill=''
+	((left_extra > 0)) && leftfill=$(printf '%*s' "$left_extra" '')
+	((right_extra > 0)) && rightfill=$(printf '%*s' "$right_extra" '')
+
+	# Padding and alignment fill are folded into the span so any background
+	# color extends over them; coloring a space's foreground is invisible anyway.
+	span="${leftfill}${padstr}${span}${padstr}${rightfill}"
+
+	local chars=()
+	[[ -n $span ]] && chars=("${(@s::)span}")
+	local n=${#chars}
+	local i pos
+
+	# With --width, every span is measured against the same denominator, so a
+	# given column lines up on the same color whether this span is short or long.
+	local denom=$((n - 1))
+	((width > 0)) && denom=$((width - 1))
+
+	# Cap glyphs are colored to match this block's actual first/last rendered
+	# color, so a cap on a --width-clamped or shorter-than-width span still
+	# matches what's next to it rather than the gradient's far endpoint.
+	local cap_end_pos=$((n - 1))
+	((cap_end_pos > denom)) && cap_end_pos=$denom
+	local capr capg capb
+
+	if [[ -n $cap_start_glyph ]]; then
+		if [[ $bg_kind == gradient ]]; then
+			capr=$bg_r0; capg=$bg_g0; capb=$bg_b0
+		else
+			capr=$bg_r; capg=$bg_g; capb=$bg_b
+		fi
+		if [[ $cap_start_channel == fg ]]; then
+			printf '\e[38;2;%d;%d;%dm%s\e[0m' "$capr" "$capg" "$capb" "$cap_start_glyph"
+		else
+			printf '\e[48;2;%d;%d;%dm%s\e[0m' "$capr" "$capg" "$capb" "$cap_start_glyph"
+		fi
+	fi
+
+	local parts fgr fgg fgb bgr bgg bgb
+
+	for ((i = 1; i <= n; i++)); do
+		pos=$((i - 1))
+		((pos > denom)) && pos=$denom
+		parts=()
+
+		if [[ $fg_kind == gradient ]]; then
+			if ((denom > 0)); then
+				fgr=$((fg_r0 + ((fg_r1 - fg_r0) * pos + denom / 2) / denom))
+				fgg=$((fg_g0 + ((fg_g1 - fg_g0) * pos + denom / 2) / denom))
+				fgb=$((fg_b0 + ((fg_b1 - fg_b0) * pos + denom / 2) / denom))
+			else
+				fgr=$fg_r0; fgg=$fg_g0; fgb=$fg_b0
+			fi
+			parts+="38;2;${fgr};${fgg};${fgb}"
+		elif [[ $fg_kind == solid ]]; then
+			parts+="38;2;${fg_r};${fg_g};${fg_b}"
+		fi
+
+		if [[ $bg_kind == gradient ]]; then
+			if ((denom > 0)); then
+				bgr=$((bg_r0 + ((bg_r1 - bg_r0) * pos + denom / 2) / denom))
+				bgg=$((bg_g0 + ((bg_g1 - bg_g0) * pos + denom / 2) / denom))
+				bgb=$((bg_b0 + ((bg_b1 - bg_b0) * pos + denom / 2) / denom))
+			else
+				bgr=$bg_r0; bgg=$bg_g0; bgb=$bg_b0
+			fi
+			parts+="48;2;${bgr};${bgg};${bgb}"
+		elif [[ $bg_kind == solid ]]; then
+			parts+="48;2;${bg_r};${bg_g};${bg_b}"
+		fi
+
+		printf '\e[%s%sm%s\e[0m' "$attrs" "${(j:;:)parts}" "$chars[$i]"
+	done
+
+	if [[ -n $cap_end_glyph ]]; then
+		if [[ $bg_kind == gradient ]]; then
+			if ((denom > 0)); then
+				capr=$((bg_r0 + ((bg_r1 - bg_r0) * cap_end_pos + denom / 2) / denom))
+				capg=$((bg_g0 + ((bg_g1 - bg_g0) * cap_end_pos + denom / 2) / denom))
+				capb=$((bg_b0 + ((bg_b1 - bg_b0) * cap_end_pos + denom / 2) / denom))
+			else
+				capr=$bg_r0; capg=$bg_g0; capb=$bg_b0
+			fi
+		else
+			capr=$bg_r; capg=$bg_g; capb=$bg_b
+		fi
+		if [[ $cap_end_channel == fg ]]; then
+			printf '\e[38;2;%d;%d;%dm%s\e[0m' "$capr" "$capg" "$capb" "$cap_end_glyph"
+		else
+			printf '\e[48;2;%d;%d;%dm%s\e[0m' "$capr" "$capg" "$capb" "$cap_end_glyph"
+		fi
+	fi
+}
+
+if ((multiline)); then
+	local lines=("${(@f)text}")
+	local line
+	for line in "${lines[@]}"; do
+		render_span "$line"
+		printf '\n'
+	done
+else
+	render_span "$text"
+	printf '\n'
+fi

@@ -30,8 +30,15 @@ export PATH="./script:$PATH"
 # =============================== FUNCTIONS
 
 function zz() {
-  echo "Reloading from ~/.zshrc…"
-  source ~/.zshrc
+    # If gum is available use loading spinner
+    if type gum &>/dev/null; then
+        gum spin --spinner dot --title "Reloading ~/.zshrc…" -- zsh -c "source ~/.zshrc"
+        # green formatted tick
+        echo "\033[32m✓\033[0m Reloaded ~/.zshrc successfully!"
+    else
+        echo "Reloading from ~/.zshrc…"
+        source ~/.zshrc
+    fi
 }
 
 function source_file() {
