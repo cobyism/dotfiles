@@ -30,15 +30,14 @@ export PATH="./script:$PATH"
 # =============================== FUNCTIONS
 
 function zz() {
-    # If gum is available use loading spinner
     if type gum &>/dev/null; then
-        gum spin --spinner dot --title "Reloading ~/.zshrc…" -- zsh -c "source ~/.zshrc"
-        # green formatted tick
-        echo "\033[32m✓\033[0m Reloaded ~/.zshrc successfully!"
+        gum spin --spinner dot --title "Reloading ~/.zshrc…" -- sleep 0.2
     else
         echo "Reloading from ~/.zshrc…"
-        source ~/.zshrc
     fi
+
+    source_file ~/.zshrc
+    echo "\033[32m✓\033[0m Reloaded ~/.zshrc successfully!"
 }
 
 function source_file() {
@@ -76,6 +75,7 @@ alias zed="/opt/homebrew/bin/zed"
 alias cat="bat"
 alias c="cursor"
 alias ccstatusline="npx -y ccstatusline@latest" # Claude Code status line configuration TUI (https://github.com/sirmalloc/ccstatusline)
+alias bb="~/code/bb/bb"
 
 # Homebrew
 

@@ -1,43 +1,49 @@
 {
   "$schema": "https://opencode.ai/config.json",
-
   "provider": {
-    "turbo-fieldfare": {
+    "headroom": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Turbo Fieldfare",
+      "name": "Headroom Proxy",
       "options": {
-        "baseURL": "http://127.0.0.1:8080/v1",
+        "baseURL": "http://127.0.0.1:8787/v1"
       },
       "models": {
-        "gemma-4-26b-a4b-it": {
-          "maxTokens": 4096,
-          "contextWindow": 16384,
+        "claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6",
+          "limit": {
+            "context": 200000,
+            "output": 16384
+          }
         },
-      },
-    },
-    "lmstudio2": {
-      "name": "LmStudio2",
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "http://localhost:1234/v1",
-      },
-      "models": {
-        "google/gemma-4-26b-a4b": {
-          "name": "Gemma 4 26B A4B",
-          "modalities": { "input": ["text", "image"], "output": ["text"] },
-          "systemPrompt": "Keep responses to the point. One step at a time.",
+        "claude-opus-4-6": {
+          "name": "Claude Opus 4.6",
+          "limit": {
+            "context": 200000,
+            "output": 16384
+          }
         },
-        "google/gemma-4-e2b": {
-          "name": "Gemma 4 E2B",
-          "modalities": { "input": ["text", "image"], "output": ["text"] },
-          "systemPrompt": "Keep responses to the point. One step at a time.",
+        "claude-haiku-4-5-20251001": {
+          "name": "Claude Haiku 4.5",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          }
         },
-        "google/gemma-4-e4b": {
-          "name": "Gemma 4 E4B",
-          "modalities": { "input": ["text", "image"], "output": ["text"] },
-          "systemPrompt": "Keep responses to the point. One step at a time.",
+        "gpt-4o": {
+          "name": "GPT-4o",
+          "limit": {
+            "context": 128000,
+            "output": 16384
+          }
         },
-      },
-    },
-  },
+        "gpt-4.1": {
+          "name": "GPT-4.1",
+          "limit": {
+            "context": 1048576,
+            "output": 32768
+          }
+        }
+      }
+    }
+  }
 }
