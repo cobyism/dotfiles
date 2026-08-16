@@ -1,14 +1,62 @@
 onboarding = false
-[ui.toast]
-delivery = "system"
 
 [ui]
-show_agent_labels_on_pane_borders = false
+show_agent_labels_on_pane_borders = true
+prompt_new_tab_name = false
+agent_panel_sort = "priority"
 
-agent_panel_sort = "spaces"
+[theme]
+name = "dracula"
+auto_switch = false
+
+[ui.sound]
+enabled = true
+
 [experimental]
 pane_history = true
 
-[theme]
-name = "terminal"
-auto_switch = false
+# Expanded space rows. Built-ins are state_icon, state_text, workspace, branch, and git_status.
+# Custom values reported through workspace metadata use a $name token, for example $jj_status.
+# Inline token styles accept strict #RGB/#RRGGBB foregrounds plus bold and dim booleans.
+[ui.sidebar.spaces]
+# Blank rows between space entries. Set to 1 to restore the previous spacing.
+row_gap = 1
+# rows = [["state_icon", "workspace"], ["branch", "git_status"]]
+rows = [["state_icon", "state_text", "workspace"], ["branch", "git_status"]]
+
+# Expanded agent rows. Built-ins are state_icon, state_text, workspace, tab, pane, agent,
+# terminal_title, and terminal_title_stripped.
+# Custom values reported through pane metadata use a $name token.
+# To list available tokens, run `herdr metadata list` in a terminal pane.
+# A token occurrence may be styled with { token = "workspace", fg = "#89b4fa", bold = true, dim = false }.
+# Omitted style fields preserve the contextual default.
+[ui.sidebar.agents]
+# Blank rows between agent entries. Set to 1 to restore the previous spacing.
+row_gap = 1
+rows = [["state_icon", "state_text", "workspace", "tab", "pane"], ["terminal_title"], ["agent"]]
+# Optional canonical agent IDs replace the default rows for matching agents.
+[ui.sidebar.agents.rows_by_agent]
+# opencode = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
+
+
+
+# Background notification popup delivery
+[ui.toast]
+# off = disable pop-up notifications
+# herdr = show in-app toasts
+# terminal = ask the outer terminal to show a desktop notification
+# system = ask the OS notification service directly
+# delivery = "system"
+# delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-left"
+
+[ui.toast.clipboard]
+enabled = true
+# position = "bottom-left"
+
+[session]
+# Resume supported AI-agent panes into their native conversation sessions after
+# a Herdr server restart. Requires official integrations that report session refs.
+resume_agents_on_restore = true

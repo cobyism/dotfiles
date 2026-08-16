@@ -49,6 +49,16 @@
     "provider": "copilot"
   },
   "agent": {
+    "sandbox_permissions": {
+      "allow_all_hosts": true,
+      "network_hosts": [
+        "www.adsbdb.com",
+        "openflights.org",
+        "databrowser.opendatahub.com",
+        "api.adsbdb.com",
+        "tourism.api.opendatahub.com"
+      ]
+    },
     "use_modifier_to_send": true,
     "thinking_display": "preview",
     "expand_terminal_card": false,
@@ -56,6 +66,31 @@
     "enable_feedback": false,
     "tool_permissions": {
       "tools": {
+        "move_path": {
+          "default": "allow"
+        },
+        "skill": {
+          "default": "allow"
+        },
+        "create_directory": {
+          "default": "allow",
+          "always_allow": [
+            {
+              "pattern": "^iata-index-rev-eng-take-1/rev-eng-take-1/"
+            }
+          ]
+        },
+        "delete_path": {
+          "default": "allow",
+          "always_allow": [
+            {
+              "pattern": "^iata-index/rev-eng-take-1/"
+            },
+            {
+              "pattern": "^iata-index-rev-eng-take-1/rev-eng-take-1/"
+            }
+          ]
+        },
         "terminal": {
           "default": "allow"
         }
@@ -63,9 +98,9 @@
     },
     "dock": "left",
     "default_model": {
-      "effort": "medium",
-      "provider": "anthropic",
-      "model": "claude-sonnet-5",
+      "effort": "high",
+      "provider": "copilot_chat",
+      "model": "gpt-5.5",
       "enable_thinking": true
     },
     "favorite_models": [],

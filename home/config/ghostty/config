@@ -53,6 +53,9 @@ link-previews = true
 # keybind = global:cmd+shift+ctrl+opt+backquote=toggle_quick_terminal
 keybind = global:cmd+shift+ctrl+opt+backquote=toggle_quick_terminal
 
+# disable default quit cmd+q keybind
+keybind = super+q=unbind
+
 #custom-shader = ~/code/ghostty-cursor-shaders/cursor_warp.glsl
 #custom-shader = ~/code/ghostty-cursor-shaders/ripple_cursor.glsl
 
@@ -74,4 +77,5 @@ custom-shader = ~/code/ghostty-shader-playground/public/shaders/cursor_smear_gra
 
 # Added by boo
 #macos-icon = blueprint
-macos-icon = holographic
+macos-icon = xray
+#confirm-close-surface = true

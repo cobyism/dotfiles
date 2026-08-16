@@ -97,4 +97,5 @@ These are cues to check, not bans. "Robust", "taste" and "crux" are the weakest 
 ### Tracked Learnings
 
 - [EXAMPLE] YYYY-MM-DD: <one line rule> (context: <describe in a few words>)
+- 2026-08-14: After a correction, explicitly state the target AGENTS.md scope and ask permission before editing it. (context: learning-loop follow-through)
 - ...

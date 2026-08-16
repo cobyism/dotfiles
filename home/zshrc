@@ -16,8 +16,9 @@
 
 # =============================== ENV
 
+export DIRCODE="$HOME/code"
 export DOTFILES="$HOME/.dotfiles"
-export TOOLSHED="$HOME/code/toolshed"
+export TOOLSHED="$DIRCODE/toolshed"
 export EDITOR="code"
 export EDITOR_WAIT="code --wait"
 
@@ -31,18 +32,43 @@ export PATH="./script:$PATH"
 # =============================== FUNCTIONS
 
 function zz() {
-    if type gum &>/dev/null; then
-        gum spin --spinner dot --title "Reloading ~/.zshrc…" -- sleep 0.2
-    else
-        echo "Reloading from ~/.zshrc…"
-    fi
+  if type gum &>/dev/null; then
+      gum spin --spinner dot --title "Reloading ~/.zshrc…" -- sleep 0.2
+  else
+      echo "Reloading from ~/.zshrc…"
+  fi
 
-    source_file ~/.zshrc
-    echo "\033[32m✓\033[0m Reloaded ~/.zshrc successfully!"
+  source_file ~/.zshrc
+  echo "\033[32m✓\033[0m Reloaded ~/.zshrc successfully!"
 }
+
 
 function source_file() {
   test -r "$1" && source "$1"
+}
+
+# Usage: if is_work_machine; then ... fi
+function is_work_machine() {
+  [[ $(hostname) == "MBPDC2VF26NGJ" ]]
+}
+
+# Usage: if is_personal_machine; then ... fi
+function is_personal_machine() {
+  ! is_work_machine
+}
+
+# Usage: on_work_machine <command> <args>
+function on_work_machine() {
+  if is_work_machine; then
+    "$@"
+  fi
+}
+
+# Usage: on_personal_machine <command> <args>
+function on_personal_machine() {
+  if is_personal_machine; then
+    "$@"
+  fi
 }
 
 # =============================== Completions
@@ -58,6 +84,31 @@ export FPATH="$DOTFILES/completions:$FPATH" # Eza etc.
 
 # export HOMEBREW_UPGRADE_GREEDY="1"
 export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/Brewfile"
+
+if is_work_machine; then
+  # Set the default appdir for casks to ~/Applications instead of /Applications.
+  export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+
+  # Refuse casks that invoke macOS installer mechanisms.
+  export HOMEBREW_FORBIDDEN_CASK_ARTIFACTS=pkg installer
+
+  # Make brew bundle restorative rather than an implicit mass-upgrade.
+  # export HOMEBREW_BUNDLE_NO_UPGRADE=1
+
+  # Reduce surprise metadata/repository updates before commands.
+  # export HOMEBREW_AUTO_UPDATE_SECS=604800
+
+  # Prevent HTTPS downloads being redirected to HTTP.
+  export HOMEBREW_NO_INSECURE_REDIRECT=1
+
+  # Avoid automatic cleanup during install/upgrade.
+  # Run brew cleanup deliberately instead.
+  # export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+  # Explain intentional policy failures.
+  # export HOMEBREW_FORBIDDEN_OWNER=Local user-space workstation policy
+  # export HOMEBREW_FORBIDDEN_OWNER_CONTACT=Review the cask and request IT installation if system access is required
+fi
 
 # =============================== ALIASES
 
@@ -76,7 +127,9 @@ alias zed="/opt/homebrew/bin/zed"
 alias cat="bat"
 alias c="cursor"
 alias ccstatusline="npx -y ccstatusline@latest" # Claude Code status line configuration TUI (https://github.com/sirmalloc/ccstatusline)
-alias bb="~/code/bb/bb"
+
+on_personal_machine alias bb="~/code/bb/bb"
+on_work_machine alias bb="~/code/cobyism/bb/bb"
 
 # Homebrew
 
@@ -89,7 +142,6 @@ alias bup="brew update"
 alias bupg="brew upgrade"
 alias bupga="brew upgrade --all"
 alias bupgo="brew outdated"
-
 
 ## Projects
 
