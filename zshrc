@@ -17,7 +17,8 @@ autoload -U promptinit; promptinit
 
 export DOTFILES="$HOME/.dotfiles"
 export TOOLSHED="$HOME/code/toolshed"
-export EDITOR="zed"
+export EDITOR="code"
+export EDITOR_WAIT="code --wait"
 
 # =============================== PATH
 

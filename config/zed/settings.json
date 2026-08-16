@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "markdown_preview_font_size": 21.0,
   "markdown_preview": {
     "limit_content_width": false
   },
@@ -45,7 +46,7 @@
   "icon_theme": "Colored Zed Icons Theme Dark",
   "theme": "Dracula",
   "edit_predictions": {
-    "provider": "mercury",
+    "provider": "mercury"
   },
   "agent": {
     "dock": "left",
@@ -53,11 +54,11 @@
       "effort": "medium",
       "provider": "anthropic",
       "model": "claude-sonnet-5",
-      "enable_thinking": true,
+      "enable_thinking": true
     },
     "favorite_models": [],
-    "model_parameters": [],
+    "model_parameters": []
   },
   "ui_font_size": 16,
-  "buffer_font_size": 16.0,
+  "buffer_font_size": 16.0
 }
