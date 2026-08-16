@@ -41,7 +41,7 @@ function check_brew_packages() {
 # Function to check for "lastrun" file for a given concern to see if ever has been run.
 function check_if_run() {
 	local concern="$1"
-	local lastrun_file="$DOTFILES/config/dotfiles/.lastrun_$concern"
+	local lastrun_file="$DOTFILES/home/config/dotfiles/.lastrun_$concern"
 	if [ -f "$lastrun_file" ]; then
 		echo "✅ '$concern' has been run before (lastrun file exists)."
 	else
@@ -52,7 +52,7 @@ function check_if_run() {
 # Function to create or update "lastrun" file for a given concern to mark that it has been run.
 function mark_ran() {
 	local concern="$1"
-	local lastrun_dir="$DOTFILES/config/dotfiles"
+	local lastrun_dir="$DOTFILES/home/config/dotfiles"
 	mkdir -p "$lastrun_dir"
 	local lastrun_file="$lastrun_dir/.lastrun_$concern"
 	touch "$lastrun_file"
@@ -314,9 +314,9 @@ check_if_run "dotfilesDefaults"
 check_if_run "dotfilesDocksetup"
 check_symlink "$HOME/.dotfiles" "$HOME/code/dotfiles"
 check_symlink "$HOME/.rcrc" "$DOTFILES/rcrc"
-check_symlink "$HOME/.zshrc" "$DOTFILES/zshrc"
-check_symlink "$HOME/.config" "$DOTFILES/config"
-check_symlink "$HOME/Brewfile" "$DOTFILES/Brewfile"
+check_symlink "$HOME/.zshrc" "$DOTFILES/home/zshrc"
+check_symlink "$HOME/.config" "$DOTFILES/home/config"
+check_symlink "$HOME/Brewfile" "$DOTFILES/home/Brewfile"
 
 section "Developer tools"
 check_mise

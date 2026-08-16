@@ -58,7 +58,7 @@ export FPATH="$DOTFILES/completions:$FPATH" # Eza etc.
 # =============================== Homebrew
 
 # export HOMEBREW_UPGRADE_GREEDY="1"
-export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/code/dotfiles/Brewfile"
+export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/Brewfile"
 
 # =============================== ALIASES
 
@@ -150,7 +150,7 @@ eval "$(starship init zsh)"
 
 # =============================== SHELL INTEGRATIONS
 
-# source_file "$DOTFILES/config/iterm2/iterm2_shell_integration.zsh"
+# source_file "$DOTFILES/home/config/iterm2/iterm2_shell_integration.zsh"
 source /Users/cobyism/.iterm2_shell_integration.zsh
 source_file "$HOME/.cargo/env"
 # source_file "$(brew --prefix asdf)/libexec/asdf.sh"
