@@ -8,6 +8,13 @@
 
 # Assumes this repo is cloned into ~/code/dotfiles
 local DOTFILES_REPO="$HOME/code/dotfiles"
+local TOOLSHED_REPO="$HOME/code/toolshed"
+
+# Clone toolshed (CLI tools, kept separate from dotfiles config) if missing
+if [ ! -d "$TOOLSHED_REPO" ]; then
+  echo "Cloning toolshed into ${TOOLSHED_REPO}"
+  git clone https://github.com/cobyism/toolshed "$TOOLSHED_REPO"
+fi
 
 # check if ~/.dotfiles is a symlink and if it is, remove it
 if [ -L ~/.dotfiles ]; then

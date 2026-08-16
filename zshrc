@@ -16,13 +16,14 @@ autoload -U promptinit; promptinit
 # =============================== ENV
 
 export DOTFILES="$HOME/.dotfiles"
+export TOOLSHED="$HOME/code/toolshed"
 export EDITOR="zed"
 
 # =============================== PATH
 
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-export PATH="$DOTFILES/wip:./wip:$PATH"
-export PATH="$DOTFILES/bin:./bin:$PATH"
+export PATH="$TOOLSHED/wip:./wip:$PATH"
+export PATH="$TOOLSHED/bin:./bin:$PATH"
 export PATH="$HOME/bin:$HOME/.bin/:$HOME/.local/bin:$PATH"
 export PATH="/Users/cobyism/.yarn/bin:$PATH"
 export PATH="./script:$PATH"

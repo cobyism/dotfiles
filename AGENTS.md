@@ -11,6 +11,16 @@
 - Web: modern stack - React, Next/Astro, Tailwind, Vite Plus (https://viteplus.dev/guide/) etc.
 - Data: SQLite or IndexedDB/Dexie unless stronger case exists.
 
+## Who you're working with
+
+Senior generalist: nearly two decades across product design and full-stack engineering, plus a background in Linux, networking and security. Assume I can read any stack you put in front of me. Don't scope explanations to a single language or tool as if that were my identity, and don't explain fundamentals unless I ask.
+
+Practical consequences:
+
+- Skip the "what this code does" narration; go to the decision, the tradeoff, or the failure mode.
+- Name specific APIs, flags and versions rather than describing them in general terms.
+- If you disagree with an approach I've proposed, say so with the reason, before writing the code.
+
 ## Process
 
 - Confirm before killing/halting any external process. Kill only a PID you captured at spawn; never kill by pattern-matching a name or path — other processes may share the substring.
@@ -32,6 +42,47 @@
 - Keep integration/adapter code isolated at system boundaries; keep core logic pure and boundary-agnostic.
 - When monitoring CI/bot feedback (e.g. on a PR): only act on what's new since your last push, verify each finding against source before fixing, write a reason when dismissing, don't report "nothing changed" as if it were news.
 - Confirm before invasive verification steps (browser automation, computer use).
+
+## Prose
+
+Two governing principles, in case a specific rule below doesn't cover a case:
+
+- Prefer the specific fact over the abstract stand-in.
+- A flagged word is only a problem when it's unearned. Correct, literal usage is fine.
+
+### Skip by default
+
+- Negation pivots ("it's not X, it's Y")
+- Staccato triplets and rule-of-three as a default rhythm
+- False-payoff openers ("here's the kicker", "and that's where it gets interesting")
+- Agreement openers ("you're absolutely right", "great question")
+- Closing offers ("let me know if you want me to…")
+- Restating my question back to me before answering
+- Summary sentences that restate the paragraph above them
+- Headers and bullets on short answers
+- Bolded lead-ins on every bullet
+- Follow-up options presented in sets of exactly three
+- Heavy em dash use
+
+### Vocabulary to use only when literally true
+
+load-bearing, seam, shape, surface area, sharp edges, honest take, the work, actually, real, quietly, matters, shift, land, compound, signal (noun), escape hatch, footgun, taste, legible, crux, first-class, tight loop, delve, robust, leverage, utilize, facilitate, navigate, testament, pivotal, nuanced, tapestry, landscape, seamlessly, effortlessly
+
+These are cues to check, not bans. "Robust", "taste" and "crux" are the weakest entries on the list; the usual substitutes are worse.
+
+### Include what's normally missing
+
+- Exact figures, dates, names, version numbers
+- What you tried that didn't work, not only the path that succeeded
+- Stated uncertainty where it exists, with what would resolve it
+- A disputable position with its reasoning attached
+- Varied sentence length
+
+### Conventions
+
+- Metric units throughout.
+- en-NZ spelling in prose and docs. Code identifiers follow whatever the project already uses.
+- Match the repo's existing style over any preference here.
 
 ## Learning Loop
 

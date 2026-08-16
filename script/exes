@@ -1,8 +1,9 @@
 #!/usr/bin/env zsh
 
 export DOTFILES="$HOME/.dotfiles"
+export TOOLSHED="$HOME/code/toolshed"
 
-echo "Ensuring $DOTFILES/bin and $DOTFILES/script are executable..."
+echo "Ensuring $DOTFILES/script and $TOOLSHED/{bin,wip} are executable..."
 
-chmod +x $DOTFILES/bin/*
 chmod +x $DOTFILES/script/*
+chmod +x $TOOLSHED/bin/* $TOOLSHED/wip/*
