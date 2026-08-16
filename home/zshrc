@@ -11,7 +11,8 @@
 
 # =============================== AUTOLOAD
 
-autoload -U promptinit; promptinit
+## Not needed because I use starship prompt
+#autoload -U promptinit; promptinit
 
 # =============================== ENV
 
@@ -22,11 +23,9 @@ export EDITOR_WAIT="code --wait"
 
 # =============================== PATH
 
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="$TOOLSHED/wip:./wip:$PATH"
 export PATH="$TOOLSHED/bin:./bin:$PATH"
 export PATH="$HOME/bin:$HOME/.bin/:$HOME/.local/bin:$PATH"
-export PATH="/Users/cobyism/.yarn/bin:$PATH"
 export PATH="./script:$PATH"
 
 # =============================== FUNCTIONS
@@ -167,9 +166,6 @@ if type brew &>/dev/null; then
 fi
 
 source_file "$DOTFILES/completions/completion-for-pnpm.zsh"
-
-# Added by Windsurf
-export PATH="/Users/cobyism/.codeium/windsurf/bin:$PATH"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/cobyism/.lmstudio/bin"

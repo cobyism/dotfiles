@@ -9,43 +9,46 @@
 **/.env
 **/.localrc
 **/.vscode
+**/.mise.toml
+**/.claude/settings.local.json
+
 **/update-notifier*.json
 **/extensions/*
 **/keypairs/*
-config/iterm2/AppSupport
-config/.mono
-config/gh/hosts.yml
-config/raycast
-config/rclone
-config/sonic-pi.net
-config/SweetScape
-config/Xplist
-config/yarn
-config/gatsby/*
+home/config/iterm2/AppSupport
+home/config/.mono
+home/config/gh/hosts.yml
+home/config/raycast
+home/config/rclone
+home/config/sonic-pi.net
+home/config/SweetScape
+home/config/Xplist
+home/config/yarn
+home/config/gatsby/*
 
 # op CLI - device-specific state, not a shareable preference
-config/op/*
+home/config/op/*
 
 # crush/goose - skill symlinks resolve outside this repo
-config/crush/skills
+home/config/crush/skills
 
 # uv - installer receipt, machine-specific
-config/uv/*
+home/config/uv/*
 
 # darktable - SQLite library/cache databases, corruption-prone to sync
-config/darktable/*
+home/config/darktable/*
 
 # herdr - ephemeral session/log state and bundled asset
-config/herdr/session.json
-config/herdr/session-history.json
-config/herdr/*.log
-config/herdr/.plugins.lock
-config/herdr/release-notes.json
+home/config/herdr/session.json
+home/config/herdr/session-history.json
+home/config/herdr/*.log
+home/config/herdr/.plugins.lock
+home/config/herdr/release-notes.json
 
 # zed - binary prompt library DB, not portable/sync-safe
-config/zed/prompts/
+home/config/zed/prompts/
 
 # fizzy - config.yaml contains a live API token
-config/fizzy/
+home/config/fizzy/
 
-config/tmux/*.local
+home/config/tmux/*.local
