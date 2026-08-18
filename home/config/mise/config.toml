@@ -7,6 +7,8 @@ go = "latest"
 bun = "latest"
 pipx = "latest"
 npm = "latest"
+uv = "latest"
+zig = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby"]

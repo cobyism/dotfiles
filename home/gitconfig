@@ -45,6 +45,7 @@
 	keepBackup = true
 [push]
 	default = simple
+	autoSetupRemote = true
 [filter "media"]
 	required = true
 	clean = git media clean %f

@@ -52,3 +52,6 @@ home/config/zed/prompts/
 home/config/fizzy/
 
 home/config/tmux/*.local
+
+.serena/
+home/config/openspec/
