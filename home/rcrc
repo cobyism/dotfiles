@@ -2,5 +2,5 @@
 
 ## Docs https://thoughtbot.github.io/rcm/rcrc.5.html
 DOTFILES_DIRS="~/.dotfiles/home"
-SYMLINK_DIRS="config"
+SYMLINK_DIRS="config homebrew"
 UNDOTTED="Brewfile AGENTS.md"

@@ -55,5 +55,6 @@ home/config/tmux/*.local
 
 .serena/
 home/config/openspec/
-
 home/config/github-copilot/
+home/config/twg/
+home/config/tmux/plugins/

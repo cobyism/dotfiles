@@ -31,11 +31,16 @@ export PATH="./script:$PATH"
 
 # =============================== FUNCTIONS
 
+# Usage: if gum_available; then ...; else ...; fi
+function gum_available() {
+  type gum &>/dev/null
+}
+
 function zz() {
-  if type gum &>/dev/null; then
-      gum spin --spinner dot --title "Reloading ~/.zshrc…" -- sleep 0.2
+  if gum_available; then
+    gum spin --spinner dot --title "Reloading ~/.zshrc…" -- sleep 0.2
   else
-      echo "Reloading from ~/.zshrc…"
+    echo "Reloading from ~/.zshrc…"
   fi
 
   source_file ~/.zshrc

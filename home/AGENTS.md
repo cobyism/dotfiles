@@ -2,6 +2,7 @@
 
 ## Basics
 
+- Before running any command, script, tool, action, or generating output, check if doing so aligns with guidance in this file. This avoids situations where you/the agent only realises after the fact that it has violated a rule or expectation.
 - Deterministic commands and scripts > LLM reasoning.
 - Tokens are precious. Be terse and concise with responses. No cruft. Use ASD-STE100 Simplified Technical English.
 - When output can be structured, used TOON (Token Optimied Object Notation - https://toonformat.dev/guide/format-overview.html)/YAML over JSON, only adding human explanation when necessary. Use JSON only when required by a tool or library.
