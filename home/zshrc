@@ -133,8 +133,8 @@ alias cat="bat"
 alias c="cursor"
 alias ccstatusline="npx -y ccstatusline@latest" # Claude Code status line configuration TUI (https://github.com/sirmalloc/ccstatusline)
 
-on_personal_machine alias bb="~/code/bb/bb"
-on_work_machine alias bb="~/code/cobyism/bb/bb"
+on_personal_machine alias bbb="~/code/bb/bb"
+on_work_machine alias bbb="~/code/cobyism/bb/bb"
 
 # Homebrew
 
