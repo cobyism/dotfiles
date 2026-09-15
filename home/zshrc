@@ -28,6 +28,7 @@ export PATH="$TOOLSHED/wip:./wip:$PATH"
 export PATH="$TOOLSHED/bin:./bin:$PATH"
 export PATH="$HOME/bin:$HOME/.bin/:$HOME/.local/bin:$PATH"
 export PATH="./script:$PATH"
+export PATH="./node_modules/.bin:$PATH"
 
 # =============================== FUNCTIONS
 
@@ -93,6 +94,7 @@ export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/Brewfile"
 if is_work_machine; then
   # Set the default appdir for casks to ~/Applications instead of /Applications.
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+  export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
 
   # Refuse casks that invoke macOS installer mechanisms.
   export HOMEBREW_FORBIDDEN_CASK_ARTIFACTS=pkg installer
@@ -207,7 +209,7 @@ eval "$(starship init zsh)"
 # =============================== SHELL INTEGRATIONS
 
 # source_file "$DOTFILES/home/config/iterm2/iterm2_shell_integration.zsh"
-source /Users/cobyism/.iterm2_shell_integration.zsh
+# source /Users/cobyism/.iterm2_shell_integration.zsh
 source_file "$HOME/.cargo/env"
 # source_file "$(brew --prefix asdf)/libexec/asdf.sh"
 # source_file "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"

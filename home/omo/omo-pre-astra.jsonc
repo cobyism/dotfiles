@@ -1,0 +1,129 @@
+// OMO configuration
+{
+  "[opencode]": {
+    "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
+    "agents": {
+      "sisyphus": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "max",
+        "ultrawork": {
+          "model": "github-copilot/gpt-5.6-sol",
+          "reasoning": "max"
+        }
+      },
+      "hephaestus": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "medium"
+      },
+      "oracle": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "xhigh"
+      },
+      "librarian": {
+        "model": "github-copilot/gpt-5.6-sol"
+      },
+      "explore": {
+        "model": "github-copilot/gpt-5.6-sol"
+      },
+      "multimodal-looker": {
+        "model": "github-copilot/gpt-5.6-sol"
+      },
+      "prometheus": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "prompt_append": "Leverage deep & quick agents heavily, always in parallel."
+      },
+      "metis": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "high"
+      },
+      "momus": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "high"
+      },
+      "atlas": {
+        "model": "github-copilot/gpt-5.6-sol"
+      },
+      "sisyphus-junior": {
+        "model": "github-copilot/gpt-5.6-sol"
+      }
+    },
+    "categories": {
+      "visual-engineering": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "models": [
+          {
+            "model": "github-copilot/gpt-5.6-sol",
+            "reasoning": "medium"
+          }
+        ],
+        "reasoning": "xhigh"
+      },
+      "ultrabrain": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "xhigh"
+      },
+      "deep": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "medium"
+      },
+      "artistry": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "high",
+        "models": [
+          {
+            "model": "github-copilot/gpt-5.6-sol",
+            "reasoning": "high"
+          }
+        ]
+      },
+      "quick": {
+        "model": "github-copilot/gpt-5.6-sol"
+      },
+      "unspecified-low": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "medium",
+        "models": [
+          {
+            "model": "github-copilot/gpt-5.6-sol",
+            "reasoning": "low"
+          }
+        ]
+      },
+      "unspecified-high": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "models": [
+          {
+            "model": "github-copilot/gpt-5.6-sol",
+            "reasoning": "low"
+          }
+        ]
+      },
+      "writing": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "reasoning": "medium",
+        "models": [
+          {
+            "model": "github-copilot/gpt-5.6-sol"
+          }
+        ]
+      },
+      "git": {
+        "model": "github-copilot/gpt-5.6-sol",
+        "description": "All git operations",
+        "prompt_append": "Focus on atomic commits, clear messages, and safe operations."
+      }
+    },
+    "codegraph": {}
+  },
+  "_migrations": [
+    "2026-08-reasoning-unification",
+    "2026-07-codex-config-jsonc"
+  ],
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
+  "codegraph": {},
+  "[codex]": {
+    "codegraph": {}
+  }
+}

@@ -58,3 +58,5 @@ home/config/openspec/
 home/config/github-copilot/
 home/config/twg/
 home/config/tmux/plugins/
+**/update-notifier-*
+**/secrets.*

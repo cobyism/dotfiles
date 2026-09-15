@@ -1,0 +1,18 @@
+# Lume Configuration
+
+defaultLocationName: "home"
+cacheDirectory: "~/.lume/cache"
+cachingEnabled: false
+telemetryEnabled: true
+
+# VM Locations
+vmLocations:
+  - name: "home"
+    path: "~/.lume"
+
+# Registry Configuration
+registry:
+  type: "ghcr"
+  ghcr:
+    registry: "ghcr.io"
+    organization: "trycua"

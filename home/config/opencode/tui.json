@@ -1,0 +1,5 @@
+{
+  "plugin": [
+    "oh-my-openagent"
+  ]
+}

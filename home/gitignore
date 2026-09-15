@@ -11,3 +11,5 @@
 **/.vscode
 **/.mise.toml
 **/.claude/settings.local.json
+**/.omo/*
+**/.serena/*

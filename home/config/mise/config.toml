@@ -1,3 +1,6 @@
+[plugins]
+vite-plus = "https://github.com/markmals/mise-vite-plus"
+
 [tools]
 node = "latest"
 ruby = "latest"
@@ -9,6 +12,7 @@ pipx = "latest"
 npm = "latest"
 uv = "latest"
 zig = "latest"
+vite-plus = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby"]

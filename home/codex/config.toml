@@ -1,0 +1,100 @@
+model = "gpt-6-astra"
+model_reasoning_effort = "medium"
+plan_mode_reasoning_effort = "high"
+network_access = "enabled"
+experimental_use_rmcp_client = true # Figma?
+sandbox_mode = "workspace-write"
+model_verbosity = "medium"
+model_reasoning_summary = "detailed"
+
+[desktop]
+followUpQueueMode = "steer"
+conversationDetailMode = "STEPS_PROSE"
+composerPlainTextMode = true
+show-context-window-usage = true
+hotkey-window-projectless-default-enabled = false
+localeOverride = "en-US"
+mac-menu-bar-enabled = true
+defaultTerminalLocation = "right"
+preventSleepWhileRunning = true
+composerEnterBehavior = "cmdAlways"
+notifications-turn-mode = "always"
+notifications-permissions-enabled = true
+notifications-questions-enabled = true
+toys-confetti-enabled = true
+toys-audio-visualizer-enabled = false
+appearanceTheme = "dark"
+appearanceDarkCodeThemeId = "dracula"
+usePointerCursors = true
+dock-icon-preference = "codex-system"
+reduced-motion-preference = "system"
+sansFontSize = 16
+appearanceDiffMarkerStyle = "color"
+useFontSmoothing = true
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "persistent", "max"]
+browser-show-full-url = true
+browser-download-prompt-enabled = false
+worktree-upstream-refresh-mode = "best-effort"
+
+[desktop.open-in-target-preferences]
+global = "vscode"
+
+[desktop.appearanceDarkChromeTheme]
+accent = "#ff79c6"
+accentSource = "custom"
+contrast = 50
+ink = "#f8f8f2"
+opaqueWindows = false
+surface = "#282a36"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = '"Geist Mono", ui-monospace, "SFMono-Regular"'
+ui = '"Geist"'
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#50fa7b"
+diffRemoved = "#ff5555"
+skill = "#ff79c6"
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/Users/chapc3/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[mcp_servers.cua_repl]
+command = "/Users/chapc3/Applications/ChatGPT.app/Contents/MacOS/ChatGPT"
+enabled = false
+
+[projects."/Users/chapc3/Documents/Codex/2026-09-15/w"]
+trust_level = "trusted"
+
+[projects."/Users/chapc3/Documents/Codex/2026-09-15/using-the-iata-aidm-offers-and"]
+trust_level = "trusted"
+
+[projects."/Users/chapc3/Documents/Codex/2026-09-16/i"]
+trust_level = "trusted"
+
+[projects."/Users/chapc3/Documents/Codex/2026-09-16/i-m-having-trouble-keeping-track"]
+trust_level = "trusted"
+
+[features]
+plugins = true
+workspace_dependencies = true
+memories = true
+
+[sandbox_workspace_write]
+network_access = true
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[hooks.state]
+
+[hooks.state."/Users/chapc3/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:004cfd95db845cbfacefce85a0736c6317f12d80f5889ee4fe743d8cedda46d7"
