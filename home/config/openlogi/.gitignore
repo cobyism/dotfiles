@@ -1,0 +1,5 @@
+agent.lock
+agent.sock
+openlogi.lock
+overlay.claim
+overlay.lock
