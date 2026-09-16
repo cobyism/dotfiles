@@ -1,7 +1,7 @@
-font-family = "Monaspace Neon NF"
-font-family-bold = "Monaspace Neon NF"
-font-family-italic = "Monaspace Radon NF"
-font-family-bold-italic = "Monaspace Radon NF"
+font-family = "MonaspiceNe NFM"
+font-family-bold = "MonaspiceNe NFM Bold"
+font-family-italic = "MonaspiceRn NFM"
+font-family-bold-italic = "MonaspiceRn NFM Bold"
 font-size = 12
 font-feature = +calt,+liga,+ss01,+ss02,+ss03,+ss04,+ss05,+ss06,+ss08,+ss09,+ss10
 #font-family = "Geist Mono"

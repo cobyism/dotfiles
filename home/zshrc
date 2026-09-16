@@ -231,10 +231,10 @@ export PATH="$PATH:/Users/cobyism/.lmstudio/bin"
 # End of LM Studio CLI section
 
 # Added by Antigravity
-export PATH="/Users/cobyism/.antigravity/antigravity/bin:$PATH"
+# export PATH="/Users/cobyism/.antigravity/antigravity/bin:$PATH"
 
 # Vite+ bin (https://viteplus.dev)
-. "$HOME/.vite-plus/env"
+# . "$HOME/.vite-plus/env"
 
 # =============================== MUST BE LAST!
 
