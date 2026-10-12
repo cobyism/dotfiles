@@ -94,27 +94,15 @@ export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/Brewfile"
 if is_work_machine; then
   # Set the default appdir for casks to ~/Applications instead of /Applications.
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-  export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
 
-  # Refuse casks that invoke macOS installer mechanisms.
-  export HOMEBREW_FORBIDDEN_CASK_ARTIFACTS=pkg installer
+  # Disable Homebrew's sudo calls and packages that require elevated privileges.
+  export HOMEBREW_NO_SUDO=1
 
   # Make brew bundle restorative rather than an implicit mass-upgrade.
   # export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
-  # Reduce surprise metadata/repository updates before commands.
-  # export HOMEBREW_AUTO_UPDATE_SECS=604800
-
   # Prevent HTTPS downloads being redirected to HTTP.
   export HOMEBREW_NO_INSECURE_REDIRECT=1
-
-  # Avoid automatic cleanup during install/upgrade.
-  # Run brew cleanup deliberately instead.
-  # export HOMEBREW_NO_INSTALL_CLEANUP=1
-
-  # Explain intentional policy failures.
-  # export HOMEBREW_FORBIDDEN_OWNER=Local user-space workstation policy
-  # export HOMEBREW_FORBIDDEN_OWNER_CONTACT=Review the cask and request IT installation if system access is required
 fi
 
 # =============================== ALIASES

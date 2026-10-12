@@ -13,9 +13,10 @@ npm = "latest"
 uv = "latest"
 zig = "latest"
 vite-plus = "latest"
+pnpm = "latest"
 
 [settings]
-idiomatic_version_file_enable_tools = ["ruby"]
+idiomatic_version_file_enable_tools = ["ruby", "node"]
 
 [settings.ruby]
 compile = false
