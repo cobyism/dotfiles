@@ -1,0 +1,153 @@
+#!/usr/bin/env zsh
+#
+# Read-only machine inventory. Prints YAML to stdout. Changes nothing.
+#
+# Usage:
+#   script/inventory > "${DIRDEV:-$HOME/dev}/.inventory/$(hostname -s).yaml"
+#   script/inventory --full   # also print key fingerprints and signing keys
+#
+# Default output holds hostnames, tool lists and key COUNTS, no key material.
+# Keep the output out of the public repo. Compare machines with `diff` or `comm`.
+
+emulate -L zsh
+
+local FULL=0
+[[ "$1" == "--full" ]] && FULL=1
+
+local REPO="${0:A:h:h}"
+
+function have() { command -v "$1" &>/dev/null }
+
+# Print stdin as a YAML list of quoted strings, indented under a 2-space key.
+function list() {
+  local line
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && print -r -- "    - \"${line//\"/\\\"}\""
+  done
+}
+
+function kv() { print -r -- "  $1: \"${2//\"/\\\"}\"" }
+
+print "generated: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\""
+print "script_version: 1"
+
+# --- machine -----------------------------------------------------------------
+print "machine:"
+kv hostname "$(hostname -s 2>/dev/null || hostname)"
+kv os "$(uname -s)"
+kv arch "$(uname -m)"
+have sw_vers && kv macos "$(sw_vers -productVersion)"
+kv shell "$SHELL"
+for f in role host; do
+  [[ -r "$HOME/.config/machine/$f" ]] && kv "declared_$f" "$(<"$HOME/.config/machine/$f")"
+done
+
+# --- ~/.config shape (is it a symlink into the repo?) -----------------------
+print "config_dir:"
+if [[ -L "$HOME/.config" ]]; then
+  print "  is_symlink: true"
+  kv target "$(readlink "$HOME/.config")"
+else
+  print "  is_symlink: false"
+fi
+print "  entries:"
+ls -1 "$HOME/.config" 2>/dev/null | sort | list
+print "  symlinked_entries:"
+for e in "$HOME"/.config/*(N@:t); do print -r -- "$e"; done | sort | list
+
+# --- rcm ---------------------------------------------------------------------
+print "rcm:"
+if [[ -L "$HOME/.rcrc" ]]; then print "  rcrc_is_symlink: true"; else print "  rcrc_is_symlink: false"; fi
+if [[ -r "$HOME/.rcrc" ]]; then
+  print "  rcrc:"
+  grep -v -E '^\s*(#|$)' "$HOME/.rcrc" | list
+fi
+have lsrc && print "  managed_count: $(lsrc 2>/dev/null | wc -l | tr -d ' ')"
+
+# --- repo state --------------------------------------------------------------
+print "repo:"
+kv path "$REPO"
+if git -C "$REPO" rev-parse --git-dir &>/dev/null; then
+  kv branch "$(git -C "$REPO" rev-parse --abbrev-ref HEAD 2>/dev/null)"
+  print "  uncommitted_paths: $(git -C "$REPO" status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+  print "  ignored_paths_in_tree: $(git -C "$REPO" clean -ndX 2>/dev/null | wc -l | tr -d ' ')"
+fi
+
+# --- homebrew ----------------------------------------------------------------
+if have brew; then
+  export HOMEBREW_NO_AUTO_UPDATE=1
+  print "brew:"
+  kv prefix "$(brew --prefix)"
+  print "  taps:"
+  brew tap 2>/dev/null | sort | list
+  print "  leaves:"
+  brew leaves 2>/dev/null | sort | list
+  print "  casks:"
+  brew list --cask -1 2>/dev/null | sort | list
+fi
+
+# --- mise --------------------------------------------------------------------
+if have mise; then
+  print "mise:"
+  kv version "$(mise --version 2>/dev/null | head -1)"
+  kv mise_env "${MISE_ENV:-}"
+  print "  global_tools:"
+  mise ls --global --no-header 2>/dev/null | awk '{print $1 " " $2}' | sort | list
+fi
+
+# --- git identity ------------------------------------------------------------
+if have git; then
+  print "git:"
+  kv version "$(git --version)"
+  print "  global_settings:"
+  git config --global --get-regexp '^(include|user\.|github\.|gpg\.|commit\.gpgsign|tag\.gpgsign|credential\.helper|core\.excludesfile)' 2>/dev/null \
+    | { if (( FULL )); then cat; else sed -E 's/^(user\.signingkey) .*/\1 <redacted>/'; fi; } | list
+fi
+
+# --- ssh ---------------------------------------------------------------------
+print "ssh:"
+kv auth_sock "${SSH_AUTH_SOCK:+set}"
+if have ssh-add; then
+  local keys rc
+  keys="$(ssh-add -l 2>/dev/null)"; rc=$?
+  case $rc in
+    0) kv agent "reachable"; print "  key_count: $(print -r -- "$keys" | wc -l | tr -d ' ')" ;;
+    1) kv agent "empty"; print "  key_count: 0" ;;
+    *) kv agent "unreachable" ;;
+  esac
+  if (( rc == 0 )); then
+    print "  key_types:"
+    print -r -- "$keys" | awk '{print $NF}' | sort -u | list
+    if (( FULL )); then print "  keys:"; print -r -- "$keys" | list; fi
+  fi
+fi
+[[ -e "$HOME/.ssh/config" ]] && print "  config_exists: true"
+[[ -d "$HOME/.ssh/config.d" ]] && print "  config_d_exists: true"
+
+# --- gpg ---------------------------------------------------------------------
+if have gpg; then
+  print "gpg:"
+  print "  secret_key_count: $(gpg --list-secret-keys --with-colons 2>/dev/null | awk -F: '$1=="sec"{n++} END{print n+0}')"
+  if (( FULL )); then
+    print "  fingerprints:"
+    gpg --list-secret-keys --with-colons 2>/dev/null | awk -F: '$1=="sec"{p=1;next} $1=="fpr" && p{print $10;p=0}' | list
+  fi
+fi
+
+# --- 1Password ---------------------------------------------------------------
+print "onepassword:"
+if have op; then kv op_cli "$(op --version 2>/dev/null)"; else kv op_cli "absent"; fi
+[[ -d /Applications/1Password.app ]] && print "  app_installed: true" || print "  app_installed: false"
+[[ -S "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ]] \
+  && print "  agent_socket_present: true" || print "  agent_socket_present: false"
+
+# --- baseline tool presence --------------------------------------------------
+local -a present missing
+for t in zsh git rcup mise brew starship eza bat zoxide delta lazygit fzf rg fd jq yq gum tmux gh op gpg ansible docker; do
+  if have "$t"; then present+=("$t"); else missing+=("$t"); fi
+done
+print "tools:"
+print "  present:"
+print -rl -- "${present[@]}" | list
+print "  missing:"
+print -rl -- "${missing[@]}" | list
