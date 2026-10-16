@@ -60,3 +60,5 @@ home/config/twg/
 home/config/tmux/plugins/
 **/update-notifier-*
 **/secrets.*
+
+**/trust.json*

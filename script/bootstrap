@@ -66,5 +66,5 @@ if ! command -v rcup &> /dev/null; then
   exit 1
 fi
 
-echo "Running rcup to symlink dotfiles into place..."
-rcup -v
+# echo "Running rcup to symlink dotfiles into place..."
+# rcup -v
