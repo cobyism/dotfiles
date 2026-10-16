@@ -8,3 +8,21 @@
 # .zshrc is for interactive shells. You set options for the interactive shell there with the setopt and unsetopt commands. You can also load shell modules, set your history options, change your prompt, set up zle and completion, et cetera. You also set any variables that are only used in the interactive shell (e.g. $LS_COLORS).
 # .zlogin is for login shells. It is sourced on the start of a login shell but after .zshrc, if the shell is also interactive. This file is often used to start X using startx. Some systems start X on boot, so this file is not always very useful.
 # .zlogout is sometimes used to clear and reset the terminal. It is called when exiting, not when opening.
+
+# =============================== PATHS
+
+# Per-machine overrides (not tracked), e.g. `export DIRDEV="$HOME/code"`.
+[[ -r "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
+
+# Root directory for code checkouts. Prefer ~/dev, fall back to ~/code on
+# machines that haven't moved over yet.
+if [[ -z "$DIRDEV" ]]; then
+  if [[ -d "$HOME/dev" || ! -d "$HOME/code" ]]; then
+    DIRDEV="$HOME/dev"
+  else
+    DIRDEV="$HOME/code"
+  fi
+fi
+export DIRDEV
+export DOTFILES="$HOME/.dotfiles"
+export TOOLSHED="$DIRDEV/toolshed"

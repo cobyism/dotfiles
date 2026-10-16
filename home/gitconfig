@@ -1,7 +1,7 @@
 [user]
 	name = @cobyism
 	email = _+git@coby.io
-	signingkey = /Users/chapc3/.ssh/id_chapc3_airnz_rsa.pub
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLfUl1WcJGXOIlXyFeRocb0ti56jYvpfOh14JEfM3Md
 [github]
 	user = cobyism
 [heroku]

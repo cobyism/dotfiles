@@ -16,9 +16,7 @@
 
 # =============================== ENV
 
-export DIRCODE="$HOME/code"
-export DOTFILES="$HOME/.dotfiles"
-export TOOLSHED="$DIRCODE/toolshed"
+# DIRDEV, DOTFILES and TOOLSHED are set in ~/.zshenv
 export EDITOR="code"
 export EDITOR_WAIT="code --wait"
 
@@ -77,6 +75,14 @@ function on_personal_machine() {
   fi
 }
 
+# Usage: on_machine_named <machine_name> <command> <args>
+function on_machine_named() {
+  if [[ $(hostname) == "$1" ]]; then
+    shift
+    "$@"
+  fi
+}
+
 # =============================== Completions
 
 export FPATH="$DOTFILES/completions:$FPATH" # Eza etc.
@@ -123,8 +129,8 @@ alias cat="bat"
 alias c="cursor"
 alias ccstatusline="npx -y ccstatusline@latest" # Claude Code status line configuration TUI (https://github.com/sirmalloc/ccstatusline)
 
-on_personal_machine alias bbb="~/code/bb/bb"
-on_work_machine alias bbb="~/code/cobyism/bb/bb"
+on_personal_machine alias bbb="$DIRDEV/bb/bb"
+on_work_machine alias bbb="$DIRDEV/cobyism/bb/bb"
 
 # Homebrew
 

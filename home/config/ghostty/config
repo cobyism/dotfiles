@@ -56,24 +56,24 @@ keybind = global:cmd+shift+ctrl+opt+backquote=toggle_quick_terminal
 # disable default quit cmd+q keybind
 keybind = super+q=unbind
 
-#custom-shader = ~/code/ghostty-cursor-shaders/cursor_warp.glsl
-#custom-shader = ~/code/ghostty-cursor-shaders/ripple_cursor.glsl
+#custom-shader = ~/dev/ghostty-cursor-shaders/cursor_warp.glsl
+#custom-shader = ~/dev/ghostty-cursor-shaders/ripple_cursor.glsl
 
-custom-shader = ~/code/ghostty-shader-playground/public/shaders/blaze_sparks.glsl
-custom-shader = ~/code/ghostty-shader-playground/public/shaders/cursor_smear_gradient.glsl
-#custom-shader = ~/code/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
+custom-shader = ~/dev/ghostty-shader-playground/public/shaders/blaze_sparks.glsl
+custom-shader = ~/dev/ghostty-shader-playground/public/shaders/cursor_smear_gradient.glsl
+#custom-shader = ~/dev/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix/crt-shader-with-chromatic-aberration-glow-scanlines-dot-matrix.glsl
 
-#custom-shader = ~/code/ghostty_shaders/crt_glitch.glsl
-#custom-shader = ~/code/ghostty_shaders/flicker.glsl
-#custom-shader = ~/code/ghostty_shaders/glow.glsl
-#custom-shader = ~/code/my-ghostty-shaders/base.glsl
-#custom-shader = ~/code/my-ghostty-shaders/glow-rgbsplit-twitchy.glsl
-#custom-shader = ~/code/my-ghostty-shaders/inside-the-matrix.glsl
-#custom-shader = ~/code/gshaders/matrix-hallway.glsl
-#custom-shader = ~/code/gshaders/retro-terminal.glsl
-#custom-shader = ~/code/gshaders/tft.glsl
-#custom-shader = ~/code/Fearless-Geek-Shaders-for-Ghostty/static.glsl
-#custom-shader = ~/code/gshaders/tft.glsl
+#custom-shader = ~/dev/ghostty_shaders/crt_glitch.glsl
+#custom-shader = ~/dev/ghostty_shaders/flicker.glsl
+#custom-shader = ~/dev/ghostty_shaders/glow.glsl
+#custom-shader = ~/dev/my-ghostty-shaders/base.glsl
+#custom-shader = ~/dev/my-ghostty-shaders/glow-rgbsplit-twitchy.glsl
+#custom-shader = ~/dev/my-ghostty-shaders/inside-the-matrix.glsl
+#custom-shader = ~/dev/gshaders/matrix-hallway.glsl
+#custom-shader = ~/dev/gshaders/retro-terminal.glsl
+#custom-shader = ~/dev/gshaders/tft.glsl
+#custom-shader = ~/dev/Fearless-Geek-Shaders-for-Ghostty/static.glsl
+#custom-shader = ~/dev/gshaders/tft.glsl
 
 # Added by boo
 #macos-icon = blueprint

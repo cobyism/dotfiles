@@ -12,8 +12,9 @@ My dotfiles are managed using [thoughtbot](https://thoughtbot.com)’s wonderful
 
 ### Usage
 
-- Clone this repo into `~/code/dotfiles`.
-- From scratch, run [`script/bootstrap`](./script/bootstrap) to symlink `~/.dotfiles` and [`~/.rcrc`](./rcrc) into place.
+- Clone this repo into your code directory, e.g. `~/dev/dotfiles` (or `~/code/dotfiles` on older machines).
+- From scratch, run [`script/bootstrap`](./script/bootstrap) to symlink `~/.dotfiles` and [`~/.rcrc`](./home/rcrc) into place, clone [toolshed](https://github.com/cobyism/toolshed) alongside, and run `rcup`.
+- The code directory is exported as `$DIRDEV` from [`zshenv`](./home/zshenv): `~/dev` if it exists, otherwise `~/code`. Pin it per machine with `export DIRDEV=...` in `~/.zshenv.local` (bootstrap writes this for you if the repo isn't in `~/dev`).
 - Ensure `rcm` is installed and available in your `PATH` (e.g., via Homebrew: `brew install rcm`).
 - Subsequently use `rcup`, `rcdn`, `lsrc`, and `mkrc` to manage.
 
@@ -21,12 +22,8 @@ Example setup from scratch:
 
 ```zsh
 brew install git rcm
-mkdir -p ~/code
-git clone https://github.com/cobyism/dotfiles.git ~/code/dotfiles
-cd ~/code/dotfiles
-script/bootstrap
-cd ~
-rcup
+git clone https://github.com/cobyism/dotfiles.git ~/dev/dotfiles
+~/dev/dotfiles/script/bootstrap
 ```
 
 ### License
