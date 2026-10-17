@@ -1,11 +1,19 @@
 add_newline = true
 command_timeout = 200
-format = "[$directory$git_branch$git_status]($style)$character"
+format = "$username@$hostname:[$directory$git_branch$git_status]($style)$character"
+
+[username]
+show_always = true
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = false
+format = "[$ssh_symbol$hostname]($style)"
 
 [character]
 error_symbol = "[✗](bold red)"
-success_symbol = "[➜](bold green)"
-# success_symbol = "[❯](bold cyan)"
+# success_symbol = "[➜](bold green)"
+success_symbol = "[❯](bold green)"
 
 [directory]
 truncation_length = 2
@@ -29,6 +37,7 @@ home_symbol = "~"
 # ]
 #home_symbol = "~󰋜󱂵󰋞"
 # code = "󰅩󰘦󰅨"
+format = '[$path]($style)[$read_only]($read_only_style)'
 
 [git_branch]
 format = "[](purple)[](bg:purple fg:black)[](purple) [$branch]($style) "
