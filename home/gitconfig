@@ -57,6 +57,8 @@
 	clean = git-lfs clean -- %f
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true
 [http]
 	postBuffer = 524288000
 # For Delta
@@ -72,8 +74,11 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
   gpgsign = true
-[pull]
-	rebase = true
+[include] # Set the machine's signer and personal key before applying repository-specific identity
+  path = ~/.gitconfig-machine # rcm host-specific symlink exists on work machine, ignored on personal machine
+[includeIf "gitdir:airnz/"] # automatically prepends/appends to **/airnz/**
+  path = ~/.config/git/work.gitconfig # work-specific gitconfig for airnz repos
+

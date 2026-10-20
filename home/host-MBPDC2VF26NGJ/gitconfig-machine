@@ -1,0 +1,4 @@
+[gpg "ssh"]
+  program = ssh-keygen
+[user]
+  signingkey = ~/.ssh/id_ed25519_cobyism_signing.pub

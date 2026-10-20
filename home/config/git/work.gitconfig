@@ -1,0 +1,4 @@
+[user] # Work repo identity
+	name = Coby Chapple
+	email = CobyChapple@airnz.co.nz
+	signingkey = ~/.ssh/id_chapc3_airnz_rsa

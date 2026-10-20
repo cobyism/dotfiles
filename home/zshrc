@@ -180,6 +180,11 @@ alias gwho="git show -s --pretty=fuller"
 # Spotify DL code custom
 alias spdl="spotify-dl --format mp3 --parallel 1 --save-playlist --destination ~/Documents/cc-dj-music-library/music-library/"
 
+
+# =============================== GIT
+
+on_work_machine source_file "$DOTFILES/home/config/git/git.work.zsh"
+
 # =============================== LOCALRC
 
 # Use .localrc for secret crap since this is a public, versioned repo.
