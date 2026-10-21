@@ -25,6 +25,7 @@ export EDITOR_WAIT="code --wait"
 export PATH="$TOOLSHED/wip:./wip:$PATH"
 export PATH="$TOOLSHED/bin:./bin:$PATH"
 export PATH="$HOME/bin:$HOME/.bin/:$HOME/.local/bin:$PATH"
+export PATH="$DOTFILES/script:$PATH"
 export PATH="./script:$PATH"
 export PATH="./node_modules/.bin:$PATH"
 

@@ -12,6 +12,12 @@ setw -g pane-base-index 1
 set -g renumber-windows on
 set -g status-interval 1
 
+# Bind Space to cycle through layouts
+bind-key -r Space next-layout
+
+# Set longer repeat time for key bindings
+set -g repeat-time 1000
+
 ### My Settings
 
 # # For non-active windows
@@ -407,6 +413,7 @@ tmux_conf_theme_clock_style="24"
 #   - false (default)
 #   - disabled
 # on Linux, this requires xsel, xclip or wl-copy
+# Preserve tmux-yank's pbcopy commands when Oh My Tmux rewrites bindings.
 tmux_conf_copy_to_os_clipboard=true # causes an error if false
 
 
