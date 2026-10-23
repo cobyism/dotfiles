@@ -51,8 +51,6 @@ home/config/zed/prompts/
 # fizzy - config.yaml contains a live API token
 home/config/fizzy/
 
-home/config/tmux/*.local
-
 .serena/
 home/config/openspec/
 home/config/github-copilot/
@@ -60,5 +58,7 @@ home/config/twg/
 home/config/tmux/plugins/
 **/update-notifier-*
 **/secrets.*
+**/*.local
+**/*.key
 
 **/trust.json*
