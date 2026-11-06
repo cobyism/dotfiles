@@ -35,6 +35,7 @@
 	quotepath = false
 	editor = code
 	pager = delta # brew "git-delta"
+	hooksPath = ~/.config/git/hooks
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [help]

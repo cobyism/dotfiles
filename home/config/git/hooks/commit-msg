@@ -1,0 +1,10 @@
+#!/bin/sh
+# Git hook to automatically strip AI co-author lines from commit messages
+
+COMMIT_MSG_FILE=$1
+
+# Remove any lines containing Co-Authored-By (case-insensitive)
+if [ -f "$COMMIT_MSG_FILE" ]; then
+    # Perl is highly portable across macOS, Linux, and Git Bash on Windows
+    perl -i -ne 'print unless /^[[:space:]]*co-authored-by[[:space:]]*:/i' "$COMMIT_MSG_FILE"
+fi
