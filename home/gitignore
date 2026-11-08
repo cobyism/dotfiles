@@ -10,6 +10,7 @@
 **/.localrc
 **/.vscode
 **/.mise.toml
+**/.claude/settings.json
 **/.claude/settings.local.json
 **/.omo/*
 **/.serena/*
